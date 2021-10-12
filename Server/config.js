@@ -6,7 +6,7 @@
 //
 ///////////////////////////////////////////////////////////////////
 //
-// 새로운 설정을 작성하거나 수정시
+// 본 파일에서 export 할때는
 // config_
 // 를 접두사로 붙이기 바랍니다.
 //
@@ -23,5 +23,17 @@ const config_db = {
     password: "",           // 연결시 사용할 패스워드
     database: ""            // 연결할 데이터베이스명
 };
+
+exports.config_db = config_db;
+
+/* server */
+
+const config_server = {
+    port: 8000              // 서버 실행시 사용할 포트 번호 (인터넷 기본: 8080)
+    
+}
+
+exports.config_server = config_server
+
 
 /* admin */

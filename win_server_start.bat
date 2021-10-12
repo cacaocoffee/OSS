@@ -25,9 +25,9 @@ IF %FAST_START%==1 (
 
 :L_FAST_START
 
-ECHO "안내 없이 서버를 실행합니다."
+ECHO 안내 없이 서버를 실행합니다.
 
-GOTO L_EOF
+GOTO L_SERVER_START
 :L_SLOW_START
 
 
@@ -91,14 +91,28 @@ IF NOT "%IS_CONFIG%"=="Y" (
     )
 )
 
+
+:L_SERVER_START
 :: 여기에 데이터베이스 및 웹서버 실행 코드를 작성하면 됩니다.
 :: 데이터베이스 실행 - 웹서버 실행 순으로 진행
 :: 각 실행 과정에서 안정성을 위해 딜레이를 두고 실행할 것.
+ECHO 데이터베이스를 실행합니다.
+
+TIMEOUT 1
+ECHO Node.js 웹 서버를 실행합니다.
+
+IF NOT EXIST "./bin/www" (
+    ECHO 파일이 없어 제대로 시작하지 못했습니다.
+    ECHO 다시 다운로드하세요.
+    TIMEOUT 3
+    GOTO L_EOF
+)
+
+npm start
 
 
 GOTO L_EOF
 :L_EOF
-CLS
 ECHO 서버 실행 배치를 종료합니다.
 TIMEOUT 3
 
