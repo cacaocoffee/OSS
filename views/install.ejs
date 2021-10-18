@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title><%= title %></title>
+
+    </head>
+    <body>
+<% if(!set_comp) { %>
+        <h1>Hello world, Here is Installation Page</h1>
+        <form method="post">
+            <fieldset>
+                <legend>Database Information</legend>
+                <label>host: </label><input type="text" name="dbHost" value="localhost">
+                <label>ID: </label><input type="id" name="dbId" value="root">
+                <label>PW: </label><input type="password" name="dbPassword" value="toor">
+                <label>DB: </label><input type="text" name="dbName" value="teamOSS">
+            </fieldset>
+            <input type="submit">
+        </form>
+
+<% } else { %>
+        <p>데이터베이스 생성이 완료되었습니다. 변경된 내용을 적용하기 위해 서버를 다시 실행해주세요.</p>
+
+<% } %>
+    </body>
+</html>
