@@ -3,11 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var fs = require('fs');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var routersList = require('./routes/_routerCtrl');
 
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -18,9 +19,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json()); // body-parser
+// 라우터 바인딩은 app에서 분리
+// TODO: install 페이지 체크를 무엇으로 할지 논의 필요
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+if(fs.existsSync("./config.ini")){
+  app.use(routersList);
+  var maria = require('./Server/dbConn');
+
+}else{
+  let installRouter = require('./routes/install');
+  app.use(installRouter);
+}
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

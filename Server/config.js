@@ -29,7 +29,7 @@ exports.config_db = config_db;
 /* server */
 
 const config_server = {
-    port: 8000              // 서버 실행시 사용할 포트 번호 (인터넷 기본: 8080)
+    port: 3000              // 서버 실행시 사용할 포트 번호
     
 }
 

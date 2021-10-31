@@ -93,12 +93,9 @@ IF NOT "%IS_CONFIG%"=="Y" (
 
 
 :L_SERVER_START
-:: 여기에 데이터베이스 및 웹서버 실행 코드를 작성하면 됩니다.
-:: 데이터베이스 실행 - 웹서버 실행 순으로 진행
-:: 각 실행 과정에서 안정성을 위해 딜레이를 두고 실행할 것.
-ECHO 데이터베이스를 실행합니다.
 
-TIMEOUT 1
+:: DB는 따로 실행할 필요 없음
+
 ECHO Node.js 웹 서버를 실행합니다.
 
 IF NOT EXIST "./bin/www" (
@@ -106,6 +103,17 @@ IF NOT EXIST "./bin/www" (
     ECHO 다시 다운로드하세요.
     TIMEOUT 3
     GOTO L_EOF
+)
+
+IF NOT EXIST "./node_modules" (
+    ECHO.
+    ECHO 종속성 모듈이 없습니다.
+    ECHO 종속성 모듈을 다운로드 합니다.
+    ECHO.
+    CALL npm install
+    ECHO.
+    ECHO 실행 대기중
+    TIMEOUT 1
 )
 
 npm start
