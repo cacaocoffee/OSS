@@ -15,25 +15,11 @@
 //
 /////////////////////////////////////////////////////////////////*/
 
-/* database */
-const config_db = {
-    host: "localhost",      // db 호스트
-    port: "3306",           // 연결시 사용할 포트(mysql 기본 3306)
-    user: "",               // 연결시 사용할 사용자명
-    password: "",           // 연결시 사용할 패스워드
-    database: ""            // 연결할 데이터베이스명
-};
-
-exports.config_db = config_db;
-
-/* server */
-
 const config_server = {
     port: 3000              // 서버 실행시 사용할 포트 번호
     
 }
 
 exports.config_server = config_server
-
 
 /* admin */

@@ -7,7 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('oss:server');
 var http = require('http');
-var userSetting = require("../Server/config")
+var userSetting = require("../Server/config");
 /**
  * Get port from environment and store in Express.
  */
