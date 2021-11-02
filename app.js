@@ -23,7 +23,7 @@ app.use(express.json()); // body-parser
 // 라우터 바인딩은 app에서 분리
 // TODO: install 페이지 체크를 무엇으로 할지 논의 필요
 
-if(fs.existsSync("./config.ini")){
+if(fs.existsSync("./config.json")){
   app.use(routersList);
   var maria = require('./Server/dbConn');
 
