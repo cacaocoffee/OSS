@@ -6,7 +6,7 @@ const algorithmForHash = 'sha256';
 exports.Hash = function (text) {
     return crypto.createHash(algorithmForHash).update(text).digest("hex");
 };
-exports.HashFor2Way = (text){
+exports.HashFor2Way = (text) => {
     return this.Hash(text).substring(0,32);
 }
 exports.Encrypt = function(plainText, password){
