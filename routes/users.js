@@ -15,4 +15,8 @@ router.post('/login', controller.Login);
 router.get('/sign_up', function(req, res, next) {
   res.render('sign_up', { title: 'Express' });
 });
+
+router.post('/sign_up', controller.SignIn);
+
 module.exports = router;
+``

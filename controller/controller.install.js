@@ -29,9 +29,7 @@ exports.InitializeDB = async (req, res, next) => {
     const connection = await mysql.createConnection(body);
     try {
         await connection.beginTransaction();
-        await connection.query("CREATE DATABASE IF NOT EXISTS ??;", [
-            req.body.dbName,
-        ]);
+        await connection.query("CREATE DATABASE IF NOT EXISTS ??;", req.body.dbName);
         await connection.query("USE ??;", req.body.dbName);
         /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
 
