@@ -1,25 +1,27 @@
-var express = require('express');
-var maria = require('mysql');
-const sec = require('./security');
-const si = require('systeminformation');
+// https://t-anb.tistory.com/53
+const mysql = require('mysql2/promise');
 const fs = require('fs');
+const si = require('systeminformation');
+const sec = require('./security');
 
-let userdb = fs.readFileSync("./config.json", "utf-8", function(err){});
-userdb = JSON.parse(userdb);
-let conn;
-si.baseboard(el =>{
+exports.pool = async () => {
+    let dbPool;
+    const Initialize = async _ => {
+        const baseboard = await si.baseboard();
+        let config = await fs.readFileSync("./config.json", "utf-8", _ => { });
+        config = JSON.parse(config);
 
-     conn = maria.createConnection({
-            host:userdb.host,
-            user:userdb.user,
-            password: sec.Decrypt(userdb.password, sec.Hash(el.serial)),
-            database:"teamoss"
-        }
-    );
+        config.connectionLimit = 30;
+        config.password = sec.Decrypt(config.password, sec.Hash(baseboard.serial));
 
-    conn.connect();
-});
+        return await mysql.createPool(config);
+    };
+
+    if (!dbPool) {
+        dbPool = await Initialize();
+        return dbPool;
+    }
+    return dbPool;
+};
 
 
-
-module.exports = conn;
