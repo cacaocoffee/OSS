@@ -2,11 +2,11 @@ const sec = require('../server/security');
 const db = require('../server/dbConn');
 
 
-exports.login = async (req, res, next) => {
+exports.Login = async (req, res, next) => {
     const pool = await db.pool();
     const connection = await pool.getConnection(async conn => conn);
     try {
-        const hashedPassword = sec.Hash(req.body['pw']);
+        const hashedPassword = sec.HashFor2Way(req.body['pw']);
         // TODO: DB 테이블이 작성되면 그에 맞게 수정해야함.
         const queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?;";
         const queryParam = ['user', 'user', req.body.id, 'password', hashedPassword];

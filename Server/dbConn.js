@@ -12,7 +12,7 @@ exports.pool = async () => {
         config = JSON.parse(config);
 
         config.connectionLimit = 30;
-        config.password = sec.Decrypt(config.password, sec.Hash(baseboard.serial));
+        config.password = sec.Decrypt(config.password, sec.HashFor2Way(baseboard.serial));
 
         return await mysql.createPool(config);
     };

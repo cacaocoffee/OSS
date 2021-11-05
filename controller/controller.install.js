@@ -41,7 +41,7 @@ exports.InitializeDB = async (req, res, next) => {
                 si.baseboard()
                     .then((el) => {
                         body.database = req.body.dbName;
-                        body.password = sec.Encrypt(body.password, sec.Hash(el.serial));
+                        body.password = sec.Encrypt(body.password, sec.HashFor2Way(el.serial));
                         fs.writeFileSync("./config.json", JSON.stringify(body), (_) => { });
                     })
                     .then((_) => {
