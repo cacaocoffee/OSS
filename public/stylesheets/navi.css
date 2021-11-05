@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
+*{margin: 0;padding: 0;box-sizing: border-box;}
+
+
+body{
+    margin:0;
+    font-family: 'Noto Sans KR', sans-serif;/*폰트*/
+/*boby의 바깥 여백을 없애 바가 페이지에 바짝 붙게함.*/
+}
+
+.nav-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: darkslategray;
+    list-style-type: none;
+}
+
+.nav-item{
+    padding: 15px;
+    cursor: pointer;
+    
+}
+.nav-item a{
+    
+    text-align: center;
+    text-decoration: none;
+    color: white;
+}
+.nav-item:nth-child(1){
+    background-color: lightseagreen;
+}
+
+
+.nav-item:hover{
+    background-color: grey;
+}
+
+.nav-container{
+    position: flxed;
+    top: 0;
+}/*상단 위치를 0으로 해서 위에 붙게함*/
+
+
+header{
+    margin-top: 20px;
+}
