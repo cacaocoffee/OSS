@@ -25,25 +25,28 @@ exports.InitializeDB = async (req, res, next) => {
         set_comp: true,
         result: "데이터베이스 초기화 성공. 서버를 다시 실행해주세요."
     };
+    
+    const connection = await mysql.createConnection(body)
     try {
-        const connection = await mysql.createConnection(body)
+        await connection.beginTransaction();
         await connection.query("CREATE DATABASE IF NOT EXISTS ??;", [req.body.dbName]);
         await connection.query("USE ??;", req.body.dbName);
         /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
-
-
+        
+        await connection.commit();
         Promise.all([connection])
             .then(_ => {
                 si.baseboard()
                     .then(el => {
                         body.database = req.body.dbName;
                         body.password = sec.Encrypt(body.password, sec.Hash(el.serial));
-
-                        fs.writeFile("./config.json", JSON.stringify(body), _ => { });
+                        fs.writeFileSync("./config.json", JSON.stringify(body), _ => { });
 
                     }).then(_ => {
                         res.render('install', resResult);
                         res.end();
+                        
+                        await connection.end();
                         process.exit();
 
                     }).catch((err) => {
@@ -60,9 +63,12 @@ exports.InitializeDB = async (req, res, next) => {
             });
 
     } catch (e) {
+        await connection.rollback();
         resResult.result = `설치 오류\n오류 내용: ${e}`;
         res.render('install', resResult);
         res.end();
+        
     }
+    await connection.end();
 
 }
