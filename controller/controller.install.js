@@ -34,9 +34,13 @@ exports.InitializeDB = async (req, res, next) => {
         await connection.query("CREATE DATABASE IF NOT EXISTS ??;", req.body.dbName);
         await connection.query("USE ??;", req.body.dbName);
         /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
-        `CREATE TABLE lang (
-            id int(11) NOT NULL AUTO_INCREMENT,
-            c bool(20) NOT NULL,
+        `CREATE TABLE user (
+            id int unsigned NOT NULL AUTO_INCREMENT,
+            userid varchar(16) NOT NULL,
+            pw varchar(64) NOT NULL,
+            name varchar(10) NOT NULL,
+            authorize tinyint(1) NOT NULL,
+            PRIMARY KEY(userid),
             PRIMARY KEY (id)
           );`
         
