@@ -3,6 +3,8 @@ const sec = require("../server/security");
 const si = require("systeminformation");
 const fs = require("fs");
 const mysql = require("mysql2/promise");
+const { table } = require("console");
+const { create } = require("domain");
 
 exports.Installation = (req, res, next) => {
     let set = {
@@ -32,7 +34,12 @@ exports.InitializeDB = async (req, res, next) => {
         await connection.query("CREATE DATABASE IF NOT EXISTS ??;", req.body.dbName);
         await connection.query("USE ??;", req.body.dbName);
         /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
-
+        `CREATE TABLE lang (
+            id int(11) NOT NULL AUTO_INCREMENT,
+            c bool(20) NOT NULL,
+            PRIMARY KEY (id)
+          );`
+        
         await connection.commit();
         Promise.all([connection])
             .then((_) => {
