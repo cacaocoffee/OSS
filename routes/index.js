@@ -15,4 +15,7 @@ router.get('/sign_up', function(req, res, next) {
 router.get('/navigation', function(req, res, next) {
   res.render('navigation', { title: 'Express' });
 });
+router.get('/profile', function(req, res, next) {
+  res.render('profile', { title: 'Express' });
+});
 module.exports = router;
