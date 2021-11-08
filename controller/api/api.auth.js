@@ -1,5 +1,3 @@
-
-
 exports.existsID = async (conn, id) =>{
     try{
         const queryString = 'SELECT * FROM ?? WHERE ?? = ?;';
@@ -14,7 +12,15 @@ exports.existsID = async (conn, id) =>{
 }
 
 exports.pageUseAuthorize = async (conn, req) =>{
+    // 페이지 권한
     if(!req.session.user) return false;
     
+    return true;
+}
+exports.isLogined = (req) =>{
+    // 로그인 여부
+    if(!req.session) return false;
+    if(!req.session.user) return false;
+
     return true;
 }

@@ -3,15 +3,19 @@ const db = require('../server/dbConn');
 const apiAuth = require('./api/api.auth');
 
 exports.Login = async (req, res, next) => {
+    if(apiAuth.isLogined(req)){
+        res.redirect('/');
+    }
+
     let pool = await db.pool();
     let connection = await pool.getConnection(async conn => conn);
     try {
         const hashedPassword = sec.Hash(req.body['pw']);
         // TODO: DB 테이블이 작성되면 그에 맞게 수정해야함.
-        const queryString = "SELECT * FROM ?? WHERE ?? = ? AND ?? = ?;";
-        const queryParam = ['user', 'userid', req.body.id, 'pw', hashedPassword];
-        // TODO:: ERROR FIXME:
-        const result = await connection.query(queryString, queryParam);
+        const queryString = "SELECT * FROM user WHERE userid = ? AND pw = ?;";
+        const queryParam = [req.body.id, hashedPassword];
+
+        const [result, _] = await connection.execute(queryString, queryParam);
 
         // REVIEW: 프론트와 연계해 어떤 값을 보낼지 논의 필요
         if (!result[0]) {

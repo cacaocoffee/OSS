@@ -1,5 +1,6 @@
 var express = require('express');
 const controller = require('../controller/controller.auth');
+const apiAuth = require('../controller/api/api.auth');
 var router = express.Router();
 
 /* GET users listing. */
@@ -7,7 +8,11 @@ router.get('/', function (req, res, next) {
     res.send('respond with a resource');
 });
 router.get('/login', function (req, res, next) {
-    res.render('login', { title: 'Express' });
+        if(apiAuth.isLogined(req)){
+            res.redirect('/');
+        }
+        res.render('login', { title: 'Express' });
+
 });
 
 router.post('/login', controller.Login);
@@ -24,4 +29,3 @@ router.get('/logout', (req, res, next) => {
 });
 
 module.exports = router;
-``

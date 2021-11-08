@@ -38,11 +38,17 @@ if (fs.existsSync("./config.json")) {
     }
     
     app.use(session({
+        httoOnly:true,
+        secure:true,
         key: 'test',
         secret: 'secret',
         store: new MYSQLStore(storeConfig),
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie:{
+            httpOnly:true,
+            Secure:true
+        }
     }));
 
     const routersList = require('./routes/_routerCtrl');
