@@ -14,12 +14,21 @@
 //
 //
 /////////////////////////////////////////////////////////////////*/
+const fs = require('fs')
 
-const config_server = {
+exports.version = {
+    major:0,
+    minor:1,
+    patch:0
+};
+
+exports.config_server = {
     port: 3000              // 서버 실행시 사용할 포트 번호
     
 }
 
-exports.config_server = config_server
+const temp = JSON.parse(fs.readFileSync('./config.json', "utf-8", () =>{}));
+
+exports.config = temp;
 
 /* admin */
