@@ -1,15 +1,14 @@
 var express = require('express');
+const controller = require("../controller/controller.install");
+const apiAuth = require('../controller/api/api.auth');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Express' });
-});
-router.get('/sign_up', function(req, res, next) {
-  res.render('sign_up', { title: 'Express' });
+router.get('/', function (req, res, next) {
+    if (!apiAuth.isLogined(req)) {
+        return res.redirect('/users/login');
+    }
+    res.render('index', { title: 'Express' });
 });
 
 router.get('/navigation', function(req, res, next) {

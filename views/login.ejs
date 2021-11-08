@@ -12,12 +12,12 @@
     <h1>8조 말 많은 양의 왕</h1>
    <form action=""method="post">
     <div class="int-area">
-    <input type="text" name="id" id="id"
+    <input type="text" name="id" id="id" value='test1'
     autocomplete="off" required>
     <label for="id">USER NAME</label>
     </div>
     <div class="int-area">
-    <input type="password" name="pw" id="pw" 
+    <input type="password" name="pw" id="pw" value='test1'
     autocomplete="off" required>
     <label for="pw">PASSWORD</label>
     </div>
@@ -31,26 +31,6 @@
     <a href="sign_up">Sign up?</a>
     </div>
    </section>
-   <script>
-   let id = $('#id');
-   let pw = $('#pw');
-   let btn = $('#btn');
-   $(btn).on('click',function() {
-       if($(id).val()== ""){
-          $(id).next('label').addClass('warning');
-            setTimeout(function(){
-                $('label').removeClass('warning');
-            },1500); 
-        }
-       else if($(pw).val()== "")
-        {
-            $(pw).next('label').addClass('warning');
-            setTimeout(function(){
-                $('label').removeClass('warning');
-            },1500); 
-        }
-   });
-   </script>
-   
+  
 </body>
 </html>

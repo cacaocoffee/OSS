@@ -1,25 +1,44 @@
-var express = require('express');
-var maria = require('mysql');
+// https://t-anb.tistory.com/53
 const sec = require('./security');
-const si = require('systeminformation');
+const tools = require('./tools');
+
+const express = require('express');
+const mysql2 = require('mysql2/promise');
 const fs = require('fs');
 
-let userdb = fs.readFileSync("./config.json", "utf-8", function(err){});
-userdb = JSON.parse(userdb);
-let conn;
-si.baseboard(el =>{
+const app  = express();
+    
+// exports.sessionStore = (connection) =>{
+//     let sessionStore;
+    
+//     const InitializeSessionStore = _ => {
+//         sessionStore = new MySQLStore({}, connection);
+//         return sessionStore;
+//     }
+    
+//     if(!sessionStore) return sessionStore = InitializeSessionStore();
+//     return sessionStore;
+// }
 
-     conn = maria.createConnection({
-            host:userdb.host,
-            user:userdb.user,
-            password: sec.Decrypt(userdb.password, sec.Hash(el.serial)),
-            database:"teamoss"
-        }
-    );
+exports.pool = _ => {
+    let dbPool = undefined;
+    const Initialize = _ => {
+        let config = this.config;
+        config.connectionLimit = 10;
+        
+        return dbPool = mysql2.createPool(config);
+    };
 
-    conn.connect();
-});
+    if (!dbPool) {
+        Initialize();
+    }
+
+    
+    return dbPool;
+};
 
 
+const temp = tools.config;
+temp.db.password = sec.Decrypt(temp.db.password, sec.HashFor2Way(tools.config.serial));
 
-module.exports = conn;
+exports.config = temp.db;
