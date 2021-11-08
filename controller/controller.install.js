@@ -34,16 +34,29 @@ exports.InitializeDB = async (req, res, next) => {
         await connection.query("CREATE DATABASE IF NOT EXISTS ??;", req.body.dbName);
         await connection.query("USE ??;", req.body.dbName);
         /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
-        `CREATE TABLE user (
-            id int unsigned NOT NULL AUTO_INCREMENT,
-            userid varchar(16) NOT NULL,
-            pw varchar(64) NOT NULL,
-            name varchar(10) NOT NULL,
-            authorize tinyint(1) NOT NULL,
-            PRIMARY KEY(userid),
-            PRIMARY KEY (id)
-          );`
-        
+        await connection.
+        query(`CREATE TABLE user (
+                id int unsigned NOT NULL AUTO_INCREMENT COMMENT '식별용 ID', 
+                userid varchar(16) NOT NULL COMMENT '로그인 ID',
+                pw char(64) NOT NULL COMMENT '로그인 PASSWORD',
+                name varchar(10) NOT NULL default 'unknown' COMMENT '사용자 이름',
+                authorize tinyint(1) NOT NULL default 0 COMMENT '페이지 이용 승인 여부',
+                PRIMARY KEY(id, userid)
+            );`);
+        await connection.
+        query(`CREATE TABLE language_user (
+                userid int unsigned NOT NULL AUTO_INCREMENT COMMENT 'user테이블 id', 
+                language char(16) NOT NULL COMMENT '사용 언어',
+                PRIMARY KEY(userid,language)
+            );`);
+        await connection.
+        query(`CREATE TABLE language_list (
+                C tinyint(1) NOT NULL default 0 'C 사용여부', 
+                C++ tinyint(1) NOT NULL default 0 'C++ 사용여부', 
+                C# tinyint(1) NOT NULL default 0 'C# 사용여부', 
+                HTML tinyint(1) NOT NULL default 0 'HTML 사용여부', 
+                PRIMARY KEY(userid,language)
+            );`);       
         await connection.commit();
         Promise.all([connection])
             .then((_) => {
