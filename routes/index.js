@@ -8,7 +8,13 @@ router.get('/', function (req, res, next) {
     if (!apiAuth.isLogined(req)) {
         return res.redirect('/users/login');
     }
-    res.render('index', { title: 'Express' });
+    // res.render('index', { title: 'Express' });
+    res.render('layout', {
+      content_file:"index",
+      title:"Express",
+      css:['style.css']
+    })
+    
 });
 
 router.get('/navigation', function(req, res, next) {
