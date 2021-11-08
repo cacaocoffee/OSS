@@ -1,4 +1,5 @@
 const sec = require("../server/security");
+const conf = require("../server/config");
 
 const si = require("systeminformation");
 const fs = require("fs");
@@ -16,9 +17,13 @@ exports.Installation = (req, res, next) => {
 
 exports.InitializeDB = async (req, res, next) => {
     const body = {
-        host: req.body.dbHost,
-        user: req.body.dbId,
-        password: req.body.dbPassword,
+        db:{
+            host: req.body.dbHost,
+            user: req.body.dbId,
+            password: req.body.dbPassword,
+        },
+        serial:'',
+        version:conf.version
     };
     const resResult = {
         title: "TeamOSS",
@@ -26,11 +31,12 @@ exports.InitializeDB = async (req, res, next) => {
         result: "데이터베이스 초기화 성공. 서버를 다시 실행해주세요.",
     };
 
-    const connection = await mysql.createConnection(body);
+    const connection = await mysql.createConnection(body.db);
     try {
         await connection.beginTransaction();
         await connection.query("CREATE DATABASE IF NOT EXISTS ??;", req.body.dbName);
         await connection.query("USE ??;", req.body.dbName);
+        body.db.database = req.body.dbName;
         /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
 
         await connection.commit();
@@ -38,8 +44,9 @@ exports.InitializeDB = async (req, res, next) => {
             .then((_) => {
                 si.baseboard()
                     .then((el) => {
-                        body.database = req.body.dbName;
-                        body.password = sec.Encrypt(body.password, sec.HashFor2Way(el.serial));
+                        body.db.password = sec.Encrypt(body.db.password, sec.HashFor2Way(el.serial));
+                        body.serial = el.serial;
+
                         fs.writeFileSync("./config.json", JSON.stringify(body), (_) => { });
                     })
                     .then((_) => {

@@ -1,27 +1,44 @@
 // https://t-anb.tistory.com/53
-const mysql = require('mysql2/promise');
-const fs = require('fs');
-const si = require('systeminformation');
 const sec = require('./security');
+const conf = require('./config');
 
-exports.pool = async () => {
-    let dbPool;
-    const Initialize = async _ => {
-        const baseboard = await si.baseboard();
-        let config = await fs.readFileSync("./config.json", "utf-8", _ => { });
-        config = JSON.parse(config);
+const express = require('express');
+const mysql2 = require('mysql2/promise');
+const fs = require('fs');
 
-        config.connectionLimit = 30;
-        config.password = sec.Decrypt(config.password, sec.HashFor2Way(baseboard.serial));
+const app  = express();
+    
+// exports.sessionStore = (connection) =>{
+//     let sessionStore;
+    
+//     const InitializeSessionStore = _ => {
+//         sessionStore = new MySQLStore({}, connection);
+//         return sessionStore;
+//     }
+    
+//     if(!sessionStore) return sessionStore = InitializeSessionStore();
+//     return sessionStore;
+// }
 
-        return await mysql.createPool(config);
+exports.pool = _ => {
+    let dbPool = undefined;
+    const Initialize = _ => {
+        let config = this.config;
+        config.connectionLimit = 10;
+        
+        return dbPool = mysql2.createPool(config);
     };
 
     if (!dbPool) {
-        dbPool = await Initialize();
-        return dbPool;
+        Initialize();
     }
+
+    
     return dbPool;
 };
 
 
+const temp = conf.config;
+temp.db.password = sec.Decrypt(temp.db.password, sec.HashFor2Way(conf.config.serial));
+
+exports.config = temp.db;
