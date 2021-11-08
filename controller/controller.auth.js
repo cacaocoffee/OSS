@@ -4,7 +4,7 @@ const apiAuth = require('./api/api.auth');
 
 exports.Login = async (req, res, next) => {
     if(apiAuth.isLogined(req)){
-        res.redirect('/');
+        return res.redirect('/');
     }
 
     let pool = await db.pool();

@@ -1,5 +1,3 @@
-const conf = require('./Server/config');
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,9 +6,7 @@ var logger = require('morgan');
 var fs = require('fs');
 var app = express();
 
-const db = require('./Server/dbConn');
 const session = require('express-session');
-const { config } = require('process');
 const MYSQLStore = require('express-mysql-session')(session);
 
 
@@ -29,6 +25,7 @@ app.use(express.json()); // body-parser
 // TODO: install 페이지 체크를 무엇으로 할지 논의 필요
 
 if (fs.existsSync("./config.json")) {
+    const db = require('./Server/dbConn');
     const storeConfig = {
         host:db.config.host,
         user:db.config.user,
