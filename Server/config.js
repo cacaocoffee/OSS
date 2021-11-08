@@ -27,8 +27,4 @@ exports.config_server = {
     
 }
 
-const temp = JSON.parse(fs.readFileSync('./config.json', "utf-8", () =>{}));
-
-exports.config = temp;
-
 /* admin */

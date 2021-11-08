@@ -9,7 +9,7 @@ router.get('/', function (req, res, next) {
 });
 router.get('/login', function (req, res, next) {
         if(apiAuth.isLogined(req)){
-            res.redirect('/');
+            return res.redirect('/');
         }
         res.render('login', { title: 'Express' });
 

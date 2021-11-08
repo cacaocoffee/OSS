@@ -1,6 +1,6 @@
 // https://t-anb.tistory.com/53
 const sec = require('./security');
-const conf = require('./config');
+const tools = require('./tools');
 
 const express = require('express');
 const mysql2 = require('mysql2/promise');
@@ -38,7 +38,7 @@ exports.pool = _ => {
 };
 
 
-const temp = conf.config;
-temp.db.password = sec.Decrypt(temp.db.password, sec.HashFor2Way(conf.config.serial));
+const temp = tools.config;
+temp.db.password = sec.Decrypt(temp.db.password, sec.HashFor2Way(tools.config.serial));
 
 exports.config = temp.db;

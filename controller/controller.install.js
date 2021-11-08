@@ -4,8 +4,6 @@ const conf = require("../server/config");
 const si = require("systeminformation");
 const fs = require("fs");
 const mysql = require("mysql2/promise");
-const { table } = require("console");
-const { create } = require("domain");
 
 exports.Installation = (req, res, next) => {
     let set = {
@@ -14,7 +12,6 @@ exports.Installation = (req, res, next) => {
     };
 
     res.render("install", set);
-    res.end();
 };
 
 exports.InitializeDB = async (req, res, next) => {
@@ -40,15 +37,15 @@ exports.InitializeDB = async (req, res, next) => {
         await connection.query("USE ??;", req.body.dbName);
         body.db.database = req.body.dbName;
         /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
-        `CREATE TABLE user (
-            id int unsigned NOT NULL AUTO_INCREMENT,
-            userid varchar(16) NOT NULL,
-            pw varchar(64) NOT NULL,
-            name varchar(10) NOT NULL,
-            authorize tinyint(1) NOT NULL,
-            PRIMARY KEY(userid),
-            PRIMARY KEY (id)
-          );`
+        await connection.
+        query(`CREATE TABLE user (
+                id int unsigned NOT NULL AUTO_INCREMENT COMMENT '식별용 ID', 
+                userid varchar(16) NOT NULL COMMENT '로그인 ID',
+                pw char(64) NOT NULL COMMENT '로그인 PASSWORD',
+                name varchar(10) NOT NULL default 'unknown' COMMENT '사용자 이름',
+                authorize tinyint(1) NOT NULL default 0 COMMENT '페이지 이용 승인 여부',
+                PRIMARY KEY(id, userid)
+            );`);
         
         await connection.commit();
         Promise.all([connection])
