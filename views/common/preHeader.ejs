@@ -1,11 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<%  if(css){
-        css.forEach(item =>{
-            %>
-                <link type="text/css" rel="stylesheet" href="stylesheets/<%= item %>">
+<% css || css.forEach(item=>{ %>
+    <link type="text/css" rel="stylesheet" href="stylesheets/<%= item %>">
 
-            <%
-        })
-    }
-%>
+<% });%>

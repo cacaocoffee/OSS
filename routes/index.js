@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
     }
     // res.render('index', { title: 'Express' });
     res.render('layout', {
-      content_file:"index",
+      content:"index",
       title:"Express",
       css:['style.css']
     })
