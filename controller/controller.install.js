@@ -6,12 +6,7 @@ const fs = require("fs");
 const mysql = require("mysql2/promise");
 
 exports.Installation = (req, res, next) => {
-    let set = {
-        title: "TeamOSS",
-        set_comp: false,
-    };
-
-    res.render("install", set);
+    res.render("install", {method:"get"});
 };
 
 exports.InitializeDB = async (req, res, next) => {
@@ -25,9 +20,9 @@ exports.InitializeDB = async (req, res, next) => {
         version:conf.version
     };
     const resResult = {
-        title: "TeamOSS",
-        set_comp: true,
-        result: "데이터베이스 초기화 성공. 서버를 다시 실행해주세요.",
+        method:"post",
+        result:false,
+        value:'데이터베이스 초기화 성공.<br>설치를 완료했습니다. 서버를 다시 실행해주세요.'
     };
 
     const connection = await mysql.createConnection(body.db);
@@ -58,26 +53,26 @@ exports.InitializeDB = async (req, res, next) => {
                         fs.writeFileSync("./config.json", JSON.stringify(body), (_) => { });
                     })
                     .then((_) => {
+                        resResult.result = true;
                         res.render("install", resResult);
                         res.end();
                         connection.end();
-                        process.exit();
                     })
                     .catch((err) => {
-                        resResult.result = `설정 파일을 만드는 중 오류가 발생했습니다. ${err}`;
+                        resResult.value = `설정 파일을 만드는 중 오류가 발생했습니다. ${err}`;
                         res.render("install", resResult);
                         res.end();
                     });
             })
             .catch((err) => {
                 console.log(err);
-                resResult.result = `데이터베이스 초기화 실패. 다시 작업하세요. ${err}`;
+                resResult.value = `데이터베이스 초기화 실패. 다시 작업하세요. ${err}`;
                 res.render("install", resResult);
                 res.end();
             });
     } catch (e) {
         await connection.rollback();
-        resResult.result = `설치 오류\n오류 내용: ${e}`;
+        resResult.value = `설치에 실패했습니다.<br>오류 내용: ${e}`;
         res.render("install", resResult);
         res.end();
     }
