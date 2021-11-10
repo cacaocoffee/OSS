@@ -8,7 +8,20 @@ router.get('/', function (req, res, next) {
     if (!apiAuth.isLogined(req)) {
         return res.redirect('/users/login');
     }
-    res.render('index', { title: 'Express' });
+    // res.render('index', { title: 'Express' });
+    res.render('layout', {
+      content:"index",
+      title:"Express",
+      css:['style.css']
+    })
+    
+});
+
+router.get('/navigation', function(req, res, next) {
+  res.render('navigation', { title: 'Express' });
+});
+router.get('/profile', function(req, res, next) {
+  res.render('profile', { title: 'Express' });
 });
 
 module.exports = router;
