@@ -1,27 +1,125 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
     <head>
         <meta charset="utf-8">
-        <title><%= title %></title>
+        <title>Installation</title>
+        
+        <style type="text/css">
+            *{
+                margin:0; padding:0;box-sizing:border-box;
+            }
+            body{
+                width:100%;
+                padding:130px 0;
+                background:url("/images/install-background.jpg") no-repeat;
+                background-attachment:fixed;
+                background-size:auto;
+                display:grid;
+                align-items: center;
+                justify-content:center;
+                min-height:100vh;
+            }
+            #content{
+                margin:0 auto;
+                width:600px;
+                background:inherit;
+                border-radius:0.5em;
+                position:relative;
+                z-index:1;
+                box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
+                overflow:hidden;
+                
+            }
+            
+            #content::before{
+                content: "";
+                position:absolute;
+                background:inherit;
+                z-index:-1;
+                top:0;
+                left:0;
+                right:0;
+                bottom:0;
+                box-shadow:inset 0 0 1em;
+                filter: blur(10px);
+                margin:-20px;
+            }
 
+            label{
+                display:inline-block;
+                width:3em;
+                text-align:right;
+                margin-right:0.5em;
+            }
+
+            input{
+                font-size:1rem;
+            }
+            
+            input{
+                padding:0.3em 0.7em;
+                border:0;
+                border-radius:0.3em;
+            }
+            input:focus{
+                outline:none;
+                box-shadow:0 0 0.3em #9299ff;
+
+            }
+
+            input[type="submit"]{
+                background-color:#FFF;
+                transition:box-shadow 200ms;
+            }
+
+            input[type="submit"]:focus, input[type="submit"]:hover{
+                box-shadow: 0 0 0.4rem rgba(0,0,0,0.3);
+            }
+
+            .padder{
+                margin-top:0.3em;
+                margin-bottom:0.5em;
+            }
+
+            .padder:last-child{
+                margin-bottom:0;
+            }
+
+        </style>
     </head>
     <body>
-<% if(!set_comp) { %>
-        <h1>Hello world, Here is Installation Page</h1>
-        <form method="post">
-            <fieldset>
-                <legend>Database Information</legend>
-                <label>host: </label><input type="text" name="dbHost" value="localhost">
-                <label>ID: </label><input type="id" name="dbId" value="root">
-                <label>PW: </label><input type="password" name="dbPassword" value="toor">
-                <label>DB: </label><input type="text" name="dbName" value="teamOSS">
-            </fieldset>
-            <input type="submit">
-        </form>
-
-<% } else { %>
-        <p><%= result %></p>
-
-<% } %>
+        <div id="content">
+            <div style="background-color:rgba(255,255,255,0.7); padding: 4em 2em;">
+                <h1 style="text-align:center">Hello world!</h1>
+                <p style="text-align:center; font-size:1.5em; margin-bottom:1em; border-bottom:1px solid #888; padding-bottom:0.7em;">설치 페이지</p>
+                <% if(method && method == 'get') { %>
+                    <form method="post" id="sender">
+                        <fieldset style="border:0; ">
+                            <legend style="margin-bottom:1em; margin-left:1rem;">데이터베이스 접근 정보 입력</legend>
+                            <div class="padder">
+                                <label>Host: </label><input type="text" name="dbHost" value="localhost">
+                            </div>
+                            <div class="padder">
+                                <label>ID: </label><input type="id" name="dbId" value="root">
+                            </div>
+                            <div class="padder">
+                                <label>PW: </label><input type="password" name="dbPassword" value="toor">
+                            </div>
+                            <div class="padder">
+                                <label>DB: </label><input type="text" name="dbName" value="teamOSS">
+                            </div>
+                        </fieldset>
+                        <div style="margin-top:1rem;border-top:1px solid #888; padding-top:1rem;">
+                            <input type="submit" style="float:right; width:8rem; cursor:pointer;" value="등록">
+                        </div>
+                    </form>
+                <% } else{ %>
+                    <p><%- value %></p>
+                    <% if(result == false){ %>
+                        <p style="border-top:1px solid #888;padding-top:1rem; margin-top:2rem; text-align:right"><a href="/" style="color:rgb(81, 131, 224); text-decoration:none">이전 페이지로</a></p>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
     </body>
 </html>
