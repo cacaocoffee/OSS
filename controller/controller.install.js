@@ -58,9 +58,11 @@ exports.InitializeDB = async (req, res, next) => {
             );`);
         await connection.
         query(`CREATE TABLE todo (
-                id int unsigned NOT NULL AUTO_INCREMENT COMMENT "todo 테이블 id",
-                deadline DATE NOT NULL COMMENT "마감 기간",
-                todo TEXT NOT NULL COMMENT "할일 목록",
+                id int unsigned NOT NULL AUTO_INCREMENT COMMENT 'todo 테이블 id',
+                deadline DATE NOT NULL COMMENT '마감 기간',
+                todo TEXT NOT NULL COMMENT '할일 목록',
+                cleardate DATE COMMENT '실행날짜',
+                do tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
                 PRIMARY KEY(id),
                 FOREIGN KEY(id) references user(id)
             );`);           
