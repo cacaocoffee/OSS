@@ -62,9 +62,11 @@ exports.InitializeDB = async (req, res, next) => {
             'JAVA',
             'C#',
             'Python'
-        ].forEach(name =>{
-            await connection.query(`INSERT INTO language_list (language) VALUES('${name}');`);
-        })
+        ]
+        
+        for(let i = 0; i < langList.length; ++i){
+            await connection.query(`INSERT INTO language_list (language) VALUES('${langList[i]}');`);
+        }
         
         await connection.commit();
         Promise.all([connection])
