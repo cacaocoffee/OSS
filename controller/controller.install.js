@@ -67,11 +67,6 @@ exports.InitializeDB = async (req, res, next) => {
                 FOREIGN KEY(id) references user(id)
             );`);           
 
-        ////////////////////추후 제거 요망 현재 테스트를 위한 데이터///////////////////////////////////////////////////////
-        await connection.query(`INSERT INTO user (userid,pw,name) VALUES('kms16','9916','kms');`);
-        await connection.query(`INSERT INTO user (userid,pw,name,authorize) VALUES('king12','theking','king',1);`);
-        
-
         const langList = [
             'C/C++',
             'JAVA',
@@ -82,7 +77,9 @@ exports.InitializeDB = async (req, res, next) => {
         for(let i = 0; i < langList.length; ++i){
             await connection.query(`INSERT INTO language_list (language) VALUES('${langList[i]}');`);
         }
-
+        ////////////////////추후 제거 요망 현재 테스트를 위한 데이터///////////////////////////////////////////////////////
+        await connection.query(`INSERT INTO user (userid,pw,name) VALUES('kms16','9916','kms');`);
+        await connection.query(`INSERT INTO user (userid,pw,name,authorize) VALUES('king12','theking','king',1);`);
         await connection.query(`INSERT INTO language_user (userid,language) VALUES('1','3');`);
         await connection.query(`INSERT INTO language_user (userid,language) VALUES('2','1');`);
         await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-11-25','study DB');`);
