@@ -46,7 +46,25 @@ exports.InitializeDB = async (req, res, next) => {
                 authorize tinyint(1) NOT NULL default 0 COMMENT '페이지 이용 승인 여부',
                 PRIMARY KEY(id, userid)
             );`);
-        
+        await connection.
+        query(`CREATE TABLE language_user (
+                userid int unsigned NOT NULL AUTO_INCREMENT COMMENT 'user테이블 id', 
+                language int unsigned NOT NULL COMMENT '사용 언어',
+                PRIMARY KEY(userid,language),
+                FOREIGN KEY(userid) references user(id),
+                FOREIGN KEY(language) references language_list(id)
+            );`);
+        await connection.
+        query(`CREATE TABLE language_list (
+               id int unsigned NOT NULL AUTO_INCREMENT COMMENT "언어 id",
+               language varchar(16),
+               PRIMARY KEY(id)
+            );`);       
+        await connection.
+        query(`INSERT INTO language_list (language) VALUES('C'),
+        INSERT INTO language_list (language) VALUES('C++'),
+        INSERT INTO language_list (language) VALUES('JAVA'),
+        INSERT INTO language_list (language) VALUES('Python')`);   
         await connection.commit();
         Promise.all([connection])
             .then((_) => {
