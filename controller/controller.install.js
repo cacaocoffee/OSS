@@ -56,7 +56,15 @@ exports.InitializeDB = async (req, res, next) => {
                 FOREIGN KEY(userid) references user(id),
                 FOREIGN KEY(language) references language_list(id)
             );`);
-            
+        await connection.
+        query(`CREATE TABLE todo (
+                id int unsigned NOT NULL AUTO_INCREMENT COMMENT "todo 테이블 id",
+                date DATE NOT NULL COMMENT "마감 기간",
+                todo TEXT NOT NULL COMMENT "할일 목록",
+                PRIMARY KEY(id),
+                FOREIGN KEY(id) references user(id)
+            );`);           
+
         const langList = [
             'C/C++',
             'JAVA',
