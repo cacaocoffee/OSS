@@ -1,5 +1,4 @@
 var express = require('express');
-const controller = require("../controller/controller.install");
 const apiAuth = require('../controller/api/api.auth');
 var router = express.Router();
 
@@ -16,12 +15,5 @@ router.get('/', function (req, res, next) {
     })
     
 });
-
-router.get('/navigation', function(req, res, next) {
-  res.render('navigation', { title: 'Express' });
-});
-router.get('/profile', function(req, res, next) {
-  res.render('profile', { title: 'Express' });
-});
-
+  
 module.exports = router;
