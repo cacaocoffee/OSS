@@ -28,6 +28,10 @@ exports.InitializeDB = async (req, res, next) => {
         const connection = await mysql.createConnection(body.db);
         try {
             await connection.beginTransaction();
+
+            // 개발을 위한 dev config
+            await connection.query("DROP DATABASE IF EXISTS ??;", req.body.dbName);
+
             await connection.query("CREATE DATABASE IF NOT EXISTS ??;", req.body.dbName);
             await connection.query("USE ??;", req.body.dbName);
             body.db.database = req.body.dbName;
@@ -106,6 +110,7 @@ exports.InitializeDB = async (req, res, next) => {
             }
             
             ////////////////////추후 제거 요망 현재 테스트를 위한 데이터///////////////////////////////////////////////////////
+            await connection.query(`INSERT INTO user (userid,pw,name) VALUES('test1','${sec.Hash('test1')}','test1');`);
             await connection.query(`INSERT INTO user (userid,pw,name) VALUES('kms16','${sec.Hash('1625')}','kms');`);
             await connection.query(`INSERT INTO user (userid,pw,name,authorize) VALUES('king','${sec.Hash('1111')}','king',1);`);
             await connection.query(`INSERT INTO language_user (userid,language) VALUES('1','3');`);
