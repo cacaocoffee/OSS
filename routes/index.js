@@ -11,8 +11,7 @@ router.get('/', function (req, res, next) {
     // res.render('index', { title: 'Express' });
     res.render('layout', {
       content:"index",
-      title:"Express",
-      css:['style.css']
+      css:['style']
     })
 });
 
