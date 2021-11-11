@@ -1,40 +1,41 @@
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>8조 말 많은 양의 왕 프로필</title>
-    <link rel="stylesheet" href="/stylesheets/navi.css">
-    <link rel="stylesheet" href="/stylesheets/profile.css">
+    <meta charset="UTF-8">
+    
 </head>
-<body>
+<body> 
     <%- include('navigation') %>
-    
-    <header><h1>언어 사용자 목록</h1></header>
-    
-    <pro>
-        <ul class="pro-container" >
-            
-        <div>
-            <class="pro-item">C/C++ <a href=""><br>user1</a></li>
-            </div>
-            
-        <div>
-            <class="pro-item">C# <a href=""><br>user2</a></li>
-            </div>
-            
-        <div>
-            <class="pro-item">Java <a href=""><br>user3</a></li>
-            </div>
-        <div>
-            <class="pro-item">Js <a href=""><br>user4</a></li>
-            </div>
-            
-        <div>
-            <class="pro-item">Python <a href=""><br>user5</a></li>
+ 
+<div class="container">
+    <h1>프로필</h1>
+    <br>
+    <img id="myimage" src="https://www.w3schools.com/bootstrap/img_avatar3.png" class="media-object" style="width:60px">
+
+</div>
+<div class="media-body">
+<h4 class="media-heading" id="name">이름</h4>
+<h4 class="media-heading" id="project">참여 프로젝트</h4>
+<h4 class="media-heading" id="language">사용가능 언어</h4>
+
+<div id="statetxtP">
+    <p id="statetxt"></p>
+</div>
+</div>
+<br>
+<hr>
+
+<br>
+
+        <!-- 설명 출력-->
+        <div class="container">
+            <h3>설명:</h3>
+            <br>
+            <p>안녕하세여 저는 홍길동 입니다.</p>
+            <!-- 설명 붙힐 곳-->
+            <div class="thanksList"></div>
+
         </div>
-        </ul>
-
-    </pro>
-    
-    
+</div>    
 </body>
-
 </html>
