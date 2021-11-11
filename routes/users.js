@@ -11,7 +11,7 @@ router.get('/login', function (req, res, next) {
         if(apiAuth.isLogined(req)){
             return res.redirect('/');
         }
-        res.render('login', { title: 'Express' });
+        res.render('login');
 
 });
 
