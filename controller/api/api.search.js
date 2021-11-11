@@ -5,6 +5,17 @@ function retnLangData(langid, langText){
         value:langText
     };
 }
+
+function retnTodoData(toid,daedline,cleardate,done,todo){
+    return {
+        id:toid,
+        daedline:daedline,
+        cleardate:cleardate,
+        do:done,
+        todo:todo,
+    };
+}
+
 exports.GetLanguageList = async (conn) =>{
     let [getList, ] = await conn.query('SELECT * FROM language_list;');
     let result = [];
@@ -31,5 +42,33 @@ exports.GetUserLanguageList = async (conn, userid) =>{
         result.push(retnLangData(item.language, listFromLangList[0].language));
     };
 
+    return result;
+}
+
+
+exports.GetUserTodolist = async (conn, userid) =>{
+    const queryString = 'SELECT * FROM todo_user WHERE userid = ?;';
+    const queryParam = [userid];
+    let [listFromTodo, ] = await conn.query(queryString, queryParam);
+    let result = [];
+    for(let item of listFromTodo){
+        const queryString = 'SELECT * FROM todo WHERE id = ?;';
+        const queryParam = [item.userid];
+        let [todolist] = await conn.query(queryString, queryParam);
+        todolist.forEach((data) =>{
+            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
+        });
+    };
+    return result;
+}
+
+
+exports.GetTodolist = async (conn) =>{
+    let [todolist, ] = await conn.query('SELECT * FROM todo;');
+    let result = [];
+
+    todolist.forEach((data) =>{
+        result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
+    });
     return result;
 }
