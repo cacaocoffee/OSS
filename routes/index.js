@@ -23,6 +23,9 @@ router.get('/navigation', function(req, res, next) {
 router.get('/profile', function(req, res, next) {
   res.render('profile', { title: 'Express' });
 });
+router.get('/project', function (req, res, next) {
+  res.render('project', { title: 'Express' });
+});
 router.get('/project_main', function(req, res, next) {
   res.render('project_main', { title: 'Express' });
 });
