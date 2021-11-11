@@ -64,8 +64,7 @@ exports.InitializeDB = async (req, res, next) => {
                     todo TEXT NOT NULL COMMENT '할일 목록',
                     cleardate DATE COMMENT '실행날짜',
                     do tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
-                    PRIMARY KEY(id),
-                    FOREIGN KEY(id) references user(id)
+                    PRIMARY KEY(id)
                 );`);           
     
             const langList = [
@@ -78,10 +77,10 @@ exports.InitializeDB = async (req, res, next) => {
             for(let i = 0; i < langList.length; ++i){
                 await connection.query(`INSERT INTO language_list (language) VALUES('${langList[i]}');`);
             }
-
+            
             ////////////////////추후 제거 요망 현재 테스트를 위한 데이터///////////////////////////////////////////////////////
-            await connection.query(`INSERT INTO user (userid,pw,name) VALUES('kms16','9916','kms');`);
-            await connection.query(`INSERT INTO user (userid,pw,name,authorize) VALUES('king12','theking','king',1);`);
+            await connection.query(`INSERT INTO user (userid,pw,name) VALUES('kms16','${sec.Hash('1625')}','kms');`);
+            await connection.query(`INSERT INTO user (userid,pw,name,authorize) VALUES('king','${sec.Hash('1111')}','king',1);`);
             await connection.query(`INSERT INTO language_user (userid,language) VALUES('1','3');`);
             await connection.query(`INSERT INTO language_user (userid,language) VALUES('2','1');`);
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-11-25','study DB');`);
