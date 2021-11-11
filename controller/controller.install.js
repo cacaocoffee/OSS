@@ -33,23 +33,24 @@ exports.InitializeDB = async (req, res, next) => {
             body.db.database = req.body.dbName;
             /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
             await connection.
-            query(`CREATE TABLE user (
+            query(`CREATE TABLE IF NOT EXISTS user (
                     id int unsigned NOT NULL AUTO_INCREMENT COMMENT '식별용 ID', 
                     userid varchar(16) NOT NULL COMMENT '로그인 ID',
                     pw char(64) NOT NULL COMMENT '로그인 PASSWORD',
                     name varchar(10) NOT NULL default 'unknown' COMMENT '사용자 이름',
+                    description tinytext COMMENT '유저 소개 글',
                     authorize tinyint(1) NOT NULL default 0 COMMENT '페이지 이용 승인 여부',
                     PRIMARY KEY(id, userid)
                 );`);
             await connection.
-            query(`CREATE TABLE language_list (
+            query(`CREATE TABLE IF NOT EXISTS language_list (
                 id int unsigned NOT NULL AUTO_INCREMENT COMMENT "언어 id",
                 language varchar(16),
                 PRIMARY KEY(id)
                 );`);       
     
             await connection.
-            query(`CREATE TABLE language_user (
+            query(`CREATE TABLE IF NOT EXISTS language_user (
                     userid int unsigned NOT NULL AUTO_INCREMENT COMMENT 'user테이블 id', 
                     language int unsigned NOT NULL COMMENT '사용 언어',
                     PRIMARY KEY(userid,language),
@@ -58,14 +59,33 @@ exports.InitializeDB = async (req, res, next) => {
                 );`);
                            
             await connection.
-            query(`CREATE TABLE todo (
+            query(`CREATE TABLE IF NOT EXISTS todo (
                     id int unsigned NOT NULL AUTO_INCREMENT COMMENT 'todo 테이블 id',
                     deadline DATE NOT NULL COMMENT '마감 기간',
                     todo TEXT NOT NULL COMMENT '할일 목록',
                     cleardate DATE COMMENT '실행날짜',
                     do tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
                     PRIMARY KEY(id)
-                );`);           
+                );`);     
+            await connection.
+            query(
+                `CREATE TABLE IF NOT EXISTS project(
+                    id int unsigned NOT NULL AUTO_INCREMENT COMMENT '프로젝트 식별 아이디',
+                    name tinytext NOT NULL COMMENT '프로젝트 이름',
+                    description tinytext COMMENT '프로젝트 설명 및 내용',
+                    deadline date NOT NULL COMMENT '프로젝트 종료 기간',
+                    uselanguage tinytext NOT NULL COMMENT '프로젝트 사용 언어',
+                    PRIMARY KEY(id)
+                );` );
+            await connection.
+            query(
+                `CREATE TABLE IF NOT EXISTS project_user(
+                    userid int unsigned NOT NULL COMMENT '유저 식별 아이디',
+                    projectid int unsigned NOT NULL COMMENT '프로젝트 식별 아이디',
+                    FOREIGN KEY(userid) references user(id),
+                    FOREIGN KEY(projectid) references project(id)
+                );`
+            );
     
             const langList = [
                 'C/C++',
@@ -85,6 +105,8 @@ exports.InitializeDB = async (req, res, next) => {
             await connection.query(`INSERT INTO language_user (userid,language) VALUES('2','1');`);
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-11-25','study DB');`);
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-12-25','meet Santa');`);
+            await connection.query(`INSERT INTO project (name,description, deadline, uselanguage) VALUES('teamoss','contribute opensource','2021-11-25','HTML,CSS,JS,MYSQL');`);
+            await connection.query(`INSERT INTO project_user(userid,projectid) VALUES(1,1);`)
             //////////////////////////////////////////////////////////////////////////////////////////////////////
      
 
