@@ -56,7 +56,17 @@ exports.InitializeDB = async (req, res, next) => {
                     FOREIGN KEY(userid) references user(id),
                     FOREIGN KEY(language) references language_list(id)
                 );`);
-                
+                           
+            await connection.
+            query(`CREATE TABLE todo (
+                    id int unsigned NOT NULL AUTO_INCREMENT COMMENT 'todo 테이블 id',
+                    deadline DATE NOT NULL COMMENT '마감 기간',
+                    todo TEXT NOT NULL COMMENT '할일 목록',
+                    cleardate DATE COMMENT '실행날짜',
+                    do tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
+                    PRIMARY KEY(id)
+                );`);           
+    
             const langList = [
                 'C/C++',
                 'JAVA',
@@ -68,6 +78,16 @@ exports.InitializeDB = async (req, res, next) => {
                 await connection.query(`INSERT INTO language_list (language) VALUES('${langList[i]}');`);
             }
             
+            ////////////////////추후 제거 요망 현재 테스트를 위한 데이터///////////////////////////////////////////////////////
+            await connection.query(`INSERT INTO user (userid,pw,name) VALUES('kms16','${sec.Hash('1625')}','kms');`);
+            await connection.query(`INSERT INTO user (userid,pw,name,authorize) VALUES('king','${sec.Hash('1111')}','king',1);`);
+            await connection.query(`INSERT INTO language_user (userid,language) VALUES('1','3');`);
+            await connection.query(`INSERT INTO language_user (userid,language) VALUES('2','1');`);
+            await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-11-25','study DB');`);
+            await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-12-25','meet Santa');`);
+            //////////////////////////////////////////////////////////////////////////////////////////////////////
+     
+
             await connection.commit();
             Promise.all([connection])
                 .then((_) => {
