@@ -45,23 +45,7 @@ exports.GetUserLanguageList = async (conn, userid) =>{
     return result;
 }
 
-exports.GetUserTodolist = async (conn, userid) =>{
-    const queryString = 'SELECT * FROM todo_user WHERE userid = ?;';
-    const queryParam = [userid];
-    let [listFromTodo, ] = await conn.query(queryString, queryParam);
-    let result = [];
-    for(let item of listFromTodo){
-        const queryString = 'SELECT * FROM todo WHERE id = ?;';
-        const queryParam = [item.userid];
-        let [todolist] = await conn.query(queryString, queryParam);
-        console.log(todolist);
-        todolist.forEach((data) =>{
-            console.log(data);
-            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
-        });
-    };
-    return result;
-}
+
 exports.GetUserTodolist = async (conn, userid) =>{
     const queryString = 'SELECT * FROM todo_user WHERE userid = ?;';
     const queryParam = [userid];
