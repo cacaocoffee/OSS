@@ -5,7 +5,6 @@ function retnLangData(langid, langText){
         value:langText
     };
 }
-
 function retnProjectData(id, name, desc, deadline, uselang){
     return {
         'id': id,
@@ -13,6 +12,16 @@ function retnProjectData(id, name, desc, deadline, uselang){
         'desc': desc,
         'deadline':deadline,
         'language':uselang
+    }
+}
+
+function retnTodoData(toid,daedline,cleardate,done,todo){
+    return {
+        id:toid,
+        daedline:daedline,
+        cleardate:cleardate,
+        do:done,
+        todo:todo,
     };
 }
 
@@ -45,6 +54,7 @@ exports.GetUserLanguageList = async (conn, userid) =>{
     return result;
 }
 
+
 exports.GetProjectList = async (conn) =>{
     let [getList, ] = await conn.query('SELECT * FROM project;');
     let result = [];
@@ -74,4 +84,31 @@ exports.GetUserProjectList = async (conn, userid) =>{
     console.log(result);
     return result;
 
+}
+
+exports.GetUserTodolist = async (conn, userid) =>{
+    const queryString = 'SELECT * FROM todo_user WHERE userid = ?;';
+    const queryParam = [userid];
+    let [listFromTodo, ] = await conn.query(queryString, queryParam);
+    let result = [];
+    for(let item of listFromTodo){
+        const queryString = 'SELECT * FROM todo WHERE id = ?;';
+        const queryParam = [item.userid];
+        let [todolist] = await conn.query(queryString, queryParam);
+        todolist.forEach((data) =>{
+            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
+        });
+    };
+    return result;
+}
+
+
+exports.GetTodolist = async (conn) =>{
+    let [todolist, ] = await conn.query('SELECT * FROM todo;');
+    let result = [];
+
+    todolist.forEach((data) =>{
+        result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
+    });
+    return result;
 }
