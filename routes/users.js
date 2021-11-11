@@ -23,9 +23,25 @@ router.get('/sign_up', function (req, res, next) {
 
 router.post('/sign_up', controller.SignIn);
 
+router.get('/profile', function (req, res, next) {
+    res.render('profile', { title: 'Express' });
+});
+
+router.get('/navigation', function (req, res, next) {
+    res.render('navigation', { title: 'Express' });
+});
+router.get('/profile', function (req, res, next) {
+    res.render('profile', { title: 'Express' });
+});
+
+router.get('/project_main', function (req, res, next) {
+    res.render('project_main', { title: 'Express' });
+});
 router.get('/logout', (req, res, next) => {
     req.session.destroy();
     res.redirect('/');
 });
+
+
 
 module.exports = router;
