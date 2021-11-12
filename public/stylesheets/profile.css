@@ -1,6 +1,13 @@
-div {
-    width : 100px;
-    height: 100px;
-    background-color: white;
-    border: 1px solid red;
-  }
+div{
+  border: 3px solid #dee3eb;
+  text-align: center;  
+}
+.pro-container{
+  
+  width : 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px; /* 자식요소간의 간격 */
+   padding: 1rem;  
+}
