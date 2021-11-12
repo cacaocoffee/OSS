@@ -8,46 +8,10 @@
             *{
                 margin:0; padding:0;box-sizing:border-box;
             }
-            body{
-                width:100%;
-                padding:130px 0;
-                background:url("/images/install-background.jpg") no-repeat;
-                background-attachment:fixed;
-                background-size:auto;
-                display:grid;
-                align-items: center;
-                justify-content:center;
-                min-height:100vh;
-            }
-            #content{
-                margin:0 auto;
-                width:600px;
-                background:inherit;
-                border-radius:0.5em;
-                position:relative;
-                z-index:1;
-                box-shadow:0 0 1rem 0 rgba(0,0,0, .2);
-                overflow:hidden;
-                
-            }
-            
-            #content::before{
-                content: "";
-                position:absolute;
-                background:inherit;
-                z-index:-1;
-                top:0;
-                left:0;
-                right:0;
-                bottom:0;
-                box-shadow:inset 0 0 1em;
-                filter: blur(10px);
-                margin:-20px;
-            }
 
             label{
                 display:inline-block;
-                width:3em;
+                width:8rem;
                 text-align:right;
                 margin-right:0.5em;
             }
@@ -77,6 +41,7 @@
             }
 
             .padder{
+                margin:0 auto;
                 margin-top:0.3em;
                 margin-bottom:0.5em;
             }
@@ -86,27 +51,28 @@
             }
 
         </style>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/glass.css">
+
     </head>
-    <body>
-        <div id="content">
-            <div style="background-color:rgba(255,255,255,0.7); padding: 4em 2em;">
+    <body class="glass-parent" style="display:grid; background-image:url(/images/background.jpg);">
+        <div id="content" style="width:34rem; padding:1rem;">
                 <h1 style="text-align:center">Hello world!</h1>
                 <p style="text-align:center; font-size:1.5em; margin-bottom:1em; border-bottom:1px solid #888; padding-bottom:0.7em;">설치 페이지</p>
                 <% if(method && method == 'get') { %>
                     <form method="post" id="sender">
                         <fieldset style="border:0; ">
-                            <legend style="margin-bottom:1em; margin-left:1rem;">데이터베이스 접근 정보 입력</legend>
+                            <legend style="margin-bottom:1em; text-align:center;">데이터베이스 접근 정보 입력</legend>
                             <div class="padder">
-                                <label>Host: </label><input type="text" name="dbHost" value="localhost">
+                                <label>Host</label><input type="text" name="dbHost" value="localhost" placeholder="DB Host">
                             </div>
                             <div class="padder">
-                                <label>ID: </label><input type="id" name="dbId" value="root">
+                                <label>ID</label><input type="id" name="dbId" value="root" placeholder="DB USER ID">
                             </div>
                             <div class="padder">
-                                <label>PW: </label><input type="password" name="dbPassword" value="toor">
+                                <label>Password</label><input type="password" name="dbPassword" value="toor" placeholder="DB USER PASSWORD">
                             </div>
                             <div class="padder">
-                                <label>DB: </label><input type="text" name="dbName" value="teamOSS">
+                                <label>DB Name</label><input type="text" name="dbName" value="teamOSS" placeholder="DB NAME">
                             </div>
                         </fieldset>
                         <div style="margin-top:1rem;border-top:1px solid #888; padding-top:1rem;">
@@ -119,7 +85,6 @@
                         <p style="border-top:1px solid #888;padding-top:1rem; margin-top:2rem; text-align:right"><a href="/" style="color:rgb(81, 131, 224); text-decoration:none">이전 페이지로</a></p>
                     <% } %>
                 <% } %>
-            </div>
         </div>
     </body>
 </html>

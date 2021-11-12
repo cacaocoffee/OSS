@@ -1,25 +1,26 @@
-header {
-    background-color:lightgrey;
-    height:100px;
+div{
+    border: 2px solid #ffebb5;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: inset 0 0 4px #deb13a;   
+    place-items: center;  
 }
-nav {
-    background-color:#339999;
-    color:white;
-    width:200px;
-    height:300px;
-    float:right;
+  .container{
+    
+    width : 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 100px; /* 자식요소간의 간격 */
+     padding: 1rem;  
+    
 }
-section {
-    width:200px;
-    text-align:left;
-    float:left;
-    padding:10px;
+.pro{
+    word-break:break-all  
 }
-footer {
-    background-color:#FFCC00;
-    height:100px;
-    clear:both;
+.lang{
+    word-break:keep-all  
 }
-header, nav, section, footer { text-align:center; }
-header, footer { line-height:100px; }
-nav, section { line-height:240px; }
+.list{
+    word-break:break-all  
+} 
