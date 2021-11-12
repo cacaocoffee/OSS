@@ -85,7 +85,6 @@ exports.InitializeDB = async (req, res, next) => {
                     name tinytext NOT NULL COMMENT '프로젝트 이름',
                     description tinytext COMMENT '프로젝트 설명 및 내용',
                     deadline date NOT NULL COMMENT '프로젝트 종료 기간',
-                    uselanguage tinytext NOT NULL COMMENT '프로젝트 사용 언어',
                     PRIMARY KEY(id)
                 );` );
             await connection.
@@ -97,6 +96,16 @@ exports.InitializeDB = async (req, res, next) => {
                     FOREIGN KEY(projectid) references project(id)
                 );`
             );
+            await connection.
+            query(
+                `CREATE TABLE IF NOT EXISTS language_project(
+                    languageid int unsigned NOT NULL COMMENT '프로젝트 사용 언어 아이디',
+                    projectid int unsigned NOT NULL COMMENT '프로젝트 식별 아이디',
+                    FOREIGN KEY(languageid) references language_list(id),
+                    FOREIGN KEY(projectid) references project(id)
+                );`
+            );
+
     
             const langList = [
                 'C/C++',
@@ -118,8 +127,10 @@ exports.InitializeDB = async (req, res, next) => {
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-11-25','study DB');`);
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-12-25','meet Santa');`);
             await connection.query(`INSERT INTO todo_user (userid,todoid) VALUES(1,1);`);
-            await connection.query(`INSERT INTO project (name,description, deadline, uselanguage) VALUES('teamoss','contribute opensource','2021-11-25','HTML,CSS,JS,MYSQL');`);
-            await connection.query(`INSERT INTO project_user(userid,projectid) VALUES(1,1);`)
+            await connection.query(`INSERT INTO project (name,description, deadline, uselanguage) VALUES('teamoss','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project_user(userid,projectid) VALUES(1,1);`);
+            await connection.query(`INSERT INTO language_project(languageid,projectid) VALUES(1,1);`);
+            await connection.query(`INSERT INTO language_project(languageid,projectid) VALUES(2,1);`); 
             //////////////////////////////////////////////////////////////////////////////////////////////////////
      
 
