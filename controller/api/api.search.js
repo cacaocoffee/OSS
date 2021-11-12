@@ -19,7 +19,7 @@ function retnTodoData(toid,daedline,cleardate,done,todo){
         id:toid,
         daedline:daedline,
         cleardate:cleardate,
-        do:done,
+        done:done,
         todo:todo,
     };
 }
@@ -94,7 +94,7 @@ exports.GetUserTodolist = async (conn, userid) =>{
         const queryParam = [item.userid];
         let [todolist] = await conn.query(queryString, queryParam);
         todolist.forEach((data) =>{
-            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
+            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.done,data.todo));
         });
     };
     return result;
@@ -106,7 +106,7 @@ exports.GetTodolist = async (conn) =>{
     let result = [];
 
     todolist.forEach((data) =>{
-        result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
+        result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.done,data.todo));
     });
     return result;
 }
