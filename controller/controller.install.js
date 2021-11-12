@@ -68,7 +68,7 @@ exports.InitializeDB = async (req, res, next) => {
                     deadline DATE NOT NULL COMMENT '마감 기간',
                     todo TEXT NOT NULL COMMENT '할일 목록',
                     cleardate DATE COMMENT '실행날짜',
-                    do tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
+                    done tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
                     PRIMARY KEY(id)
                 );`);
             await connection.
