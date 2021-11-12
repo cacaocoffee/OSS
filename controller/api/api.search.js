@@ -11,7 +11,7 @@ function retnTodoData(toid,daedline,cleardate,done,todo){
         id:toid,
         daedline:daedline,
         cleardate:cleardate,
-        do:done,
+        done:done,
         todo:todo,
     };
 }
@@ -68,7 +68,7 @@ exports.GetTodolist = async (conn) =>{
     let result = [];
 
     todolist.forEach((data) =>{
-        result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
+        result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.done,data.todo));
     });
     return result;
 }
