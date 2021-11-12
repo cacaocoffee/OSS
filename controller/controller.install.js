@@ -127,7 +127,7 @@ exports.InitializeDB = async (req, res, next) => {
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-11-25','study DB');`);
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-12-25','meet Santa');`);
             await connection.query(`INSERT INTO todo_user (userid,todoid) VALUES(1,1);`);
-            await connection.query(`INSERT INTO project (name,description, deadline, uselanguage) VALUES('teamoss','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('teamoss','contribute opensource','2021-11-25');`);
             await connection.query(`INSERT INTO project_user(userid,projectid) VALUES(1,1);`);
             await connection.query(`INSERT INTO language_project(languageid,projectid) VALUES(1,1);`);
             await connection.query(`INSERT INTO language_project(languageid,projectid) VALUES(2,1);`); 
