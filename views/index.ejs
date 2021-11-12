@@ -7,10 +7,17 @@
     <title>OSS.말많은양의왕</title>
 
     <!--style-->
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <link rel="stylesheet" type="text/css" href="css/oss.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/slick.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/lightgallery.css">
 
-    
+    <!-- 웹 폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script" rel="stylesheet">
+
+    <!--fontawesome-->
+    <script src="public/all.js"></script>
 </head>
 <body>
     <div id="wrap">
@@ -25,7 +32,7 @@
                     <!--//헤더 메뉴 title의 경우 프젝명 바뀌면 바꾸면돼-->
                     <div class="header-tit">
                         <h1>OSS &amp; 말많은양의왕</h1><br>
-                        <a href="https://.........">xxxx바로가기</a> 
+                        <a href="https://www.kw.ac.kr/ko/">광운대학교 바로가기</a> 
                     </div>
                     <!--//헤더 타이틀-->
                     <div class="header-icon">
@@ -40,66 +47,110 @@
     </div>
     <!-- //header-->
 
-    <div id ="contents">
-        <div id ="cont_nav">
+    <div id="contents">
+        <div id="cont_nav">
             <div class="container">
                 <h2 class="ir_su">전체 메뉴</h2>
-                    <div class="nav">
-                        <div>
-                            <h3>TARGET</h3>
-                            <ol>
-                                <li><a href="#">웹프로그래밍</a></li>
-                                <li><a href="#">풀스택개발</a></li>
-                                <li><a href="#">프론트앤드</a></li>
-                                <li><a href="#">웹퍼블리셔</a></li>
-                                <li><a href="#">안드로이드APP</a></li>
-                                <li><a href="#">게임프로그래밍</a></li>
-                                <li><a href="#">정보보안</a></li>
-                                <li><a href="#">빅데이터</a></li>
-                                <li><a href="#">머신러닝</a></li>
-                                <li><a href="#">코딩테스트준비</a></li>
-                                <li><a href="#">C패키지</a></li>
-                                <li><a href="#">네트워크 트러블슈팅</a></li>
-                                <li><a href="#">서버관리자</a></li>
-                            </ol>
-                        </div>
-                        <div>
-                            <h3>STUDY</h3>
-                            <ol>
-                                <li><a href="#">IT기초</a></li>
-                                <li><a href="#">JAVA</a></li>
-                                <li><a href="#">Python</a></li>
-                                <li><a href="#">C언어</a></li>
-                                <li><a href="#">C++</a></li>
-                                <li><a href="#">파이썬 어드밴스</a></li>
-                                <li><a href="#">JSP</a></li>
-                                <li><a href="#">Spring</a></li>
-                                <li><a href="#">안드로이드</a></li>
-                                <li><a href="#">HTML/CSS</a></li>
-                                <li><a href="#">자바스크립트</a></li>
-                                <li><a href="#">자료구조/알고리즘</a></li>
-                                <li><a href="#">CCNA</a></li>
-                                <li><a href="#">CCNP</a></li>
-                            </ol>
-                        </div>
-                        <div class="last">
-                            <h3>aaa</h3>
-                            <ol>
-                                <li><a href="#">s</a></li>
-                                <li><a href="#">a</a></li>
-                                <li><a href="#">b</a></li>
-                                <li><a href="#">a</a></li>
-                                <li><a href="#">b</a></li>
-                                <li><a href="#">a</a></li>
-                            </ol>
-                        </div>
+                <div class="nav">
+                    <div>
+                        <h3>Target</h3>
+                        <ol>
+                            <li><a href="#">웹프로그래밍</a></li>
+                            <li><a href="#">풀스택개발</a></li>
+                            <li><a href="#">프론트앤드</a></li>
+                            <li><a href="#">웹퍼블리셔</a></li>
+                            <li><a href="#">안드로이드APP</a></li>
+                            <li><a href="#">게임프로그래밍</a></li>
+                            <li><a href="#">정보보안</a></li>
+                            <li><a href="#">빅데이터</a></li>
+                            <li><a href="#">머신러닝</a></li>
+                            <li><a href="#">코딩테스트준비</a></li>
+                            <li><a href="#">C패키지</a></li>
+                            <li><a href="#">네트워크 트러블슈팅</a></li>
+                            <li><a href="#">서버관리자</a></li>
+                        </ol>
                     </div>
+                    <div>
+                        <h3>Study</h3>
+                        <ol>
+                            <li><a href="#">IT기초</a></li>
+                            <li><a href="#">JAVA</a></li>
+                            <li><a href="#">Python</a></li>
+                            <li><a href="#">C언어</a></li>
+                            <li><a href="#">C++</a></li>
+                            <li><a href="#">파이썬 어드밴스</a></li>
+                            <li><a href="#">JSP</a></li>
+                            <li><a href="#">Spring</a></li>
+                            <li><a href="#">안드로이드</a></li>
+                            <li><a href="#">HTML/CSS</a></li>
+                            <li><a href="#">자바스크립트</a></li>
+                            <li><a href="#">자료구조/알고리즘</a></li>
+                            <li><a href="#">CCNA</a></li>
+                            <li><a href="#">CCNP</a></li>
+                        </ol>
+                    </div>
+                    </div>
+            
+            </div>
+        </div>
+        <!-- //cont_nav -->
+        
+        <div id="cont_tit">
+            <div class="container">
+                <div class="tit">
+                    <h3>Navigation</h3>
+                    <a href="#" class="btn"><span class="ir_pm">전체메뉴</span></a>
                 </div>
             </div>
-            <!-- //cont_nav -->
+        </div>
+        <!-- //cont_tit -->
             
-
-
+            <div id="cont_cont">
+                <div class="container">
+                    <div class="cont">
+                        <div class="column1">
+                            <div class="notice">
+                                <h4></i>내가 하고 있는 프로젝트</h4>
+                                <ul>
+                                    <li><a href="#">내용내용</a></li>
+                                    <li><a href="#">내용내용</a></li>
+                                    <li><a href="#">내용내용</a></li>
+                                    <li><a href="#">내용내용</a></li>
+                                </ul>
+                            </div>
+                            <div class="notice2">
+                                <h4>참여 중인 Project진행 상황</h4>
+                                <ul>
+                                    <li><a href="#">질문1</a></li>
+                                    <li><a href="#">질문2</a></li>
+                                    <li><a href="#">질문3</a></li>
+                                    <li><a href="#">질문4</a></li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="column2">
+                                <div class="notice3">
+                                    <h4>할 일</h4>
+                                    <ul>
+                                        <li><a href="#">내용내용</a></li>
+                                        <li><a href="#">내용내용</a></li>
+                                        <li><a href="#">내용내용</a></li>
+                                        <li><a href="#">내용내용</a></li>
+                                    </ul>
+                                    </div>
+                                <div class="notice4">
+                                    <h4>했던 일</h4>
+                                    <ul>
+                                        <li><a href="#">100%</a></li>
+                                        <li><a href="#">70%</a></li>
+                                        <li><a href="#">40%</a></li>
+                                        <li><a href="#">20%</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>               
 </body>
 <!--
 <html>

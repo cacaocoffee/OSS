@@ -9,8 +9,8 @@
 
 /* 레이아웃 */
 #wrap{}
-#header{height: 325px; background: #000;}
-#contents{}
+#header{height: 275px; background: rgb(3, 3, 3) url(../images/3.png) left no-repeat;}
+#cont_cont{}
 #footer {}
 
 /* 컨테이너 */
@@ -21,10 +21,10 @@
 .header .header-menu a {color: #fff; padding: 10px 0px 10px 13px; display: inline-block;}
 .header .header-menu a:hover {color: #666;}
 .header .header-tit {text-align: center;}
-.header .header-tit h1 {background-color: #4f6997; font-size: 28px; padding: 5px 20px 6px 20px; display: inline-block; color: #fff; margin-top: 40px; font-weight: normal; text-transform: uppercase;}
-.header .header-tit a {display: inline-block; background-color: #2b3d5d; font-size: 18px; color:#fff; padding: 5px 20px 6px 20px; margin-top: -5px;}
-.header .header-icon {text-align: center; margin-top: 30px;}
-.header .header-icon a {width: 60px; height: 60px; display: inline-block; background: url(../img/icon2.png); margin: 0 3px;}
+.header .header-tit h1 {background-color: #e91f18; font-size: 28px; padding: 5px 20px 6px 20px; display: inline-block; color: #fff; margin-top: 20px; font-weight: normal; text-transform: uppercase;}
+.header .header-tit a {display: inline-block; background-color: #f1a80a; font-size: 18px; color:#fff; padding: 5px 20px 6px 20px; margin-top: -5px;}
+.header .header-icon {text-align: center; margin-top: 15px;}
+.header .header-icon a {width: 60px; height: 60px; display: inline-block; background: url(../images/icon2.png); margin: 0 3px;}
 .header .header-icon a.icon1 {background-position: 0 0;}
 .header .header-icon a.icon2 {background-position: 0 -60px;}
 .header .header-icon a.icon3 {background-position: 0 -120px;}
@@ -36,11 +36,46 @@
 
 /* 전체 메뉴 */
 .nav {overflow: hidden; padding: 30px 0;}
-.nav > div {float: left; width: 40%;}
-.nav > div:last-child {width: 20%;} 
-.nav > div.last {width: 20%;}
-.nav > div h3 {font-size: 18px; color: #3b4474; margin-bottom: 4px;}
+.nav > div {float: left; width: 50%;}
+.nav > div h3 {font-size: 24px; color: #3b4474; margin-bottom: 4px;}
 .nav > div ol {overflow: hidden;}
 .nav > div ol li {float: left; width: 50%;}
-.nav > div.last ol li {width: 100%;}
 .nav > div ol li a:hover {text-decoration: underline;}
+
+/* 타이틀 */
+.tit {position: relative;}
+.tit h3 {font-size: 40px; text-align: center; padding: 5px 0; letter-spacing: 2px; color: #3b4474;}
+.tit .btn {position: absolute; top: 5px; right: 0; width: 60px; height: 60px;}
+.tit .btn.on {background-position: 0 -660px;}
+
+
+/* 게시판 */
+.container .cont{display:flex;}
+.container .cont .column1{flex:1;}
+.container .cont .column2{flex:1;}
+.notice {position: relative; border: black; }
+.notice h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; background: blue;}
+.notice ul li {background:rgb(25, 197, 34); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 8px;}
+.notice ul li a {font-size: 16px;}
+.notice a.more {position: absolute; right: 0; top: 0; display: block; width: 17px; height: 17px;}
+
+/* 게시판2 */
+.notice2 {position: relative;}
+.notice2 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; background: blue;}
+.notice2 ul li {background:rgb(25, 197, 34); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 8px;}
+.notice2 ul li a {font-size: 16px;}
+.notice2 a.more {position: absolute; right: 0; top: 0; display: block; width: 17px; height: 17px;}
+
+/* 게시판3 */
+.notice3 {position: relative;}
+.notice3 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; background: blue;}
+.notice3 ul li {background:rgb(25, 197, 34); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 8px;}
+.notice3 ul li a {font-size: 16px;}
+.notice3 a.more {position: absolute; right: 0; top: 0; display: block; width: 17px; height: 17px;}
+
+/* 게시판4 */
+.notice4 {position: relative;}
+.notice4 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; background: blue;}
+.notice4 ul li {background:rgb(25, 197, 34); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding-left: 8px;}
+.notice4 ul li a {font-size: 16px;}
+.notice4 a.more {position: absolute; right: 0; top: 0; display: block; width: 17px; height: 17px;}
