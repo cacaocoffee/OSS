@@ -1,0 +1,26 @@
+div{
+    border: 2px solid #ffebb5;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: inset 0 0 4px #deb13a;   
+    place-items: center;  
+}
+  .container{
+    
+    width : 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 100px; /* 자식요소간의 간격 */
+     padding: 1rem;  
+    
+}
+.pro{
+    word-break:break-all  
+}
+.lang{
+    word-break:keep-all  
+}
+.list{
+    word-break:break-all  
+} 
