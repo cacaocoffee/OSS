@@ -5,13 +5,12 @@ function retnLangData(langid, langText){
         value:langText
     };
 }
-function retnProjectData(id, name, desc, deadline, uselang){
+function retnProjectData(id, name, desc, deadline){
     return {
         'id': id,
         'name': name,
         'desc': desc,
-        'deadline':deadline,
-        'language':uselang
+        'deadline':deadline
     }
 }
 
@@ -60,7 +59,7 @@ exports.GetProjectList = async (conn) =>{
     let result = [];
 
     getList.forEach((project) =>{
-        result.push(retnProjectData(project.id, project.name, project.description, project.deadline, project.uselanguage));
+        result.push(retnProjectData(project.id, project.name, project.description, project.deadline));
     })
 
     return result;    
@@ -77,10 +76,9 @@ exports.GetUserProjectList = async (conn, userid) =>{
         const queryParam = [item.projectid];
         let [listFromProj, ] = await conn.query(queryString, queryParam);
         for(let project of listFromProj){
-            result.push(retnProjectData(project.id, project.name, project.description, project.deadline, project.uselanguage));
+            result.push(retnProjectData(project.id, project.name, project.description, project.deadline));
         }
     }
-
     console.log(result);
     return result;
 
@@ -96,7 +94,7 @@ exports.GetUserTodolist = async (conn, userid) =>{
         const queryParam = [item.userid];
         let [todolist] = await conn.query(queryString, queryParam);
         todolist.forEach((data) =>{
-            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.do,data.todo));
+            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.done,data.todo));
         });
     };
     return result;
