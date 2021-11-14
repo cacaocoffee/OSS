@@ -30,10 +30,10 @@ exports.InitializeDB = async (req, res, next) => {
             await connection.beginTransaction();
 
             // 개발을 위한 dev config
-            await connection.query("DROP DATABASE IF EXISTS ??;", req.body.dbName);
+            await connection.query("DROP DATABASE IF EXISTS ??;", [req.body.dbName]);
 
-            await connection.query("CREATE DATABASE IF NOT EXISTS ??;", req.body.dbName);
-            await connection.query("USE ??;", req.body.dbName);
+            await connection.query("CREATE DATABASE IF NOT EXISTS ?? default character set utf8 collate utf8_general_ci;", [req.body.dbName]);
+            await connection.query("USE ??;", [req.body.dbName]);
             body.db.database = req.body.dbName;
             /* TODO: 생성할 테이블 등 서비스 운영에 필요한 기본 테이블 등은 해당 주석 바로 아래 작성하면 됩니다. */
             await connection.
@@ -45,13 +45,13 @@ exports.InitializeDB = async (req, res, next) => {
                     description tinytext COMMENT '유저 소개 글',
                     authorize tinyint(1) NOT NULL default 0 COMMENT '페이지 이용 승인 여부',
                     PRIMARY KEY(id, userid)
-                );`);
+                ) default character set utf8 collate utf8_general_ci;`);
             await connection.
             query(`CREATE TABLE IF NOT EXISTS language_list (
                 id int unsigned NOT NULL AUTO_INCREMENT COMMENT "언어 id",
                 language varchar(16),
                 PRIMARY KEY(id)
-                );`);       
+                ) default character set utf8 collate utf8_general_ci;`);       
     
             await connection.
             query(`CREATE TABLE IF NOT EXISTS language_user (
@@ -60,7 +60,7 @@ exports.InitializeDB = async (req, res, next) => {
                     PRIMARY KEY(userid,language),
                     FOREIGN KEY(userid) references user(id),
                     FOREIGN KEY(language) references language_list(id)
-                );`);
+                ) default character set utf8 collate utf8_general_ci;`);
                            
             await connection.
             query(`CREATE TABLE IF NOT EXISTS todo (
@@ -70,14 +70,14 @@ exports.InitializeDB = async (req, res, next) => {
                     cleardate DATE COMMENT '실행날짜',
                     done tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
                     PRIMARY KEY(id)
-                );`);
+                ) default character set utf8 collate utf8_general_ci;`);
             await connection.
             query(`CREATE TABLE IF NOT EXISTS todo_user (
                 userid int unsigned NOT NULL COMMENT '유저 식별 아이디',
                 todoid int unsigned NOT NULL COMMENT '할일 아이디',
                 FOREIGN KEY(userid) references user(id),
                 FOREIGN KEY(todoid) references todo(id)
-                );`);        
+                ) default character set utf8 collate utf8_general_ci;`);        
             await connection.
             query(
                 `CREATE TABLE IF NOT EXISTS project(
@@ -86,7 +86,7 @@ exports.InitializeDB = async (req, res, next) => {
                     description tinytext COMMENT '프로젝트 설명 및 내용',
                     deadline date NOT NULL COMMENT '프로젝트 종료 기간',
                     PRIMARY KEY(id)
-                );` );
+                ) default character set utf8 collate utf8_general_ci;` );
             await connection.
             query(
                 `CREATE TABLE IF NOT EXISTS project_user(
@@ -94,7 +94,7 @@ exports.InitializeDB = async (req, res, next) => {
                     projectid int unsigned NOT NULL COMMENT '프로젝트 식별 아이디',
                     FOREIGN KEY(userid) references user(id),
                     FOREIGN KEY(projectid) references project(id)
-                );`
+                ) default character set utf8 collate utf8_general_ci;`
             );
             await connection.
             query(
@@ -103,7 +103,7 @@ exports.InitializeDB = async (req, res, next) => {
                     projectid int unsigned NOT NULL COMMENT '프로젝트 식별 아이디',
                     FOREIGN KEY(languageid) references language_list(id),
                     FOREIGN KEY(projectid) references project(id)
-                );`
+                ) default character set utf8 collate utf8_general_ci;`
             );
 
     
@@ -114,8 +114,8 @@ exports.InitializeDB = async (req, res, next) => {
                 'Python'
             ]
             
-            for(let i = 0; i < langList.length; ++i){
-                await connection.query(`INSERT INTO language_list (language) VALUES('${langList[i]}');`);
+            for(let item of langList){
+                await connection.execute(`INSERT INTO language_list (language) VALUES (?);`, [item]);
             }
             
             ////////////////////추후 제거 요망 현재 테스트를 위한 데이터///////////////////////////////////////////////////////
@@ -128,6 +128,13 @@ exports.InitializeDB = async (req, res, next) => {
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-12-25','meet Santa');`);
             await connection.query(`INSERT INTO todo_user (userid,todoid) VALUES(1,1);`);
             await connection.query(`INSERT INTO project (name,description, deadline) VALUES('teamoss','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test1','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test2','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test3','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test5','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test6','contribute opensource','2021-11-25');`);
+            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test7','contribute opensource','2021-11-25');`);
             await connection.query(`INSERT INTO project_user(userid,projectid) VALUES(1,1);`);
             await connection.query(`INSERT INTO language_project(languageid,projectid) VALUES(1,1);`);
             await connection.query(`INSERT INTO language_project(languageid,projectid) VALUES(2,1);`); 

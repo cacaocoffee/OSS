@@ -8,7 +8,7 @@
     padding:1rem;
 }
 
-.glass-parent > div{
+.glass-parent div.glass{
     background:inherit;
     position:relative;
     z-index:0;
@@ -16,14 +16,9 @@
     border-radius:4px;
     box-shadow:0 0 1rem rgba(0,0,0,0.2);
     padding:1rem;
-    margin-top:1rem;
 }
 
-.glass-parent > div:first-child{
-    margin-top:0;
-}
-
-.glass-parent > div:before{
+.glass-parent  div.glass:before{
     content:'';
     background:inherit;
     filter:blur(15px);
@@ -36,7 +31,7 @@
     margin:-20px;
 }
 
-.glass-parent > div::after{
+.glass-parent div.glass::after{
     content:'';
     z-index:-1;
     position:absolute;

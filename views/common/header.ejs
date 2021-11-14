@@ -1,3 +1,6 @@
 <header>
-    
+    <div id="profile-area">
+        <p>안녕하세요, <%= user.name %>님<br> <a href="/users/profile?userid=<%= user.id %>">회원 정보</a>
+            <a href="/users/logout">로그아웃</a></p>
+    </div>
 </header>

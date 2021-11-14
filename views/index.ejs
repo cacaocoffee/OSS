@@ -1,105 +1,70 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSS.말많은양의왕</title>
-
-    <!--style-->
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
-    <link rel="stylesheet" type="text/css" href="css/oss.css">
-
-    
-</head>
-<body>
-    <div id="wrap">
-        <div id="header" role="header">
-            <div class="container">
-                <div class="header">
-                    <div class ="header-menu">
-                        <a href="https://www.FaceBook.com/">FaceBook</a>
-                        <a href="https://www.Instagram.com/">Instargram</a>
-                        <a href="https://www.youtube.com">Youtube</a>
-                    </div>
-                    <!--//헤더 메뉴 title의 경우 프젝명 바뀌면 바꾸면돼-->
-                    <div class="header-tit">
-                        <h1>OSS &amp; 말많은양의왕</h1><br>
-                        <a href="https://.........">xxxx바로가기</a> 
-                    </div>
-                    <!--//헤더 타이틀-->
-                    <div class="header-icon">
-                        <a href="#" class="icon1"><span class="ir_pm">icon1</span></a>
-                        <a href="#" class="icon2"><span class="ir_pm">icon2</span></a>
-                        <a href="#" class="icon3"><span class="ir_pm">icon3</span></a>
-                        <a href="#" class="icon4"><span class="ir_pm">icon4</span></a>                
-                    </div>
-                    <!--//헤더 아이콘-->
-            </div>
+<div class="glass-parent content-area" id="main-grid">
+    <div class="glass project-list">
+        <div>
+            <h3>최근 생성된 프로젝트</h3>
+            <% if(recentProject.length) { %> 
+                <ul>
+                    <% for(let proj of recentProject){  %>
+                        <li title="<%= proj.name %>"><a href="/project?projectid=<%= proj.id %>"><%= proj.name %></a></li>
+                    <% } %>
+                </ul>
+            <% } else { %>
+                <p>아직 생성된 프로젝트가 없습니다.</p>
+            <% } %>
         </div>
     </div>
-    <!-- //header-->
+    <div class="glass project-list">
+        <div>
+            <h3>내가 참여중인 프로젝트</h3>
+            <% if(myProject.length){ %>
+                <ul>
+                    <% for(let proj of myProject){ %>
+                        <li title="<%= proj.name %>"><a href="/project?projectid=<%= proj.id %>"><%= proj.id %></a></li>
+                    <% } %>
+                        <li><a href="/project/list?type=my">내가 참여중인 모든 프로젝트 보기</a></li>
+                </ul>
+            <% } else { %>
+                <p>아직 참여중인 프로젝트가 없습니다.</p>
+            <% } %>
+        </div>
+    </div>
+    <div class="glass">
+        <div>
+            <h3>작업할 내용</h3>
+            <% if(todo.length){ %>
+                <ul>
+                    <% for(let todoItem of todo){ %>
+                        <li title="<%= todoItem.todo %>"><a href="/todo/list#todo-<%= todoItem.id %>"><%= todoItem.todo %><br> ~ <%= todoItem.deadline.toLocaleString() %></a></li>
+                    <% } %>
+                        <li style="text-align: right;"><a href="/todo/list">모든 작업 목록 보기</a></li>
+                </ul>
+            <% } %>
+        </div>
+    </div>
+    <div class="glass">
 
-    <div id ="contents">
-        <div id ="cont_nav">
-            <div class="container">
-                <h2 class="ir_su">전체 메뉴</h2>
-                    <div class="nav">
-                        <div>
-                            <h3>TARGET</h3>
-                            <ol>
-                                <li><a href="#">웹프로그래밍</a></li>
-                                <li><a href="#">풀스택개발</a></li>
-                                <li><a href="#">프론트앤드</a></li>
-                                <li><a href="#">웹퍼블리셔</a></li>
-                                <li><a href="#">안드로이드APP</a></li>
-                                <li><a href="#">게임프로그래밍</a></li>
-                                <li><a href="#">정보보안</a></li>
-                                <li><a href="#">빅데이터</a></li>
-                                <li><a href="#">머신러닝</a></li>
-                                <li><a href="#">코딩테스트준비</a></li>
-                                <li><a href="#">C패키지</a></li>
-                                <li><a href="#">네트워크 트러블슈팅</a></li>
-                                <li><a href="#">서버관리자</a></li>
-                            </ol>
-                        </div>
-                        <div>
-                            <h3>STUDY</h3>
-                            <ol>
-                                <li><a href="#">IT기초</a></li>
-                                <li><a href="#">JAVA</a></li>
-                                <li><a href="#">Python</a></li>
-                                <li><a href="#">C언어</a></li>
-                                <li><a href="#">C++</a></li>
-                                <li><a href="#">파이썬 어드밴스</a></li>
-                                <li><a href="#">JSP</a></li>
-                                <li><a href="#">Spring</a></li>
-                                <li><a href="#">안드로이드</a></li>
-                                <li><a href="#">HTML/CSS</a></li>
-                                <li><a href="#">자바스크립트</a></li>
-                                <li><a href="#">자료구조/알고리즘</a></li>
-                                <li><a href="#">CCNA</a></li>
-                                <li><a href="#">CCNP</a></li>
-                            </ol>
-                        </div>
-                        <div class="last">
-                            <h3>aaa</h3>
-                            <ol>
-                                <li><a href="#">s</a></li>
-                                <li><a href="#">a</a></li>
-                                <li><a href="#">b</a></li>
-                                <li><a href="#">a</a></li>
-                                <li><a href="#">b</a></li>
-                                <li><a href="#">a</a></li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- //cont_nav -->
-            
+    </div>
+    <div class="glass"></div>
+    <div class="glass"></div>
+</div>
 
+<script type='text/javascript'>
+    function setGridItem(){
+        let grid = document.querySelector('#main-grid');
+        let rowHeight = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-auto-rows'));
+        let rowGap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-row-gap'));
 
-</body>
-
-</html>
+        let rem = parseInt(getComputedStyle(document.body).getPropertyValue('font-size'));
+        let itemHeight;
+        for(let item of grid.children){
+            itemHeight = 0;
+            if(item.childElementCount){
+                itemHeight = parseInt(item.lastElementChild.offsetHeight) + (2 * rem);
+            }
+            item.style.gridRowEnd = `span ${Math.round((itemHeight + rem) / (2 * rem))}`;
+        }
+    }
+    window.addEventListener('load', setGridItem);
+    window.addEventListener('resize', setGridItem);
+    setGridItem();
+</script>

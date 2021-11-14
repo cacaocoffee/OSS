@@ -17,6 +17,8 @@ router.get('/login', function (req, res, next) {
 
 router.post('/login', controller.Login);
 
+router.get('/logout', controller.Logout);
+
 router.get('/sign_up', function (req, res, next) {
     res.render('sign_up', { title: 'Express' });
 });

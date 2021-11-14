@@ -26,7 +26,7 @@ exports.Login = async (req, res, next) => {
         } else {
             await connection.commit();
             // TODO: 다른 값으로 수정 필요
-            req.session.user = result[0];
+            req.session.user = result[0].id;
             req.session.save(_ => {
                 return res.redirect('/');
             });
@@ -68,10 +68,10 @@ exports.SignIn = async (req, res, next) => {
 
         }
 
-        queryString = 'INSERT INTO ??(??, ??, ??) VALUES(?, ?, ?);';
-        queryParam = ['user', 'userid', 'pw', 'name', req.body.id, sec.Hash(req.body.pw), req.body.name];
+        queryString = 'INSERT INTO user(userid, pw, name) VALUES(?, ?, ?);';
+        queryParam = [req.body.id, sec.Hash(req.body.pw), req.body.name];
 
-        let [result,] = await connection.query(queryString, queryParam);
+        let [result,] = await connection.execute(queryString, queryParam);
 
         // TODO: 프론트와 연계해 어떤 값을 보낼지 논의 필요
         if ('insertId' in result) {   // 가입 성공
@@ -79,8 +79,8 @@ exports.SignIn = async (req, res, next) => {
 
             /*TODO: 현재는 가입 성공시 바로 default 로그인 페이지로 가지만, 
                     json으로 성공 여부를 넘기고 프론트에서 이동하는 것으로 */
-            if (req.query['retUrl']) {
-                res.redirect(req.query['retUrl']);
+            if (req.query['return']) {
+                res.redirect(req.query['return']);
             } else {
                 res.redirect('/users/login');
             }
@@ -102,3 +102,9 @@ exports.SignIn = async (req, res, next) => {
     }
 }
 
+exports.Logout = async(req, res, next) =>{
+    req.session.destroy(_=>{
+        res.redirect('/');
+    });
+    
+}
