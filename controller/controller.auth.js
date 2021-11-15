@@ -4,6 +4,17 @@ const apiAuth = require('./api/api.auth');
 const apiSearch = require('./api/api.search');
 const substitute = require('../Server/config').config_site;
 
+exports.getLogin = async (req,res,next) =>{
+    if(await apiAuth.isLogined(req)){
+        return res.redirect('/');
+    }
+
+    res.render('login', {
+       site_title:substitute.title,
+       attemptLogin:false
+    });
+}
+
 exports.Login = async (req, res, next) => {
     if(apiAuth.isLogined(req)){
         return res.redirect('/');
@@ -21,10 +32,11 @@ exports.Login = async (req, res, next) => {
 
         // REVIEW: 프론트와 연계해 어떤 값을 보낼지 논의 필요
         if (!result[0]) {
-            res.json({
-                result: false,
-                value: '로그인 실패'
+            return res.render('login', {
+                site_title:substitute.title,
+                attemptLogin:true
             });
+
         } else {
             await connection.commit();
             // TODO: 다른 값으로 수정 필요

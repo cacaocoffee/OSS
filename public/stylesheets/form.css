@@ -1,0 +1,116 @@
+form{
+    width:36rem;
+    padding:1rem 2rem;
+}
+
+fieldset:first-child{
+    margin-top:0;
+}
+
+fieldset{
+    border:0;
+    margin-top:2rem;
+    padding-top:1rem;
+    text-align:center;
+}
+
+input[type='checkbox']{
+    box-shadow:0 !important;
+}
+input[type='checkbox']:focus,
+input[type='checkbox']:hover
+{
+    box-shadow:0 !important;
+}
+
+input[type='text'],
+input[type='password'],
+input[type='id'],
+input[type='email']
+{
+    border:0;
+    border-radius:4px;
+    padding:0.5rem;
+    box-shadow:0 0 .3rem rgba(0,0,0,0);
+    transition:box-shadow 300ms;
+    outline:none;
+    width:100%;
+    font-size:1.2rem;
+}
+
+input[type='text']:hover,
+input[type='password']:hover,
+input[type='id']:hover,
+input[type='email']:hover
+{
+    box-shadow:0 0 .3rem rgba(0,0,0,0.2);
+}
+
+input[type='text']:focus,
+input[type='text']:focus:hover,
+input[type='password']:focus,
+input[type='password']:focus:hover,
+input[type='id']:focus,
+input[type='id']:focus:hover,
+input[type='email']:focus,
+input[type='email']:focus:hover
+{
+    box-shadow:0 0 .3rem rgba(63, 195, 235, 0.7);
+}
+
+form .wrapper{
+    width:100%;
+    margin-top:1rem;
+}
+
+.flex-field{
+    width:100%;
+    display:flex;
+    flex-wrap:nowrap;
+}
+
+.flex-field > *:first-child{
+    margin-left:0;
+}
+
+.flex-field > *{
+    flex-basis:1;
+    flex-grow:1;
+    flex-shrink:0;
+    margin-left:1rem;
+}
+
+.upper-line{
+    margin-top:1rem;
+    border-top:1px solid #888;
+}
+
+.button{
+    border:0;
+    padding:0.5rem 2rem;
+    background-color:#FFF;
+    border-radius:4px;
+    outline:0;
+    cursor:pointer;
+    user-select:none;
+    font-size:1rem;
+    text-decoration:none;
+    color:#000;
+    text-align:center;
+}
+
+.button:focus,
+.button:hover{
+    box-shadow:0 0 0.3rem rgba(0, 0, 0, 0.5);
+}
+
+.button{
+    min-width:8rem;
+}
+
+.submit-field > *:first-child{
+    margin-left:0;
+}
+.submit-field > *{
+    margin-left:1rem;
+}

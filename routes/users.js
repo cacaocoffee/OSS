@@ -7,14 +7,7 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
 });
-router.get('/login', function (req, res, next) {
-        if(apiAuth.isLogined(req)){
-            return res.redirect('/');
-        }
-
-        res.render('login');
-
-});
+router.get('/login', controller.getLogin);
 
 router.post('/login', controller.Login);
 
