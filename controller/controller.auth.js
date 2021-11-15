@@ -78,7 +78,11 @@ exports.SignUp = async (req, res, next) => {
     try {
         let queryString = 'SELECT * FROM ?? WHERE ?? = ?';
         let queryParam = ['user', 'userid', req.body.id];
-        console.log(req.body);
+        
+        // TODO: 전달되는 language 리스트를 사용자 언어 리스트로 등록해야함.
+        // req.body.language[array]
+        // 언어별 고윳값이 string으로 전달됨.
+
         switch (await apiAuth.existsID(connection, req.body.id)) {
             case 1: {
                 return res.json({
@@ -95,34 +99,45 @@ exports.SignUp = async (req, res, next) => {
 
             }
         }
-        if (await apiAuth.existsID(connection, req.body.id)) {
-
-        }
 
         queryString = 'INSERT INTO user(userid, pw, name) VALUES(?, ?, ?);';
         queryParam = [req.body.id, sec.Hash(req.body.pw), req.body.name];
 
         let [result,] = await connection.execute(queryString, queryParam);
-
         // TODO: 프론트와 연계해 어떤 값을 보낼지 논의 필요
-        if ('insertId' in result) {   // 가입 성공
-            await connection.commit();
 
-            /*TODO: 현재는 가입 성공시 바로 default 로그인 페이지로 가지만, 
-                    json으로 성공 여부를 넘기고 프론트에서 이동하는 것으로 */
-            if (req.query['return']) {
-                res.redirect(req.query['return']);
-            } else {
-                res.redirect('/users/login');
-            }
-        } else {                      // 가입 실패
-            res.json({
+        if (!'insertId' in result) {   // 가입 실패
+            await connection.rollback();
+
+            return res.json({
                 result: false,
                 value: [
                     '등록 실패',
                     result
                 ]
             });
+
+        }
+
+        if(req.body.language){ // 사용자 언어 목록 등록
+            queryString = 'INSERT INTO language_user(userid, language) VALUES(?, ?);';
+            for(let lang of req.body.language){
+                try{
+                    await connection.execute(queryString, [result.insertId, parseInt(lang)]);
+                }catch(e){
+                    console.log(e);
+                }
+            }
+        }
+
+        await connection.commit();
+
+        /*TODO: 현재는 가입 성공시 바로 default 로그인 페이지로 가지만, 
+                json으로 성공 여부를 넘기고 프론트에서 이동하는 것으로 */
+        if (req.query['return']) {
+            return res.redirect(req.query['return']);
+        } else {
+            return res.redirect('/users/login');
         }
 
     } catch (e) {
