@@ -1,6 +1,8 @@
 const sec = require('../server/security');
 const db = require('../server/dbConn');
 const apiAuth = require('./api/api.auth');
+const apiSearch = require('./api/api.search');
+const substitute = require('../Server/config').config_site;
 
 exports.Login = async (req, res, next) => {
     if(apiAuth.isLogined(req)){
@@ -41,13 +43,42 @@ exports.Login = async (req, res, next) => {
     }
 }
 
-exports.SignIn = async (req, res, next) => {
+exports.getSignUp = async (req, res, next) =>{
+    if(await apiAuth.isLogined(req)){
+        return res.redirect('/');
+    }
+    try{
+        const pool = await db.pool();
+        const connection = await pool.getConnection(async conn => conn);
+        try{
+            let languageList = await apiSearch.GetLanguageList(connection);
+
+
+            
+            res.render('signup', {
+                'site_title': substitute.title,
+                'languageList':languageList
+            });
+            
+        }catch(e){
+            console.log(e);
+            return res.status(500).end();
+        }finally{
+            await connection.release();
+        }
+    }catch(e){
+        console.log(e);
+        return res.status(500).end();
+    }
+} // /users/signup method = get
+
+exports.SignUp = async (req, res, next) => {
     const pool = await db.pool();
     const connection = await pool.getConnection(async conn => conn);
     try {
         let queryString = 'SELECT * FROM ?? WHERE ?? = ?';
         let queryParam = ['user', 'userid', req.body.id];
-
+        console.log(req.body);
         switch (await apiAuth.existsID(connection, req.body.id)) {
             case 1: {
                 return res.json({

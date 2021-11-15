@@ -27,4 +27,7 @@ exports.config_server = {
     
 }
 
-/* admin */
+/* site */
+exports.config_site = {
+    title:'말 많은 양의 왕'
+}

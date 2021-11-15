@@ -1,72 +1,167 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
-*{margin: 0;padding: 0;box-sizing: border-box;}
-body{
-    font-family: 'Noto Sans KR', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: url("../images/bg.jpg") no-repeat center;
-    background-size: cover;
-    font-weight: bold;
-    font-size: 1.3rem;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 
 }
-
-body::before{
-    content: "";
-    position: absolute;z-index: 1;
-    top: 0; right: 0;bottom: 0;left: 0;
-    background-color: rgba(0,0,0,.5);
+.main{
+    background-image:url(../images/background.jpg);
+    display:grid;
+    align-items:center;
+    justify-content:center;
 }
 
-.login-form{position: relative; z-index: 2;}
+form{
+    width:36rem;
+    padding:1rem 2rem;
+}
 
-.int-area{
-    width: 400px;position: relative;
-    margin-top:20px;
+fieldset:first-child{
+    margin-top:0;
 }
-.int-area:first-child{margin-top:0;}
 
-.int-area input{
-    width: 100%;
-    padding: 20px 10px 10px;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #999;
-    font-size: 18px;color: #fff;
-    outline: none;
+fieldset{
+    border:0;
+    margin-top:2rem;
+    padding-top:1rem;
+    text-align:center;
 }
-.int-area label{
-    position: absolute;left: 10px;top: 15px;
-    font-size:20px;color: rgb(0, 0, 0);
-    font-weight: bold;
-    transition: all .5s ease;
+
+input[type='checkbox']{
+    box-shadow:0 !important;
 }
-@keyframes warning{
-    0%{transform: translateX(-8px);}
-    25%{transform: translateX(8px);}
-    50%{transform: translateX(-8px);}
-    75%{transform: translateX(8px);}
+input[type='checkbox']:focus,
+input[type='checkbox']:hover
+{
+    box-shadow:0 !important;
 }
-.int-area input:focus+label,
-.int-area input:valid + label{
-    top:-2px;
-    font-size : 13px;color :#1619ec;
-    
+
+input[type='text'],
+input[type='password'],
+input[type='id'],
+input[type='email']
+{
+    border:0;
+    border-radius:4px;
+    padding:0.5rem;
+    box-shadow:0 0 .3rem rgba(0,0,0,0);
+    transition:box-shadow 300ms;
+    outline:none;
+    width:100%;
 }
-.btn-area{
-    margin-top: 20px;
+
+input[type='text']:hover,
+input[type='password']:hover,
+input[type='id']:hover,
+input[type='email']:hover
+{
+    box-shadow:0 0 .3rem rgba(0,0,0,0.2);
 }
-.btn-area button{
-    width: 100%; height: 50px;
-    
-    background: #166cea;
-    color:#fff;
-    font-size: 20px;
-    border: none;
-    border-radius: 15px;
+
+input[type='text']:focus,
+input[type='text']:focus:hover,
+input[type='password']:focus,
+input[type='password']:focus:hover,
+input[type='id']:focus,
+input[type='id']:focus:hover,
+input[type='email']:focus,
+input[type='email']:focus:hover
+{
+    box-shadow:0 0 .3rem rgba(63, 195, 235, 0.7);
+}
+
+form .wrapper{
+    width:100%;
+    margin-top:1rem;
+}
+
+form .flex-field{
+    width:100%;
+    display:flex;
+    flex-wrap:nowrap;
+}
+
+form .flex-field > div:first-child{
+    margin-left:0;
+}
+
+form .flex-field > div{
+    flex-basis:1;
+    flex-grow:1;
+    flex-shrink:0;
+    margin-left:1rem;
+}
+
+.upper-line{
+    margin-top:2rem;
+    border-top:1px solid #888;
+}
+
+.language-field > div{
+    display:inline-block;
+}
+
+.language-field{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-items:stretch;
+    align-items:center;
+}
+
+.language-field > div{
+    flex-grow:1;
+    flex-shrink:1;
+    flex-basis:0;
+    margin:0.1rem;
+}
+
+
+input[type='checkbox']{
+    display:none;
+}
+
+input[type='checkbox'] + label{
+    border:1px solid #888;
+    display:inline-block;
+    padding:0.5rem;
+    white-space:pre;
+    width:100%;
+    border-radius:4px;
     cursor:pointer;
-
+}
+input[type='checkbox']:checked + label{
+    border:1px solid #333;
+    background-color:#333;
+    color:#FFF;
+    user-select:none;
 }
 
+.button{
+    border:0;
+    padding:0.5rem 2rem;
+    background-color:#FFF;
+    border-radius:4px;
+    outline:0;
+    cursor:pointer;
+    user-select:none;
+    font-size:1rem;
+    text-decoration:none;
+    color:#000;
+}
+
+.button:focus,
+.button:hover{
+    box-shadow:0 0 0.3rem rgba(0, 0, 0, 0.5);
+}
+
+.button{
+    min-width:8rem;
+}
+
+.submit-field > *:first-child{
+    margin-left:0;
+}
+.submit-field > *{
+    margin-left:1rem;
+}

@@ -108,11 +108,10 @@ exports.InitializeDB = async (req, res, next) => {
 
     
             const langList = [
-                'C/C++',
-                'JAVA',
-                'C#',
-                'Python'
-            ]
+                'C/C++', 'JAVA', 'C#', 'Python', 'Ruby',
+                'HTML', 'CSS', 'Go', 'Javascript', 'Kotlin',
+                'Perl', 'R', 'Swift', 'Objective-C', 'Basic'
+            ];
             
             for(let item of langList){
                 await connection.execute(`INSERT INTO language_list (language) VALUES (?);`, [item]);

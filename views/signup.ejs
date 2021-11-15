@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <title><%= site_title %></title>
+        <link type="text/css" rel="stylesheet" href="/stylesheets/sign.css">
+        <link type="text/css" rel="stylesheet" href="/stylesheets/glass.css">
+    </head>
+    <body>
+        <div class="main glass-parent">
+            <div class="glass">
+                <form action="" method="post">
+                    <fieldset class='user-field upper-line'>
+                        <legend>회원 정보</legend>
+                        <div class="warpper flex-field">
+                            <div>
+                                <input type="id" name="id" placeholder="ID" required autofocus />
+                            </div>
+
+                            <div>
+                                <input type="text" name="name" placeholder="이름/닉네임" required />
+                            </div>
+                        </div>
+                        <div class="wrapper flex-field">
+                            <div>
+                                <input type="password" name="pw" placeholder="Password" required />
+                            </div>
+                            <div>
+                                <input type="password" name="pwCheck" placeholder="Check Password" required />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="language-field upper-line">
+                        <legend>사용 가능한 언어 목록</legend>
+                        <%  for(let lang of languageList){ %>
+                            <div>
+                                <input type="checkbox" name="language[]" id="language-<%= lang.id %>" value="<%= lang.id %>">
+                                <label for="language-<%= lang.id %>"><%= lang.value %></label>
+                            </div>
+                        <% } %>
+                    </fieldset>
+                    <fieldset class="upper-line submit-field">
+                        <a class="button" href="/users/login">이전으로</a>
+                        <input class="button" type="submit" value="회원가입">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

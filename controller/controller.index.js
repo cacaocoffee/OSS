@@ -1,6 +1,7 @@
 const apiSearch = require('./api/api.search');
 const apiAuth = require('./api/api.auth');
 const db = require('../Server/dbConn');
+const sitesubstitute = require('../server/config').config_site;
 
 exports.index = async (req, res, next) =>{
     if(!apiAuth.isLogined(req)){
@@ -30,6 +31,7 @@ exports.index = async (req, res, next) =>{
             }
             
             res.render('layout', {
+                'site_title': sitesubstitute.title,
                 'css':['glass', 'index'],
                 'content':'index',
                 'user':user,
