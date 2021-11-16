@@ -1,13 +1,15 @@
 .content-area{
     background-image:inherit;
     width:100%;
-    height:100%;
     display:grid;
     grid-gap:1rem;
     align-items:stretch;
+    min-width:27rem;
     grid-template-columns:repeat(auto-fill, minmax(25rem, 1fr));
     grid-auto-rows:1rem;
     padding:1rem;
+    overflow-y:scroll;
+    overflow-x:hidden;
 }
 
 .content-area div > *:first-child{

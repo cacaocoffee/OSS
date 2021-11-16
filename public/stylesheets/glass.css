@@ -1,6 +1,5 @@
 .glass-parent{
     background-repeat:no-repeat;
-    background-attachment: fixed;
     background-size:auto;
     align-items:center;
     justify-content: center;
@@ -21,6 +20,7 @@
 .glass-parent  .glass:before{
     content:'';
     background:inherit;
+    background-attachment: fixed;
     filter:blur(15px);
     position:absolute;
     left:0;

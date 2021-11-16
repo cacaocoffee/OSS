@@ -10,6 +10,7 @@ body{
     display:flex;
     background-image:url(../images/background.jpg);
     min-width:44rem;
+    overflow-y:hidden;
 }
 
 body > *{
@@ -17,13 +18,7 @@ body > *{
 }
 
 header{
-    width:20rem;
-}
-
-content{
-    width:calc(100% - 20rem);
-    min-width:27rem;
-    background-image:inherit;
+    width:26rem;
 }
 
 ::-webkit-scrollbar{
