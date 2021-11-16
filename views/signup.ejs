@@ -22,6 +22,12 @@
 
             function validID(){
                 let input = document.querySelector(`#id`);
+                if(input.value.length <= 0){
+                    alert("ID를 입력해주세요.");
+                    input.focus();
+                    return;
+                }
+
                 fetch(`/api/ValidID?id=${encodeURIComponent(input.value)}`, {
                     method:'get'
                 }).then(response =>{
