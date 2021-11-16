@@ -34,6 +34,9 @@ router.get('/navigation', function (req, res, next) {
 router.get('/profile', function (req, res, next) {
     res.render('profile', { title: 'Express' });
 });
+router.get('/profile_edit', function (req, res, next) {
+    res.render('profile_edit', { title: 'Express' });
+});
 router.get('/language_list', function (req, res, next) {
     res.render('language_list', { title: 'Express' });
 });
