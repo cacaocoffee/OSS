@@ -5,6 +5,10 @@ var router = express.Router();
 
 /* GET home page. */
 
+router.get('/favicon.ico', (req,res,next)=>{
+    res.status(404).end();
+});
+
 router.get('/', controller.index);
 
 module.exports = router;
