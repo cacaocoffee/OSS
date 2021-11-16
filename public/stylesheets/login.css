@@ -17,12 +17,14 @@ body::before{
     background-color: rgba(0,0,0,.5);
 }
 
-.login-form{position: relative; z-index: 2;}
+.login-form{
+    position: relative; z-index: 2;}
 .login-form h1{
     font-size: 32px;color: #fff;
     text-align: center;      
     margin-bottom: 60px;      
 }
+
 .int-area{
     width: 400px;position: relative;
     margin-top:20px;
@@ -37,18 +39,14 @@ body::before{
     border-bottom: 1px solid #999;
     font-size: 18px;color: #fff;
     outline: none;
+
 }
 .int-area label{
     position: absolute;left: 10px;top: 15px;
     font-size:18px;color: rgb(0, 0, 0);
     transition: all .5s ease;
 }
-.int-area label.warning{
-    color: red !important;
-    animation: warning .3s ease;
-    animation-iteration-count: 3;
-    
-}
+
 @keyframes warning{
     0%{transform: translateX(-8px);}
     25%{transform: translateX(8px);}

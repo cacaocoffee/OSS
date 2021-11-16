@@ -40,8 +40,14 @@ router.get('/language_list', function (req, res, next) {
 router.get('/project', function (req, res, next) {
     res.render('project', { title: 'Express' });
 });
+router.get('/my_profile', function (req, res, next) {
+    res.render('my_profile', { title: 'Express' });
+});
 router.get('/project_main', function (req, res, next) {
     res.render('project_main', { title: 'Express' });
+});
+router.get('/project_form', function (req, res, next) {
+    res.render('project_form', { title: 'Express' });
 });
 router.get('/logout', (req, res, next) => {
     req.session.destroy();
