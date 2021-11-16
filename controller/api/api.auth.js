@@ -11,6 +11,14 @@ exports.existsID = async (conn, id) =>{
     }
 }
 
+exports.validID = async (id) =>{
+    const exp = new RegExp(`([A-Za-z0-9]*)`);
+    id = id || '';
+    let ret = exp.exec(id);
+    if( ret[1] == id) return true;
+    else return ret;
+}
+
 exports.pageUseAuthorize = async (conn, req) =>{
     // 페이지 권한
     if(!req.session.user) return false;
