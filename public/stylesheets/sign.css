@@ -9,7 +9,7 @@ body{
     background: url("../images/bg.jpg") no-repeat center;
     background-size: cover;
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 2rem;
 
 }
 
@@ -60,9 +60,9 @@ body::before{
 }
 .btn-area button{
     width: 100%;
-    background: #166cea;
+    background: #00ee63;
     color:#fff;
-    font-size: 20px;
+    font-size: 30px;
     border: none;
     border-radius: 15px;
     cursor:pointer;

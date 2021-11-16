@@ -56,15 +56,15 @@ body::before{
 .int-area input:focus+label,
 .int-area input:valid + label{
     top:-2px;
-    font-size : 13px;color :#99ea16;
+    font-size : 13px;color :#471a00;
     
 }
 .btn-area{
-    margin-top: 30px;
+    margin-top: 40px;
 }
 .btn-area button{
     width: 100%; height: 50px;
-    background: #166cea;
+    background: #00ee63;
     color:#fff;
     font-size: 20px;
     border: none;
