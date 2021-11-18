@@ -13,7 +13,3 @@ div{
   gap: 5px; /* 자식요소간의 간격 */
    padding: 1rem;  
 }
-
-a { text-decoration:none ;
-  color: inherit;
-}
