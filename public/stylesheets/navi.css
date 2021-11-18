@@ -9,13 +9,15 @@ body{
 }
 
 .nav-container{
+    
     display: flex;
     flex-direction: row;
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: darkslategray;
+    background-color: rgb(253, 203, 66);
     list-style-type: none;
+
 }
 
 .nav-item{
@@ -24,13 +26,13 @@ body{
     
 }
 .nav-item a{
-    
+    user-select: none;
     text-align: center;
     text-decoration: none;
-    color: white;
+    color: rgb(0, 0, 0);
 }
-.nav-item:nth-child(1){
-    background-color: lightseagreen;
+.nav-item:nth-child(0){
+    background-color: rgb(175, 214, 212);
 }
 
 
@@ -47,3 +49,8 @@ body{
 header{
     margin-top: 20px;
 }
+a {
+    user-select: none;
+    text-decoration:none ;
+    color: inherit;
+  }

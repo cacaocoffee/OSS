@@ -2,7 +2,23 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    
+   <style>
+    .btn button{
+        border: 2px solid #deb13a;
+        background-color: rgba(0,0,0, 0);
+      color:#685318;
+      padding: 5px;
+      border-top-left-radius: 5px; 
+      border-bottom-left-radius: 5px;
+      border-top-right-radius: 5px; 
+      border-bottom-right-radius: 5px;  
+      margin-right:-4px;
+      }
+      .btn button:hover{
+        color:white; 
+        background-color: #deb13a; 
+       }
+   </style>
 </head>
 <body> 
     <%- include('navigation') %>
@@ -23,6 +39,9 @@
 </div>
 </div>
 <br>
+<div class="btn">
+    <a href="profile_edit"><button id="changeBtn" type="button">회원정보 수정</button></a>
+</div>
 <hr>
 
 <br>
