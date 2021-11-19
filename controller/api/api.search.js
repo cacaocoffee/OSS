@@ -26,16 +26,23 @@ function retnUserData(id, userid,name){
         'name':name
     };
 }
-function retnTodoData(toid,deadline,cleardate,done,todo){
+function retnTodoData(toid,deadline,todo){
     return {
         id:toid,
-        deadline:daedline,
-        cleardate:cleardate,
-        done:done,
+        deadline:deadline,
         todo:todo,
     };
 }
-
+function retnUserTodoData(userid,todoid,projectid,overwrite,done,cleardate){
+    return{
+    'userid':userid,
+    'todoid':todoid,
+    'projectid':projectid,
+    'overwrite':overwrite,
+    'done':done,
+    'cleardate':cleardate
+    };
+}
 exports.GetLanguageList = async (conn) =>{
     let [getList, ] = await conn.query('SELECT * FROM language_list;');
     let result = [];
@@ -92,7 +99,6 @@ exports.GetUserProjectList = async (conn, userid) =>{
         }
     }
     return result;
-
 }
 exports.GetProjectLanguageList = async (conn, projectid) =>{
     const queryString = 'SELECT * FROM language_project WHERE projectid = ?;';
@@ -135,14 +141,10 @@ exports.GetUserTodolist = async (conn, userid) =>{
     const queryParam = [userid];
     let [listFromTodo, ] = await conn.query(queryString, queryParam);
     let result = [];
-    for(let item of listFromTodo){
-        const queryString = 'SELECT * FROM todo WHERE id = ?;';
-        const queryParam = [item.userid];
-        let [todolist] = await conn.query(queryString, queryParam);
-        todolist.forEach((data) =>{
-            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.done,data.todo));
-        });
-    };
+    listFromTodo.forEach((data) =>{
+        result.push(retnUserTodoData(data.userid,data.todoid,data.projectid,data.overwrite,data.done,data.cleardate));
+    });
+    console.log(result);
     return result;
 }
 
@@ -151,7 +153,7 @@ exports.GetTodolist = async (conn) =>{
     let [todolist, ] = await conn.query('SELECT * FROM todo;');
     let result = [];
     todolist.forEach((data) =>{
-        result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.done,data.todo));
+        result.push(retnTodoData(data.id,data.deadline,data.todo));
     });
     return result;
 }
