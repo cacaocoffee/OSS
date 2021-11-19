@@ -67,11 +67,6 @@ exports.InitializeDB = async (req, res, next) => {
                     id int unsigned NOT NULL AUTO_INCREMENT COMMENT 'todo 테이블 id',
                     deadline DATE NOT NULL COMMENT '마감 기간',
                     todo TEXT NOT NULL COMMENT '할일 목록',
-<<<<<<< HEAD
-=======
-                    cleardate DATE COMMENT '실행날짜',
-                    done tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
->>>>>>> b54ca948c0dc89883325419c0643f211d125c6c6
                     PRIMARY KEY(id)
                 );`);
             await connection.
