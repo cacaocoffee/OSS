@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+/* 레이아웃 */
+.row{width:1200px; margin: 0 auto;}
+header{position: fixed;
+   background:#fff; width:100%; z-index: 1000;
+   box-shadow:0 3px 5px rgba(0,0,0,.1);
+}
+nav{padding-top:40px; }
+section{}
+
+/* 헤더 */
+.header_top{
+   border-bottom: 1px solid #ccc; 
+}
+.header_top .header_cont{display:flex;}
+.header_top .title{width:40%; border-right:1px solid #ccc;}
+.header_top .title p{
+    padding-left:14px; font-weight:bold; 
+    font-size:14px; 
+    height:40px; line-height: 40px;}
+.header_top .header_nav{width:70%; }
+.header_top .header_nav ul{display:flex;}
+.header_top .header_nav ul li{
+    width:20%; height:40px;  
+    border-right:1px solid #ccc;
+    text-align: center;
+    line-height:40px;
+    }
+.header_top .header_nav ul li a{}  
+
+/* 게시판 */
+.cont1{}
+.cont1 .notice {height:350px;}
+.cont1 .notice h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black; font-family: 'Nanum Brush Script'}
+.cont1 .notice ul li {padding-left: 8px;}
+.cont1 .notice ul li a {font-size: 16px;}

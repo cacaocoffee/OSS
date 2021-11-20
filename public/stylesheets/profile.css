@@ -1,0 +1,61 @@
+@charset "utf-8";
+
+/* 레이아웃 */
+.row{width:1200px; margin: 0 auto;}
+header{}
+section{}
+footer{}
+
+
+/* 헤더 */
+.header_top{
+    border-bottom: 1px solid #ccc; 
+ }
+ .header_top .header_cont{display:flex;}
+ .header_top .title{width:40%; border-right:1px solid #ccc;}
+ .header_top .title p{
+     padding-left:14px; font-weight:bold; 
+     font-size:14px; 
+     height:40px; line-height: 40px;}
+ .header_top .header_nav{width:70%; }
+ .header_top .header_nav ul{display:flex;}
+ .header_top .header_nav ul li{
+     width:20%; height:40px;  
+     border-right:1px solid #ccc;
+     text-align: center;
+     line-height:40px;
+     }
+ .header_top .header_nav ul li a{}  
+
+/* 게시판 */
+.cont1{}
+.cont1 .notice {width:800px; height:100px;}
+.cont1 .notice h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black; font-family: 'Nanum Brush Script'}
+.cont1 .notice ul li {padding-left: 8px;}
+.cont1 .notice ul li a {font-size: 16px;}
+
+/* 게시판2 */
+.cont2{}
+.cont2 .notice2 {width:800px; height:100px;}
+.cont2 .notice2 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black;font-family: 'Nanum Brush Script'}
+.cont2 .notice2 ul li { padding-left: 8px;}
+.cont2 .notice2 ul li a {font-size: 16px;}
+
+/* 게시판3 */
+.cont3{}
+.cont3 .notice3 {width:800px; height:100px;}
+.cont3 .notice3 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black; font-family: 'Nanum Brush Script'}
+.cont3 .notice3 ul li {padding-left: 8px;}
+.cont3 .notice3 ul li a {font-size: 16px;}
+
+/* 게시판4 */
+.cont4{}
+.cont4 .notice4 {width:800px; height:100px;}
+.cont4 .notice4 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black; font-family: 'Nanum Brush Script'}
+.cont4 .notice4 ul li {padding-left: 8px;}
+.cont4 .notice4 ul li a {font-size: 16px;}
+
+.page{margin-left:555px;}
+.page ul{display:flex;}
+.page ul li{color:black; text-align: center;}
+.page ul li a{padding-left:2px;}
