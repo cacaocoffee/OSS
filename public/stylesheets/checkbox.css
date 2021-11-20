@@ -1,0 +1,37 @@
+.int-checkbox label {
+  display: inline-block;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+
+  margin-top: 0.5rem;
+  font-size: 15px;
+}
+
+.int-checkbox label span {
+  text-align: center;
+  padding: 3px 0px;
+  display: block;
+  padding: 3px 20px 2px 20px;
+}
+
+.int-checkbox label input {
+  opacity: 0;
+  position: absolute;
+}
+
+.int-checkbox input:checked + span {
+  cursor: pointer;
+  background-color: rgb(31, 23, 23);
+
+  border-radius: 5px;
+
+  color: #fff;
+}
+
+.int-checkbox input:hover + span {
+  color: #fff;
+  border-radius: 5px;
+
+  background-color: rgb(31, 23, 23);
+  cursor: pointer;
+}

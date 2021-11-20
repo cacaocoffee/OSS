@@ -15,8 +15,8 @@ router.get('/', function (req, res, next) {
     })
 });
 
-router.get('/navigation', function(req, res, next) {
-  res.render('navigation', { title: 'Express' });
+router.get('/pagenation', function(req, res, next) {
+  res.render('pagenation', { title: 'Express' });
 });
 router.get('/language_list', function(req, res, next) {
   res.render('language_list', { title: 'Express' });
@@ -37,5 +37,7 @@ router.get('/project_main', function(req, res, next) {
   res.render('project_main', { title: 'Express' });
 });router.get('/project_form', function(req, res, next) {
   res.render('project_form', { title: 'Express' });
+});;router.get('/project_edit', function(req, res, next) {
+  res.render('project_edit', { title: 'Express' });
 });
 module.exports = router;
