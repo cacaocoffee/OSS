@@ -18,8 +18,14 @@ exports.index = async (req, res, next) => {
                 recentProject = recentProject.slice(0, 5);
             }
 
-            let todoList;
+            let myProject = [];
+            myProject = await apiSearch.GetUserProjectList(connection, req.session.user);
+            if(myProject.length > 5){
+                myProject = myProject.slice(0, 5);
+            }
 
+            let todoList;
+            // FIXME: 바로 뿌릴 수 있는 데이터 필요 >> 현재는 가공후에 뿌릴 수 있음
             todoList = await apiSearch.GetUserTodolist(connection, req.session.user);
             if (todoList.length > 5) {
                 todoList = todoList.slice(0, 5);
@@ -32,18 +38,17 @@ exports.index = async (req, res, next) => {
 
             let result = apiCmn.renderData(
                 'index', 
-                ['glass', 'index', 'common'], 
+                ['glass', 'index', 'common', 'nav'], 
                 ['script'],
                 {
                     'user': user,
                     'recentProject': recentProject,
-                    'myProject': [],
+                    'myProject': myProject,
                     'todo': []
                 }
             );
             res.render('layout', result);
         } catch (e) {
-            console.log(1);
             return next(e);
         } finally {
             await connection.release();

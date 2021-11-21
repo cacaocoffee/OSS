@@ -14,9 +14,9 @@ function setGridItem(gridItemID){
 }
 
 window.addEventListener('load', ()=>{
-    setGridItem('main-grid')
+    setGridItem('content')
 });
 window.addEventListener('resize', () =>{
-    setGridItem('main-grid')
+    setGridItem('content')
 });
 

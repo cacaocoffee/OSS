@@ -135,6 +135,16 @@ exports.InitializeDB = async (req, res, next) => {
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-12-25','meet Santa');`);
             await connection.query(`INSERT INTO todo_user (userid,todoid) VALUES(1,1);`);
             await connection.query(`INSERT INTO todo_user (userid,todoid,projectid,overwrite) VALUES(1,2,1,1);`);
+            await connection.query(`INSERT INTO project (name, description, deadline) VALUES('hello world', '테스트', '2021-11-25');`);
+            await connection.query(`INSERT INTO project_user (userid, projectid) VALUES(1,1);`);
+            await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(1,1);`);
+            await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(2,1);`);
+            await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(5,1);`);
+            await connection.query(`INSERT INTO project (name, description, deadline) VALUES('말많은 양의 왕', '테스트', '2021-11-27');`);
+            await connection.query(`INSERT INTO project_user (userid, projectid) VALUES(2,2);`);
+            await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(5,2);`);
+            await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(2,2);`);
+            await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(9,2);`);
             //////////////////////////////////////////////////////////////////////////////////////////////////////
      
 

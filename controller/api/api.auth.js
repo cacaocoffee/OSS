@@ -40,6 +40,6 @@ exports.GetUserInfo = async (conn, id) =>{
     let queryParam = [id];
 
     let [result, ] = await conn.execute(queryString, queryParam);
-
+    
     return result[0];
 }

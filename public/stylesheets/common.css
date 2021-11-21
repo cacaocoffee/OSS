@@ -8,7 +8,8 @@
 }
 body{
     background-image:url(../images/background.jpg);
-    overflow-y:hidden;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 ::-webkit-scrollbar{

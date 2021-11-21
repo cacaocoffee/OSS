@@ -5,12 +5,13 @@ function retnLangData(langid, langText){
         value:langText
     };
 }
-function retnProjectData(id, name, desc, deadline){
+function retnProjectData(id, name, desc, deadline, languageList){
     return {
         'id': id,
         'name': name,
         'desc': desc,
-        'deadline':deadline
+        'deadline':deadline,
+        'language':languageList
     }
 }
 function retnProjectInfoData(project, userlist,langlist){
@@ -43,6 +44,7 @@ function retnUserTodoData(userid,todoid,projectid,overwrite,done,cleardate){
     'cleardate':cleardate
     };
 }
+
 exports.GetLanguageList = async (conn) =>{
     let [getList, ] = await conn.execute('SELECT * FROM language_list;');
     let result = [];
@@ -77,9 +79,10 @@ exports.GetProjectList = async (conn) =>{
     let [getList, ] = await conn.execute('SELECT * FROM project;');
     let result = [];
 
-    getList.forEach((project) =>{
-        result.push(retnProjectData(project.id, project.name, project.description, project.deadline));
-    })
+    for(let project of getList){
+        let langList = await this.GetProjectLanguageList(conn, project.id);
+        result.push(retnProjectData(project.id, project.name, project.description, project.deadline, langList));
+    }
 
     return result;    
 }
@@ -95,7 +98,8 @@ exports.GetUserProjectList = async (conn, userid) =>{
         const queryParam = [item.projectid];
         let [listFromProj, ] = await conn.execute(queryString, queryParam);
         for(let project of listFromProj){
-            result.push(retnProjectData(project.id, project.name, project.description, project.deadline));
+            let langList = await this.GetProjectLanguageList(conn, project.id)
+            result.push(retnProjectData(project.id, project.name, project.description, project.deadline, langList));
         }
     }
     return result;
@@ -105,14 +109,11 @@ exports.GetProjectLanguageList = async (conn, projectid) =>{
     const queryParam = [projectid];
     let [listFromLangProj, ] = await conn.query(queryString, queryParam);
     let result = [];
-    console.log(listFromLangProj);
     for(let item of listFromLangProj){
-        console.log(item);
         const queryString = 'SELECT language FROM language_list WHERE id = ?;';
         const queryParam = [item.languageid];
         let [listFromLangList,] = await conn.query(queryString, queryParam);
-        console.log(listFromLangList);
-        result.push(retnLangData(item.language, listFromLangList[0].language));
+        result.push(retnLangData(item.languageid, listFromLangList[0].language));
     };
     return result;
 }
@@ -131,7 +132,6 @@ exports.GetProject = async (conn,projectid) =>{
         project_userlist, 
         project_langlist
     );
-    console.log(result);
     return result;
 }
 
@@ -144,7 +144,6 @@ exports.GetUserTodolist = async (conn, userid) =>{
     listFromTodo.forEach((data) =>{
         result.push(retnUserTodoData(data.userid,data.todoid,data.projectid,data.overwrite,data.done,data.cleardate));
     });
-    console.log(result);
     return result;
 }
 
