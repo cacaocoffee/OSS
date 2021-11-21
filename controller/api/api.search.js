@@ -20,7 +20,7 @@ function retnProjectInfoData(project, userlist,langlist){
     return project;
 }
 
-function retnUserData(id, userid,name){
+function retnUserData(id, userid, name){
     return {
         'id' : id,
         'userid': userid,
