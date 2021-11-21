@@ -1,22 +1,68 @@
-<html lang="ko">
+
 <head>
     <title>8조 말 많은 양의 왕 프로필</title>
     <link rel="stylesheet" href="/stylesheets/project_main.css">
+    <link rel="stylesheet" href="/stylesheets/glass.css">
+    <link rel="stylesheet" href="/stylesheets/checkbox.css">
+    <link rel="stylesheet" href="/stylesheets/scrollbar.css">
+
 </head>
-<body>
-    <%- include('navigation') %>
-	
-    <header style="margin: 20px"><h1>프로젝트 명</h1></header>
-    
-    
-        <ul class="container" >
-			<div class="lang">사용된 언어<br>c/c++java </li></div>
-			<div class="pro">프로젝트 내용<br>kasmdlakmdalkdmalkdmadlkamdlamdlasddsadadasdsadadadasdasdsadadasdadkasmd</li></div>
-        <div class="list">참여자 명단<br></li></div>
-        </ul>
 
-    
-    
-</body>
+<contant>
+        <div class="outer">
+            <header style="margin: 20px; text-align: center;">
+                <h1>프로젝트 명</h1>
+            
+                <a href="project_edit"><button class="check">수정하기</button></a>
 
-</html>
+            </header>
+
+
+            <contant>
+                <div class="item" >
+                    <label name="lastday">
+                        <p>종료일</p>
+                    </label>                    
+                    <div class="item-lang" id="scrollbar">사용한 언어/스택
+                        <% for(let i=0; i < 20; i++){ %>
+                            <p><label>lang</label></p>
+                            <% } %>
+           
+                    </div>
+
+                    <div class="item-pro" id="scrollbar">
+                        <div class="item-list">
+
+                            <label>sakldmasdklsamdlkasmkasldmaskldmasdlksadlkamslakmasklmasklaklasmdlkasdmaslkdsadklamdlkasdmlkasmdaskldmaskldmasdlkasmdlasmdaklsmdalskdmasldmasdlkasmdlkasmdlaksdmaslkdm</label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="item-user" id="scrollbar">
+
+                            <div class="item-list">
+                                <p>함께하는 사용자</p>
+                                <% for(let i=0; i < 20; i++){ %>
+                                    <p><label>user</label></p>
+                                    <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-todo" id="scrollbar">
+                       
+                        <div class="int-checkbox">
+                            
+                            <p>To Do List</p>
+                            <% for(let i=0; i < 12; i++){ %>
+                                <label><input type="checkbox" name="language"value="java"><span>sadaspodasdklasdjaskld</span></label>
+                                <% } %>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </contant>
+        </div>
+    </div>
+</contant>

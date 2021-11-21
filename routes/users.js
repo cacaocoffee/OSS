@@ -27,8 +27,8 @@ router.get('/profile', function (req, res, next) {
     res.render('profile', { title: 'Express' });
 });
 
-router.get('/navigation', function (req, res, next) {
-    res.render('navigation', { title: 'Express' });
+router.get('/pagenation', function (req, res, next) {
+    res.render('pagenation', { title: 'Express' });
 });
 
 router.get('/profile', function (req, res, next) {
@@ -51,6 +51,10 @@ router.get('/project_main', function (req, res, next) {
 });
 router.get('/project_form', function (req, res, next) {
     res.render('project_form', { title: 'Express' });
+});
+
+router.get('/project_edit', function (req, res, next) {
+    res.render('project_edit', { title: 'Express' });
 });
 router.get('/logout', (req, res, next) => {
     req.session.destroy();
