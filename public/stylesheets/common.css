@@ -12,6 +12,17 @@ body{
     background-attachment: fixed;
 }
 
+content{
+    max-width:1130px;
+    min-height:0px !important;
+    width:100%;
+    margin:0 auto;
+    background:inherit;
+    display:grid;
+    grid-gap:1rem;
+    grid-auto-flow:dense;
+}
+
 ::-webkit-scrollbar{
     height:6px;
     width:6px;

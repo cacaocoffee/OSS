@@ -3,11 +3,14 @@ var router = express.Router();
 
 const indexRouter = require("./index");
 const usersRouter = require("./users");
+const projectRouter = require('./project');
 const apiRouter = require("./api");
 const sitesubstitute = require('../server/config').config_site;
 
 router.use('/', indexRouter);
 router.use('/users', usersRouter);
+router.use('/project', projectRouter);
+
 router.use('/api', apiRouter);
 
 // router.get((req,res,next) =>{

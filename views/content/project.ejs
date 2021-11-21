@@ -1,3 +1,50 @@
-<div id="main-grid">
+<content id="project-grid" class="glass-parent" style="grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));">
+    <div class="glass project-title" colspan='max'>
+        <h2 class="title">
+            <% switch(data.custom){
+                case 1: %> <%# 로그인 회원 대상 프로젝트 %>
+                    <%= data.user.name %>님의
+                <%  break;
+                case 2: %> <%# 특정 회원 대상 프로젝트 %>
+                    <%= data.targetUser.name %>님의 
+                <% break;
+                default: %> <%# 전체 프로젝트 목록 %>
+                    전체 
+            <% } %>
+            프로젝트 목록
+        </h2>
+    </div>
+    <% if(data.project.length == 0) { %>
+        <div class="glass" colspan='max'>
+            <p style="text-align:center;">아직 프로젝트가 없습니다.</p>
+        </div>
+    <% } else { %>
+        <% for(let i = 0 ; i < 5; ++i ){ data.project.forEach(proj => { %>
+            <div class="glass project" onclick="location.href = `/project/detail?projectid=<%= proj.id %>`;">
+                <div class="wrapper">
+                    <p class="project-title"><%= proj.name %></p>
+                    <p class="project-date"><%= proj.deadline.toLocaleString() %></p>
+    
+                    <div class="language-area">
+                        <% proj.language.forEach(lang =>{ %>
+                            <span class="language"><%= lang.value %></span>
+                        <% }); %>
+                    </div>
+                </div>
+            </div>
+        <% });} %>
+    <% } %>
+</content>
 
-</div>
+
+<script type="text/javascript">
+    let gridID = 'project-grid'
+    window.addEventListener('load', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+    });
+    window.addEventListener('resize', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+    });
+</script>

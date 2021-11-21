@@ -74,9 +74,9 @@ exports.GetUserLanguageList = async (conn, userid) =>{
     return result;
 }
 
-
-exports.GetProjectList = async (conn) =>{
-    let [getList, ] = await conn.execute('SELECT * FROM project;');
+/* 두 번째 인자: [가져올 위치, 가져올 크기] */
+exports.GetProjectList = async (conn, limits = null) =>{
+    let [getList, ] = await conn.execute(`SELECT * FROM project ${limits != null ? 'LIMIT ' + limits[0] + ', ' + limits[1]: ''};`);
     let result = [];
 
     for(let project of getList){

@@ -19,15 +19,18 @@ function setColSpan(gridItemID){
     let col= window.getComputedStyle(grid).getPropertyValue('grid-template-columns').split(' ').join('').split('px');
     let colCount = 0;
     col.forEach(item =>{
-        colCount += (item != '' && parseInt(item) != 0) ? 1 : 0;
+        colCount += parseInt(item) ? 1 : 0;
     });
+
+    let maxStack = [];
 
     for(let item of grid.children){
         if(!item.hasAttribute('colspan')) continue;
 
         let col = item.getAttribute('colspan');
         if(col == 'max'){
-            item.style.gridColumnEnd = `span ${colCount}`;
+            maxStack.push(item);
+            item.style.gridColumnEnd = ``;
             continue;
         }
         
@@ -38,6 +41,15 @@ function setColSpan(gridItemID){
         }else{
             item.style.gridColumnEnd = `span ${colCount}`;
         }
+    }
+
+    col = window.getComputedStyle(grid).getPropertyValue('grid-template-columns').split(' ').join('').split('px');
+    colCount = 0;
+    col.forEach(item =>{
+        colCount += parseInt(item) ? 1 : 0;
+    });
+    for(let item of maxStack){
+        item.style.gridColumnEnd = `span ${colCount}`;
     }
 
 }

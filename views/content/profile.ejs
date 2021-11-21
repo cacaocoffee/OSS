@@ -29,7 +29,7 @@
                     <p style="width:100%;text-align:center;">아직 참여한 프로젝트가 없습니다.</p>
                 <% } else { %>
                     <% data.findUser.project.forEach( proj => {%>
-                        <div class="project" onclick="location.href=`/project?projid=<%= proj.id %>`">
+                        <div class="project" onclick="location.href=`/project/detail?projectid=<%= proj.id %>`">
                             <p><%= proj.name %></p>
                             <p><%= proj.desc.substring(0, 30) %></p>
                             <p>~<%= proj.deadline.toLocaleString() %></p>
