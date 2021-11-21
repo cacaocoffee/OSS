@@ -1,71 +1,105 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap');
-*{margin: 0;padding: 0;box-sizing: border-box;}
-body{
-    font-family: 'Noto Sans KR', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: url("../images/bg.jpg") no-repeat center;
-    background-size: cover;
-    font-weight: bold;
-    font-size: 2rem;
-
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url("../images/bg.jpg") no-repeat center;
+  background-size: cover;
+  font-weight: bold;
+  font-size: 1.3rem;
+  user-select: none;
 }
 
-body::before{
-    content: "";
-    position: absolute;z-index: 1;
-    top: 0; right: 0;bottom: 0;left: 0;
-    background-color: rgba(0,0,0,.5);
+body::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
-.login-form{position: relative; z-index: 2;}
-
-.int-area{
-    width: 400px;position: relative;
-    margin-top:20px;
-}
-.int-area:first-child{margin-top:0;}
-
-.int-area input{
-    width: 100%;
-    padding: 20px 10px 10px;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #999;
-    font-size: 18px;color: #fff;
-    outline: none;
-}
-.int-area label{
-    position: absolute;left: 10px;top: 15px;
-    font-size:20px;color: rgb(0, 0, 0);
-    font-weight: bold;
-    transition: all .5s ease;
-}
-@keyframes warning{
-    0%{transform: translateX(-8px);}
-    25%{transform: translateX(8px);}
-    50%{transform: translateX(-8px);}
-    75%{transform: translateX(8px);}
-}
-.int-area input:focus+label,
-.int-area input:valid + label{
-    top:-2px;
-    font-size : 13px;color :#1619ec;
-    
-}
-.btn-area{
-    margin-top: 20px;
-}
-.btn-area button{
-    width: 100%;
-    background: #00ee63;
-    color:#fff;
-    font-size: 30px;
-    border: none;
-    border-radius: 15px;
-    cursor:pointer;
-
+.login-form {
+  position: relative;
+  z-index: 2;
 }
 
+.int-area {
+  width: 400px;
+  position: relative;
+  margin-top: 20px;
+}
+.int-area:first-child {
+  margin-top: 0;
+}
+
+.int-area input {
+  width: 100%;
+  padding: 20px 10px 10px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #999;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  outline: none;
+}
+.int-area label {
+  user-select: none;
+  position: absolute;
+  left: 10px;
+  top: 15px;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  transition: all 0.5s ease;
+}
+@keyframes warning {
+  0% {
+    transform: translateX(-8px);
+  }
+  25% {
+    transform: translateX(8px);
+  }
+  50% {
+    transform: translateX(-8px);
+  }
+  75% {
+    transform: translateX(8px);
+  }
+}
+
+.int-area input:focus + label,
+.int-area input:valid + label {
+  top: 5px;
+  font-size: 13px;
+  color: #1619ec;
+}
+.btn-area {
+  margin-top: 20px;
+}
+.btn-area button {
+  width: 100%;
+
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  border: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.int-checkbox {
+  display: inline-block;
+  width: 400px;
+}
+.int-checkbox label {
+  display: inline-block;
+}

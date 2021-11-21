@@ -11,28 +11,27 @@
     <div class="project-form">
         <form action="" method="post">
 
-           
-
+            <div class="glass-parent">
                 <div class="glass-parent">
-                    <legend style="text-align: center;">프로젝트 추가</legend>       
-                    <label>프로젝트 명 입력
-                    </label>
+                    <legend style="text-align: center;">프로젝트 수정</legend>
+                    <label>프로젝트 기존 명</label>
                     <div class="int-area"><input type="text" name="pj" id="pj" required>
-                    </div>
 
+                        
+                    </div>
                     <div class="int-textarea">
                         <label>
-                            <p>프로젝트 내용 입력</p>
+                            <p>프로젝트 기존 내용 </p>
                         </label>
                         <textarea name="pp" id="scrollbar" value="pp" required></textarea>
                     </div>
-                    <div class="int-day">
+                      <div class="int-day" >
                         <label>
                             <p>종료일 설정</p>
                         </label>
                         <input type="date" name="lastday" value="lastday">
-
-                    </div>
+                          
+                      </div> 
                     <div class="int-checkbox" style="text-align:center; ">
                         <P>사용할 언어 선택/스택</P>
                         <% for(let i=0; i < 9; i++){ %>
@@ -54,7 +53,7 @@
 
                     </div>
                     <div class="btn-area">
-                        <button>만들기</button>
+                        <button>수정하기</button>
                     </div>
                 </div>
         </form>
