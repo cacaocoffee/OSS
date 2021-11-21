@@ -5,8 +5,7 @@ header{
     z-index:0;
     box-shadow:0 0 1rem rgba(0,0,0,0.2);
     display:flex;
-    align-items: top;
-    justify-content:center;
+    flex-direction:column;
     padding:2rem;
 }
 
@@ -38,6 +37,20 @@ header > div{
     width:100%;
 }
 
-header #profile-area{
+header > *:first-child{
+    margin-top:0;
+}
 
+header > *{
+    margin-top:1rem;
+}
+
+header > .logo-area{
+    height:4rem;
+    background-color:#FAF;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
 }

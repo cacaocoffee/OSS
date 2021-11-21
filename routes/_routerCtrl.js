@@ -10,13 +10,13 @@ router.use('/', indexRouter);
 router.use('/users', usersRouter);
 router.use('/api', apiRouter);
 
-router.use((req,res) =>{
-    res.render('layout', {
-        site_title: sitesubstitute.title,
-        content:'common/error',
-        css:[],
-        error:"지정되지 않은 페이지입니다.",
-    });
-});
+// router.get((req,res,next) =>{
+//     res.render('layout', {
+//         site_title: sitesubstitute.title,
+//         content:'error',
+//         css:[],
+//         error:"지정되지 않은 페이지입니다.",
+//     });
+// });
 
 module.exports = router;

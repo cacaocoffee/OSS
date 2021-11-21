@@ -1,5 +1,6 @@
 var express = require('express');
-const controller = require('../controller/controller.auth');
+const authController = require('../controller/controller.auth');
+const profileController = require('../controller/controller.user');
 const apiAuth = require('../controller/api/api.auth');
 var router = express.Router();
 
@@ -7,21 +8,25 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
 });
-router.get('/login', controller.getLogin);
 
-router.post('/login', controller.Login);
+router.get('/login', authController.getLogin);
 
-router.get('/logout', controller.Logout);
+router.post('/login', authController.Login);
 
-router.get('/signup', controller.getSignUp);
+router.get('/logout', authController.Logout);
 
-router.post('/signup', controller.SignUp);
+router.get('/signup', authController.getSignUp);
+
+router.post('/signup', authController.SignUp);
 
 router.get('/logout', (req, res, next) => {
-    req.session.destroy();
-    res.redirect('/');
+    req.session.destroy(_ =>{
+        res.redirect('/');
+    });
 });
 
 
+
+router.get('/profile', profileController.getProfile);
 
 module.exports = router;

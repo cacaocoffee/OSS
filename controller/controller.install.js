@@ -110,10 +110,15 @@ exports.InitializeDB = async (req, res, next) => {
             const langList = [
                 'C/C++', 'JAVA', 'C#', 'Python', 'Ruby',
                 'HTML', 'CSS', 'Go', 'Javascript', 'Kotlin',
-                'Perl', 'R', 'Swift', 'Objective-C', 'Basic'
-            ];
+                'Perl', 'R', 'Swift', 'Objective-C', 'Basic', 'php',
+                '아희', '어셈블리어(Intel)', '어셈블리어(ARM)', 'Pascal',
+                'LISP', 'COBOL', 'Prolog'
+            ].sort();
+            const stackList = [
+                'Python/Flask', 'Node.js', 'Spring', 'React', 'Vue.js', 'Bootstrap', 'ASP.NET'
+            ].sort();
             
-            for(let item of langList){
+            for(let item of langList.concat(stackList)){
                 await connection.execute(`INSERT INTO language_list (language) VALUES (?);`, [item]);
             }
             
