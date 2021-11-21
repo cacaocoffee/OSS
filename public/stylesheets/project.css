@@ -1,0 +1,45 @@
+body {
+  background: white;
+  min-height: 100%;
+  overflow: hidden;
+}
+a {
+  user-select: none;
+  text-align: center;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+.btn button {
+  margin: 0px 0px 20px 725px;
+
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.6);
+  border-radius: 3px; /* 5px rounded corners */
+  border: 0;
+  cursor: pointer;
+  padding: 0.5em 0.25em 0.5em 0.25em;
+}
+.btn button:hover {
+  color: white;
+  background-color: #0051ff;
+}
+
+.temp-box3 {
+  /*참여명단*/
+
+  display: inline-block;
+  margin: 0px -120px 10px 130px;
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.6);
+  border-radius: 3px; /* 5px rounded corners */
+  width: 330px;
+  height: 230px;
+}
+
+.outer {
+  display: block;
+  width: 60rem;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+}

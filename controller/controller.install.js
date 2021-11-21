@@ -67,14 +67,17 @@ exports.InitializeDB = async (req, res, next) => {
                     id int unsigned NOT NULL AUTO_INCREMENT COMMENT 'todo 테이블 id',
                     deadline DATE NOT NULL COMMENT '마감 기간',
                     todo TEXT NOT NULL COMMENT '할일 목록',
-                    cleardate DATE COMMENT '실행날짜',
-                    done tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
                     PRIMARY KEY(id)
                 ) default character set utf8 collate utf8_general_ci;`);
             await connection.
             query(`CREATE TABLE IF NOT EXISTS todo_user (
-                userid int unsigned NOT NULL COMMENT '유저 식별 아이디',
-                todoid int unsigned NOT NULL COMMENT '할일 아이디',
+                userid int unsigned NOT NULL COMMENT '연결된 사용자 식별 ID',
+                todoid int unsigned NOT NULL COMMENT '연결된 todo 정보 id',
+                projectid int unsigned NULL COMMENT '연결된 프로젝트 아이디',
+                overwrite tinyint(1) NOT NULL default 0 COMMENT '연결된 프로젝트 구성원의 상태 변경 가능 여부',
+                done tinyint(1) NOT NULL default 0 COMMENT '할일 수행 여부',
+                cleardate DATE COMMENT '실행 완료 시간',
+                PRIMARY KEY(userid, todoid),
                 FOREIGN KEY(userid) references user(id),
                 FOREIGN KEY(todoid) references todo(id)
                 ) default character set utf8 collate utf8_general_ci;`);        
@@ -131,17 +134,7 @@ exports.InitializeDB = async (req, res, next) => {
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-11-25','study DB');`);
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-12-25','meet Santa');`);
             await connection.query(`INSERT INTO todo_user (userid,todoid) VALUES(1,1);`);
-            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('teamoss','contribute opensource','2021-11-25');`);
-            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test1','contribute opensource','2021-11-25');`);
-            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test2','contribute opensource','2021-11-25');`);
-            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test3','contribute opensource','2021-11-25');`);
-            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','contribute opensource','2021-11-25');`);
-            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test5','contribute opensource','2021-11-25');`);
-            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test6','contribute opensource','2021-11-25');`);
-            await connection.query(`INSERT INTO project (name,description, deadline) VALUES('test7','contribute opensource','2021-11-25');`);
-            await connection.query(`INSERT INTO project_user(userid,projectid) VALUES(1,1);`);
-            await connection.query(`INSERT INTO language_project(languageid,projectid) VALUES(1,1);`);
-            await connection.query(`INSERT INTO language_project(languageid,projectid) VALUES(2,1);`); 
+            await connection.query(`INSERT INTO todo_user (userid,todoid,projectid,overwrite) VALUES(1,2,1,1);`);
             //////////////////////////////////////////////////////////////////////////////////////////////////////
      
 

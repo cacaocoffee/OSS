@@ -16,7 +16,7 @@ exports.validID = async (id) =>{
     id = id || '';
     if(id.length <= 0) return false;
     let ret = exp.exec(id);
-    console.log(ret);
+    
     if( ret[1] == id) return true;
     else return false;
 }

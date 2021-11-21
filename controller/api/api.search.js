@@ -13,17 +13,36 @@ function retnProjectData(id, name, desc, deadline){
         'deadline':deadline
     }
 }
+function retnProjectInfoData(project, userlist,langlist){
+    project.userlist = userlist;
+    project.langlist = langlist;
+    return project;
+}
 
-function retnTodoData(toid,deadline,cleardate,done,todo){
+function retnUserData(id, userid,name){
+    return {
+        'id' : id,
+        'userid': userid,
+        'name':name
+    };
+}
+function retnTodoData(toid,deadline,todo){
     return {
         id:toid,
         deadline:deadline,
-        cleardate:cleardate,
-        done:done,
         todo:todo,
     };
 }
-
+function retnUserTodoData(userid,todoid,projectid,overwrite,done,cleardate){
+    return{
+    'userid':userid,
+    'todoid':todoid,
+    'projectid':projectid,
+    'overwrite':overwrite,
+    'done':done,
+    'cleardate':cleardate
+    };
+}
 exports.GetLanguageList = async (conn) =>{
     let [getList, ] = await conn.execute('SELECT * FROM language_list;');
     let result = [];
@@ -79,9 +98,41 @@ exports.GetUserProjectList = async (conn, userid) =>{
             result.push(retnProjectData(project.id, project.name, project.description, project.deadline));
         }
     }
+    return result;
+}
+exports.GetProjectLanguageList = async (conn, projectid) =>{
+    const queryString = 'SELECT * FROM language_project WHERE projectid = ?;';
+    const queryParam = [projectid];
+    let [listFromLangProj, ] = await conn.query(queryString, queryParam);
+    let result = [];
+    console.log(listFromLangProj);
+    for(let item of listFromLangProj){
+        console.log(item);
+        const queryString = 'SELECT language FROM language_list WHERE id = ?;';
+        const queryParam = [item.languageid];
+        let [listFromLangList,] = await conn.query(queryString, queryParam);
+        console.log(listFromLangList);
+        result.push(retnLangData(item.language, listFromLangList[0].language));
+    };
+    return result;
+}
+
+exports.GetProject = async (conn,projectid) =>{
+    const queryString = 'SELECT * FROM project WHERE id = ?;';
+    const queryParam = [projectid];
+    let [project, ] = await conn.query(queryString, queryParam);
+
+    let result;
+    let project_userlist= await this.GetUserProjectList(conn,projectid);
+    let project_langlist= await this.GetProjectLanguageList(conn,projectid);
+
+    result = retnProjectInfoData(
+        retnProjectData(project[0].id, project[0].name, project[0].description, project[0].deadline), 
+        project_userlist, 
+        project_langlist
+    );
     console.log(result);
     return result;
-
 }
 
 
@@ -90,23 +141,18 @@ exports.GetUserTodolist = async (conn, userid) =>{
     const queryParam = [userid];
     let [listFromTodo, ] = await conn.execute(queryString, queryParam);
     let result = [];
-    for(let item of listFromTodo){
-        const queryString = 'SELECT * FROM todo WHERE id = ?;';
-        const queryParam = [item.userid];
-        let [todolist] = await conn.execute(queryString, queryParam);
-        todolist.forEach((data) =>{
-            result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.done,data.todo));
-        });
-    };
+    listFromTodo.forEach((data) =>{
+        result.push(retnUserTodoData(data.userid,data.todoid,data.projectid,data.overwrite,data.done,data.cleardate));
+    });
+    console.log(result);
     return result;
 }
 
 exports.GetTodolist = async (conn) =>{
     let [todolist, ] = await conn.execute('SELECT * FROM todo;');
     let result = [];
-
     todolist.forEach((data) =>{
-        result.push(retnTodoData(data.id,data.deadline,data.cleardate,data.done,data.todo));
+        result.push(retnTodoData(data.id,data.deadline,data.todo));
     });
     return result;
 }
