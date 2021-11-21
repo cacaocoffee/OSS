@@ -23,11 +23,13 @@
 .check {
   margin: -55px 0px 0px 0px;
   float: right;
-  border: 1.5px solid #999;
+  border: none;
 
   color: #000000;
   padding: 2px;
   background-color: transparent;
+
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.6);
 }
 .check:hover {
   color: #ffffff;
@@ -36,8 +38,7 @@
 .item-pro {
   text-align: center;
   display: flex;
-  background: #ffffff;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 3px; /* 5px rounded corners */
   width: 500px;
   height: 284px;
@@ -52,8 +53,7 @@
   overflow-y: scroll;
   text-align: center;
   display: inline-block;
-  background: #ffffff;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 3px; /* 5px rounded corners */
   width: 500px;
   height: 150px;
@@ -67,8 +67,7 @@
 .item-lang {
   display: inline-block;
   text-align: center;
-  background: #ffffff;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 3px; /* 5px rounded corners */
   width: 200px;
   height: 480px;
@@ -84,7 +83,7 @@
   text-align: center;
   float: left;
   background: #ffffff;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 3px; /* 5px rounded corners */
   width: 150px;
   height: 480px;

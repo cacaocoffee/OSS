@@ -1,35 +1,29 @@
 body {
   background: url("../images/background.jpg") no-repeat center;
 }
-
 .glass-parent {
-  background-attachment: fixed;
+  background-repeat: no-repeat;
   background-size: auto;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
   padding: 1rem;
 }
-/*<!-- <% language.forEach(item =>{ %>
-    <label><input type="checkbox" name="language" value="c/c++" ><%= item.name %></label>
 
-<% }) %>
--->*/
-.glass-parent > div {
+.glass-parent .glass {
   background: inherit;
   position: relative;
+  z-index: 0;
   overflow: hidden;
   border-radius: 4px;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
   padding: 1rem;
-  margin-top: 0.5rem;
 }
 
-.glass-parent > div:first-child {
-  margin-top: 0;
-}
-
-.glass-parent > div:before {
+.glass-parent .glass:before {
   content: "";
+  background: inherit;
+  background-attachment: fixed;
   filter: blur(15px);
   position: absolute;
   left: 0;
@@ -37,16 +31,16 @@ body {
   right: 0;
   bottom: 0;
   z-index: -1;
+  margin: -20px;
 }
 
-.glass-parent > div::after {
+.glass-parent .glass::after {
   content: "";
   z-index: -1;
   position: absolute;
   left: 0;
-  top: 0px;
+  top: 0;
   right: 0;
-  bottom: -200px;
-  background-repeat: repeat;
-  background-color: rgba(255, 255, 255, 0.6);
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
 }

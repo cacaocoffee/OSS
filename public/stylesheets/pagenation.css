@@ -23,5 +23,4 @@
   width: 50%; /* 누구의 반이란거야? 부모 (여기선 body) */
   margin: 0 auto; /* border 가운데 정렬(항상 규칙마냥 씀) */
   overflow: auto;
-  margin-top: -20px;
 }

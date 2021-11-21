@@ -11,8 +11,9 @@ a {
 }
 .btn button {
   margin: 0px 0px 20px 725px;
-  background: #ffffff;
-  box-shadow: 0 3px 6px 0 rgba(163, 125, 125, 0.301);
+
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.6);
   border-radius: 3px; /* 5px rounded corners */
   border: 0;
   cursor: pointer;
@@ -28,8 +29,8 @@ a {
 
   display: inline-block;
   margin: 0px -120px 10px 130px;
-  background: #ffffff;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.301);
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.6);
   border-radius: 3px; /* 5px rounded corners */
   width: 330px;
   height: 230px;
