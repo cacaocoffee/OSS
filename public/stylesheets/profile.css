@@ -2,7 +2,9 @@
 
 /* 레이아웃 */
 .row{width:1200px; margin: 0 auto;}
-header{}
+header{position: fixed;
+    background:#fff; width:100%; z-index: 1000;
+    box-shadow:0 3px 5px rgba(0,0,0,.1);}
 section{}
 footer{}
 
