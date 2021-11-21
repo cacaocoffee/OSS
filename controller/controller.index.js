@@ -31,14 +31,11 @@ exports.index = async (req, res, next) => {
                 todoList = todoList.slice(0, 5);
             }
 
-            let user;
-            {
-                user = await apiAuth.GetUserInfo(connection, req.session.user);
-            }
+            let user = await apiAuth.GetUserInfo(connection, req.session.user);
 
             let result = apiCmn.renderData(
                 'index', 
-                ['glass', 'index', 'common', 'nav'], 
+                ['index'], 
                 ['script'],
                 {
                     'user': user,

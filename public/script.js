@@ -1,4 +1,4 @@
-function setGridItem(gridItemID){
+function setGridColItem(gridItemID){
     let grid = document.querySelector(`#${gridItemID}`);
 
     let rem = parseInt(window.getComputedStyle(document.querySelector('body')).getPropertyValue('font-size'));
@@ -13,10 +13,31 @@ function setGridItem(gridItemID){
     }
 }
 
-window.addEventListener('load', ()=>{
-    setGridItem('content')
-});
-window.addEventListener('resize', () =>{
-    setGridItem('content')
-});
+function setColSpan(gridItemID){
+    let grid = document.querySelector(`#${gridItemID}`);
 
+    let col= window.getComputedStyle(grid).getPropertyValue('grid-template-columns').split(' ').join('').split('px');
+    let colCount = 0;
+    col.forEach(item =>{
+        colCount += (item != '' && parseInt(item) != 0) ? 1 : 0;
+    });
+
+    for(let item of grid.children){
+        if(!item.hasAttribute('colspan')) continue;
+
+        let col = item.getAttribute('colspan');
+        if(col == 'max'){
+            item.style.gridColumnEnd = `span ${colCount}`;
+            continue;
+        }
+        
+        col = parseInt(col);
+
+        if( col < colCount){
+            item.style.gridColumnEnd = `span ${col}`;
+        }else{
+            item.style.gridColumnEnd = `span ${colCount}`;
+        }
+    }
+
+}

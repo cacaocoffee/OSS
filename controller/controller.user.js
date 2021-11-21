@@ -14,21 +14,32 @@ exports.getProfile = async (req, res, next) =>{
         const connection = await pool.getConnection();
         try{
 
-            const id = req.query.userid || null;
+            const findId = req.query.userid || null;
+            if(!findId) return res.redirect('/');
 
-            if(!id) return res.redirect('/');
-            
-            if(req.session.user != id){
-                return res.render('layout', apiCommon.renderData(
-                    'profile', ['glass', 'index'], null, {
-                        user:null
-                    }
-                ));
+            let userInfo = await apiAuth.GetUserInfo(connection, req.session.user);
+
+            let findUserInfo = await apiAuth.GetUserInfo(connection, findId);
+            let findUserLanguage;
+            let findUserProject;
+            findUserInfo = findUserInfo || null;
+
+            if(findUserInfo){
+                findUserLanguage = await apiSearch.GetUserLanguageList(connection, findUserInfo.id);
+                findUserProject = await apiSearch.GetUserProjectList(connection, findUserInfo.id);
             }
 
             res.render('layout', apiCommon.renderData(
-                'profile', ['glass', 'index'], null,{
-                    user:await apiAuth.GetUserInfo(connection, id)
+                'profile',
+                ['index', 'profile'],
+                ['script'],
+                {
+                    user: userInfo,
+                    findUser: findUserInfo && {
+                        user: findUserInfo,
+                        language: findUserLanguage,
+                        project: findUserProject
+                    }
                 }
             ));
 

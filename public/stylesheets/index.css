@@ -5,8 +5,8 @@ content{
     margin:0 auto;
     background:inherit;
     display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(25rem, 1fr));
     grid-gap:1rem;
+    grid-auto-flow:dense;
 }
 .notice{
     width:100%;

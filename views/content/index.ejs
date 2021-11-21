@@ -1,4 +1,4 @@
-<content class="glass-parent" id="content">
+<content class="glass-parent" id="content" style="grid-template-columns:repeat(auto-fill, minmax(25rem, 1fr));">
     <div class="glass notice">
         <div clss="wrapper">
             <h3 class="title">최근 생성된 프로젝트</h3>
@@ -64,3 +64,11 @@
         </div>
     </div>
 </content>
+<script type="text/javascript">
+    window.addEventListener('load', () => {
+        setGridColItem('content')
+    });
+    window.addEventListener('resize', () => {
+        setGridColItem('content')
+    });
+</script>

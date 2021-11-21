@@ -19,6 +19,8 @@ router.get('/signup', authController.getSignUp);
 
 router.post('/signup', authController.SignUp);
 
+router.get('/profile', profileController.getProfile);
+
 router.get('/pagenation', function (req, res, next) {
     res.render('pagenation', { title: 'Express' });
 });
