@@ -29,10 +29,13 @@ exports.index = async (req, res, next) => {
             {
                 user = await apiAuth.GetUserInfo(connection, req.session.user);
             }
+
             let result = apiCmn.renderData(
-                'index', ['glass', 'index'], [],
+                'index', 
+                ['glass', 'index', 'common'], 
+                ['script'],
                 {
-                    'user': JSON.stringify(user),
+                    'user': user,
                     'recentProject': recentProject,
                     'myProject': [],
                     'todo': []
