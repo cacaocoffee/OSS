@@ -1,16 +1,12 @@
 <script type="text/javascript">
     function invite(){
-        let data = {
-            projectid:<%= data.project.id %>
-        }
-
         fetch('/api/project/invite', {
             method:'POST',
             headers: {
                 'Content-Type':'application/json',
             },
             body:JSON.stringify({
-                projectid:1
+                projectid:<%= data.project.id %>
             })
         }).then(response =>{
             return response.json();
@@ -70,7 +66,7 @@
                     <% data.project.userlist.forEach( projUser =>{ %>
                         <% if(projUser.id == data.user.id) isParticipation = true; %>
                         <div class="user" onclick="location.href = `/users/profile?userid=<%= projUser.id %>`;">
-                            <p class="user-name"><%= projUser.name %> <br><span class="user-loginid">- <%= projUser.userid %> -</span></p>
+                            <p class="user-name"><%= (projUser.id == data.project.leaderid) ? '팀장' : '팀원' %> <%= projUser.name %> <br><span class="user-loginid">- <%= projUser.userid %> -</span></p>
                             <% if(projUser.descritpion != null){ %>
                                 <div class="upperLine">
                                     <p class="user-descript"><%= projUser.descritpion.substring(0,30) %></p>
@@ -90,6 +86,7 @@
                 </div>
             </div>
         <% } %>
+        
     <% } %>
 
 </content>

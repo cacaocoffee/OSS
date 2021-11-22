@@ -155,7 +155,6 @@ exports.GetProject = async (conn,projectid) =>{
         project_userlist, 
         project_langlist
     );
-    console.log(result);
     return result;
 }
 

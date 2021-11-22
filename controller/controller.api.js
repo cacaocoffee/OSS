@@ -60,18 +60,21 @@ exports.postInviteProject= async(req,res,next)=>{
 
             if(projectId === null) return res.json(jsonData(false, '잘못된 프로젝트입니다.'))
             
-            // TODO: project 참가
+            await connection.execute('INSERT INTO project_user(userid, projectid) VALUES(?,?);', [inviteUserId, projectId]);
 
-
-            // ------------------------------------
-
-            return res.json(jsonData(true, '프로젝트 참여 코드가 바인딩되어 있지 않습니다. 바인딩 작업을 진행해주세요.'));
-            // 작업후 상단 코드및 본 주석은 삭제 바람.
-
+            await connection.commit();
             return res.json(jsonData(true, '프로젝트에 참여했습니다.'));
             
         }catch(e){
-            return res.json(jsonData(false, '프로젝트 참여에 실패했습니다.'));
+            await connection.rollback();
+
+            switch(e.errno){
+                case 1062:
+                    return res.json(jsonData(false, '이미 참여중인 프로젝트입니다.'));
+                default:
+                    return res.json(jsonData(false, `알 수 없는 이유로 프로젝트 참여에 실패했습니다. 오류코드: ${e.errno}`));
+            }
+            
         }finally{
             await connection.release();
         }
