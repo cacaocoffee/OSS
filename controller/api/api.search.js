@@ -1,3 +1,5 @@
+const apiAuth = require('./api.auth');
+
 function retnLangData(langid, langText){
     return {
         label:langText.toLowerCase(),
@@ -87,6 +89,20 @@ exports.GetProjectList = async (conn, limits = null) =>{
     return result;    
 }
 
+exports.GetProjectUserList = async(conn, projectid) =>{
+    const queryString = 'SELECT userid FROM project_user WHERE projectid = ?;';
+    const queryParam = [projectid];
+    let result = [];
+
+    let [userList, ] = await conn.execute(queryString, queryParam);
+
+    for(let item of userList){
+        result.push(await apiAuth.GetUserInfo(conn, item.userid));
+    }
+
+    return result;
+}
+
 exports.GetUserProjectList = async (conn, userid) =>{
     const queryString = 'SELECT projectid FROM project_user WHERE userid = ?;';
     const queryParam = [userid];
@@ -124,7 +140,7 @@ exports.GetProject = async (conn,projectid) =>{
     let [project, ] = await conn.query(queryString, queryParam);
 
     let result;
-    let project_userlist= await this.GetUserProjectList(conn,projectid);
+    let project_userlist= await this.GetProjectUserList(conn,projectid);
     let project_langlist= await this.GetProjectLanguageList(conn,projectid);
 
     result = retnProjectInfoData(
