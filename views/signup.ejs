@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8">
+        <title><%= site_title %></title>
+        <link type="text/css" rel="stylesheet" href="/stylesheets/sign.css">
+        <link type="text/css" rel="stylesheet" href="/stylesheets/form.css">
+        <link type="text/css" rel="stylesheet" href="/stylesheets/glass.css">
+        <script type="text/javascript">
+            function passwordCheck(){
+                let input,checker;
+                input = document.querySelector(`#pw`);
+                checker = document.querySelector(`#pwchecker`);
+                
+                if(input.value == checker.value) {
+                    checker.style.background = `#c9ffbf`;
+                    return true;
+                }
+                checker.style.background = `#FF957a`;
+                return false;
+            }
+
+            function validID(){
+                let input = document.querySelector(`#id`);
+                if(input.value.length <= 0){
+                    alert("ID를 입력해주세요.");
+                    input.focus();
+                    return;
+                }
+
+                fetch(`/api/ValidID?id=${encodeURIComponent(input.value)}`, {
+                    method:'get'
+                }).then(response =>{
+                    return response.json();
+                }).then(ret =>{
+                    
+                    if(ret.valid != true){
+                        alert("유효하지 않은 문자열이 들어있습니다.");
+                        input.focus()
+                        return;
+                    }
+                    
+                    if(ret.exists == true){
+                        alert('이미 존재하는 ID입니다.');
+                        input.focus();
+                        return;
+                    }
+
+                    alert("사용 가능한 ID입니다.");
+                    document.querySelector(`#nickname`).focus();
+
+                }).catch(e =>{
+                    console.log(e);
+                });
+            }
+
+            window.addEventListener('DOMContentLoaded', ()=>{
+                document.querySelector(`#validID`).addEventListener('mousedown', ()=>{
+                    validID();
+                });
+                document.querySelector(`#pwchecker`).addEventListener('keyup', ()=>{
+                    passwordCheck();
+                });
+
+            });
+        </script>
+    </head>
+    <body>
+        <div class="main glass-parent">
+            <div class="glass">
+                <form action="" method="post">
+                    <fieldset class='user-field upper-line'>
+                        <legend>회원 정보</legend>
+                        <div class="warpper flex-field">
+                            <div>
+                                <input type="id" name="id" id="id" placeholder="ID" required autofocus />
+                            </div>
+                            <input type="button" class="button" id="validID" value="ID 확인">
+
+                        </div>
+                        <div class="wrapper flex-field">
+                            <div>
+                                <input type="text" name="name" id="nickname" placeholder="이름/닉네임" required />
+                            </div>
+                        </div>
+                        <div class="wrapper flex-field">
+                            <div>
+                                <input type="password" name="pw" id="pw" placeholder="Password" required />
+                            </div>
+                            <div>
+                                <input type="password" name="pwCheck" id="pwchecker" placeholder="Check Password" required />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="language-field upper-line">
+                        <legend>사용 가능한 언어/스택 목록</legend>
+                        <%  for(let lang of languageList){ %>
+                            <div>
+                                <input type="checkbox" name="language[]" id="language-<%= lang.id %>" value="<%= lang.id %>">
+                                <label for="language-<%= lang.id %>"><%= lang.value %></label>
+                            </div>
+                        <% } %>
+                    </fieldset>
+                    <fieldset class="upper-line submit-field">
+                        <a class="button" href="/users/login">이전으로</a>
+                        <input class="button" type="submit" value="회원가입">
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

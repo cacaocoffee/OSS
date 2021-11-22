@@ -1,0 +1,73 @@
+<content id="project-detail" class="glass-parent">
+    <% if(data.project == null){ %>
+        <div class="glass" colspan="max">
+            <p>존재하지 않는 프로젝트입니다.</p>
+        </div>
+    <% }else { %>
+        <div class="glass title-area" colspan="max">
+            <div class="wrapper">
+                <p class="title"><%= data.project.name %></p>
+            </div>
+        </div>
+        
+        <div class="glass">
+            <div class="wrapper">
+                <p class="project-subtitle">만료일</p>
+                <p class="project-date"><%= data.project.deadline.toLocaleString() %></p>
+            </div>
+        </div>
+
+        <div class="glass">
+            <div class="wrapper">
+                <p class="project-subtitle">프로젝트 설명</p>
+                <div class="project-desc"><%= data.project.desc %></div>
+            </div>
+        </div>
+
+        <div class="glass">
+            <div class="wrapper">
+                <p class="project-subtitle">프로젝트에서 사용하는 언어/스택</p>
+                <div class="language-area">
+                    <% if(data.project.langlist.length == 0) { %>
+                        <span class="language">아직 설정한 언어/스택이 없습니다.</span>
+                    <% } else { %>
+                        <% data.project.langlist.forEach( lang =>{ %>
+                            <span class="language"><%= lang.value %></span>
+                        <% }); %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="glass" colspan="max">
+            <div class="wrapper" id="userlist">
+                <p class="project-subtitle">참여하는 사람들</p>
+                <div class="user-area">
+                    <% data.project.userlist.forEach( projUser =>{ %>
+                        <div class="user" onclick="location.href = `/users/profile?userid=<%= projUser.id %>`;">
+                            <p class="user-name"><%= projUser.name %> <br><span class="user-loginid">- <%= projUser.userid %> -</span></p>
+                            <% if(projUser.descritpion != null){ %>
+                                <div class="upperLine">
+                                    <p class="user-descript"><%= projUser.descritpion.substring(0,30) %></p>
+                                </div>
+                            <% } %>
+                        </div>
+                    <% }); %>
+
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+</content>
+<script type="text/javascript">
+    let gridID = 'project-detail';
+
+    window.addEventListener('load', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+    });
+    window.addEventListener('resize', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+    });
+</script>

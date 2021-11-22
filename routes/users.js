@@ -1,5 +1,6 @@
 var express = require('express');
-const controller = require('../controller/controller.auth');
+const authController = require('../controller/controller.auth');
+const profileController = require('../controller/controller.user');
 const apiAuth = require('../controller/api/api.auth');
 var router = express.Router();
 
@@ -7,25 +8,18 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
 });
-router.get('/login', function (req, res, next) {
-        if(apiAuth.isLogined(req)){
-            return res.redirect('/');
-        }
-        res.render('login');
 
-});
+router.get('/login', authController.getLogin);
 
-router.post('/login', controller.Login);
+router.post('/login', authController.Login);
 
-router.get('/sign_up', function (req, res, next) {
-    res.render('sign_up', { title: 'Express' });
-});
+router.get('/logout', authController.Logout);
 
-router.post('/sign_up', controller.SignIn);
+router.get('/signup', authController.getSignUp);
 
-router.get('/profile', function (req, res, next) {
-    res.render('profile', { title: 'Express' });
-});
+router.post('/signup', authController.SignUp);
+
+router.get('/profile', profileController.getProfile);
 
 router.get('/pagenation', function (req, res, next) {
     res.render('pagenation', { title: 'Express' });
@@ -57,10 +51,13 @@ router.get('/project_edit', function (req, res, next) {
     res.render('project_edit', { title: 'Express' });
 });
 router.get('/logout', (req, res, next) => {
-    req.session.destroy();
-    res.redirect('/');
+    req.session.destroy(_ =>{
+        res.redirect('/');
+    });
 });
 
 
+
+router.get('/profile', profileController.getProfile);
 
 module.exports = router;

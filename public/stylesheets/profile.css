@@ -1,63 +1,58 @@
-@charset "utf-8";
+#user-profile{
 
-/* 레이아웃 */
-.row{width:1200px; margin: 0 auto;}
-header{position: fixed;
-    background:#fff; width:100%; z-index: 1000;
-    box-shadow:0 3px 5px rgba(0,0,0,.1);}
-section{}
-footer{}
+}
 
+#user-profile .glass{
+    height:100%;
+}
 
-/* 헤더 */
-.header_top{
-    border-bottom: 1px solid #ccc; 
- }
- .header_top .header_cont{display:flex;}
- .header_top .title{width:40%; border-right:1px solid #ccc;}
- .header_top .title p{
-     padding-left:14px; font-weight:bold; 
-     font-size:14px; 
-     height:40px; line-height: 40px;}
- .header_top .header_nav{width:70%; }
- .header_top .header_nav ul{display:flex;}
- .header_top .header_nav ul li{
-     width:20%; height:40px;  
-     border-right:1px solid #ccc;
-     text-align: center;
-     line-height:40px;
-     }
- .header_top .header_nav ul li a{}  
+#user-profile .title{
+    font-size:1.4rem;
+    text-align:center;
+    padding-bottom:0.5rem;
+    margin-bottom:1rem;
+    border-bottom:1px solid #888;
+}
 
-/* 게시판 */
-.cont1{}
-.cont1 .notice {width:800px; height:100px;}
-.cont1 .notice h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black; font-family: 'Nanum Brush Script'}
-.cont1 .notice ul li {padding-left: 8px;}
-.cont1 .notice ul li a {font-size: 16px;}
+.language-area *,
+.project-area *{
+ 
+}
+.language-area,
+.project-area{
+    display:flex;
+    gap:0.5rem;
+    justify-content:stretch;
+    align-items: center;
+    flex-wrap:wrap;
+    
+}
 
-/* 게시판2 */
-.cont2{}
-.cont2 .notice2 {width:800px; height:100px;}
-.cont2 .notice2 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black;font-family: 'Nanum Brush Script'}
-.cont2 .notice2 ul li { padding-left: 8px;}
-.cont2 .notice2 ul li a {font-size: 16px;}
+.language-area > .language,
+.project-area > .project{
+    flex-shrink:0;
+    flex-grow:1;
+    flex-basis:1;
+    padding:0.5rem 1rem;
+    text-align:center;
+}
 
-/* 게시판3 */
-.cont3{}
-.cont3 .notice3 {width:800px; height:100px;}
-.cont3 .notice3 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black; font-family: 'Nanum Brush Script'}
-.cont3 .notice3 ul li {padding-left: 8px;}
-.cont3 .notice3 ul li a {font-size: 16px;}
+.language-area > .language{
+    background:#333;
+    color:#FFF;
+    user-select:none;
+    border-radius:4px;
+}
 
-/* 게시판4 */
-.cont4{}
-.cont4 .notice4 {width:800px; height:100px;}
-.cont4 .notice4 h4 {font-size: 24px; color: #fff; padding-bottom: 3px; font-weight: bold; color:black; font-family: 'Nanum Brush Script'}
-.cont4 .notice4 ul li {padding-left: 8px;}
-.cont4 .notice4 ul li a {font-size: 16px;}
+.project-area > .project{
+    min-width:15rem;
+    cursor:pointer;
+    transition:border-bottom 300ms;
+    border-bottom:1px solid rgb(0,0,0,0);
+    margin:0.1rem;
+    
+}
 
-.page{margin-left:555px;}
-.page ul{display:flex;}
-.page ul li{color:black; text-align: center;}
-.page ul li a{padding-left:2px;}
+.project-area > .project:hover{
+    border-bottom:1px solid rgb(0,0,0,0.5);
+}

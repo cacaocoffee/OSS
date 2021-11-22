@@ -1,35 +1,44 @@
+<!DOCTYPE html>
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8" />
-    <title>말 많은 양의 왕</title>
-    <link rel="stylesheet" href="/stylesheets/login.css">
-    <link rel="stylesheet" href="/stylesheets/glass.css">
+    <meta charset="utf-8">
+    <title>
+        <%= site_title %>
+    </title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/login.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/form.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/glass.css">
+
 </head>
 
 <body>
-    <div class="glass-parent">
-        <div class="login-form">
-
-            <h1>8조 말 많은 양의 왕</h1>
-            <form action="" method="post">
-                <div class="int-area">
-                    <input type="text" name="id" id="id" value='test1' autocomplete="off" required>
-                    <label for="id">USER NAME</label>
+    <div class="glass-parent main">
+        <form method="post" id="login" class="glass">
+            <fieldset>
+                <legend>
+                    <%= site_title %> 로그인
+                </legend>
+                
+                <div class="wrapper">
+                    <input type="id" name="id" placeholder="ID" required autofocus>
                 </div>
-                <div class="int-area">
-                    <input type="password" name="pw" id="pw" value='test1' autocomplete="off" required>
-                    <label for="pw">PASSWORD</label>
+                <div class="wrapper">
+                    <input type="password" name="pw" placeholder="Password" required>
                 </div>
-                <div class="btn-area">
-                    <button id="btn">
-                        LOGIN</button>
-                </div>
-            </form>
-            <div class="caption">
-                <a href="">Forgot Password?</a>
-                <a href="sign_up">Sign up?</a>
-            </div>
+            </fieldset>
+            <% if(attemptLogin) { %>
+                <fieldset class="upper-line">
+                    <p>존재하지 않는 계정 정보입니다.<br>아이디/비밀번호가 맞는지 확인하세요.</p>
+                </fieldset>
+            <% } %>
+            <fieldset class="upper-line">
+                <input class="button" style="width:100%;" type="submit" value="로그인">
+            </fieldset>
+        </form>
+        <div class="glass flex-field">
+            <a  class="button" href="" onclick="alert('연결되지 않았습니다.');">계정 찾기</a>
+            <a  class="button" href="/users/signup">회원 가입</a>
         </div>
     </div>
 </body>

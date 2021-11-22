@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+    font-family: 'Nanum Gothic', sans-serif;
+}
+body{
+    background-image:url(../images/background.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+content{
+    max-width:1130px;
+    min-height:0px !important;
+    width:100%;
+    margin:0 auto;
+    background:inherit;
+    display:grid;
+    grid-gap:1rem;
+    grid-auto-flow:dense;
+}
+
+::-webkit-scrollbar{
+    height:6px;
+    width:6px;
+}
+
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-thumb{
+    background-color:rgba(0,0,0,0);
+    transition:background-color 0.3s;
+    transition-delay:300ms;
+
+}
+
+*:hover::-webkit-scrollbar-track{
+    background-color:rgba(0,0,0,0.3);
+    height: 6px;
+    border-radius:3px;
+    overflow:hidden;
+}
+
+*:hover::-webkit-scrollbar-thumb{
+    height: 6px;
+    border-radius:3px;
+    background-color:rgba(255,255,255,1);
+}
+
+
+.language-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.5rem;
+}
+
+.language-area > *{
+    flex-grow:1;
+    flex-shrink:0;
+    padding:0.2rem 0.5rem;
+    background-color:#555;
+    color:#FFF;
+    border-radius:4px;
+    text-align:center;
+}

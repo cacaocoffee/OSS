@@ -1,0 +1,60 @@
+<content id="user-profile" class="glass-parent" style="grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));">
+    <% if(data.findUser == null) { %>
+        <div class="glass" colspan="max">
+            <p style="text-align: center;">없는 사용자이거나 대상 프로필을 볼 권한이 없습니다.</p>
+        </div>
+    <% } else { %>
+        <div class="glass" >
+            <div class="wrapper">
+                <p class="title">'<%= data.findUser.user.name %>'님의 프로필 정보</p>
+                <p>아이디: <%= data.findUser.user.userid %></p>
+            </div>
+        </div>
+
+        <div class="glass" colspan=2 >
+            <div class="wrapper">
+                <p class="title">사용할 수 있는 언어/스택</p>
+                <div class="language-area">
+                    <% if(data.findUser.language.length == 0){ %>
+                        <span class="language">아직 사용 가능한 언어/스택을 작성하지 않았습니다.</span>
+                    <% } else { %>
+                        <% data.findUser.language.forEach(item =>{ %>
+                            <span class="language"><%= item.value %></span>
+                        <% }); %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+        <div class="glass" colspan='max'>
+            <div class="wrapper">
+                <p class="title">참여한 프로젝트</p>
+                <div class="project-area">
+                    
+                    <% if( data.findUser.project.length == 0){ %>
+                        <p style="width:100%;text-align:center;">아직 참여한 프로젝트가 없습니다.</p>
+                        <% } else { %>
+                            <% data.findUser.project.forEach( proj => {%>
+                                <div class="project" onclick="location.href=`/project/detail?projectid=<%= proj.id %>`">
+                                    <p><%= proj.name %></p>
+                                    <p><%= proj.desc.substring(0, 30) %></p>
+                                    <p>~<%= proj.deadline.toLocaleString() %></p>
+                                </div>
+                                <% }); %>
+                            </div>
+                <% } %>
+            </div>
+        </div>
+    <% } %>
+</content>
+
+<script type="text/javascript">
+    let gridID = 'user-profile'
+    window.addEventListener('load', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+    });
+    window.addEventListener('resize', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+    });
+</script>

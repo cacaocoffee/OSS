@@ -1,21 +1,19 @@
 <header>
-    <h1 class="ir_pm">header</h1>
-        <div class="header_top">
-        <div class="row">
-            <div class="header_cont">
-        <div class="title">
-            <p>OSS &amp; 말많은양의왕</p>
+    <div class="header">
+        <div class="flex-mode">
+            <div class="title flex-mode" style="justify-content:left;">
+                <a href="/"><%= site_title %></a>
+            </div>
+            <div class="flex-mode" style="justify-content:right;">
+                <a href="/users/profile?userid=<%= data.user.id %>"><%= data.user.userid %></a>
+                <a href="/project/my">내 프로젝트</a>
+                <a href="/users/logout">로그아웃</a>
+            </div>
         </div>
-        <div class="header_nav">
-            <ul>
-                <li><a href="">이름</a></li>
-                <li><a href="">내정보</a></li>
-                <li><a href="">프로젝트</a></li>
-                <li><a href="">프로필</a></li>
-                <li><a href="">로그아웃</a></li>    
-            </ul>
-        </div>    
     </div>
-</div>
-</div>                 
 </header>
+<nav>
+    <a href="/project/list">프로젝트</a>
+    <a href="/users/list">프로필</a>
+    <a href="/todo/list">TODO</a>
+</nav>

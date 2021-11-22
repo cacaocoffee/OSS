@@ -2,15 +2,8 @@ var express = require('express');
 const createError = require('http-errors');
 var router = express.Router();
 
-router.use(function(req,res,next){
-    res.render('error', {
-        message:"페이지 없음",
-        error:{
-            status:404,
-            message:`http://` + req.hostname + req.url
-        }
-    })
-    next(createError(404));
+router.get(function(req,res,next){
+    res.json({error:"잘못된 접근"});
 })
 
 module.exports = router;

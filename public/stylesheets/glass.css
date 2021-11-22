@@ -1,14 +1,13 @@
 .glass-parent{
     background-repeat:no-repeat;
-    background-attachment: fixed;
     background-size:auto;
     align-items:center;
     justify-content: center;
     min-height:100vh;
-    padding:11rem;
+    padding:1rem;
 }
 
-.glass-parent > div{
+.glass-parent .glass{
     background:inherit;
     position:relative;
     z-index:0;
@@ -16,16 +15,12 @@
     border-radius:4px;
     box-shadow:0 0 1rem rgba(0,0,0,0.2);
     padding:1rem;
-    
 }
 
-.glass-parent > div:first-child{
-    margin-top:0;
-}
-
-.glass-parent > div:before{
+.glass-parent  .glass:before{
     content:'';
     background:inherit;
+    background-attachment: fixed;
     filter:blur(15px);
     position:absolute;
     left:0;
@@ -36,7 +31,7 @@
     margin:-20px;
 }
 
-.glass-parent > div::after{
+.glass-parent .glass::after{
     content:'';
     z-index:-1;
     position:absolute;

@@ -1,9 +1,9 @@
 exports.existsID = async (conn, id) =>{
     try{
-        const queryString = 'SELECT * FROM ?? WHERE ?? = ?;';
-        const queryParam = ['user', 'userid', id];
+        const queryString = 'SELECT * FROM user WHERE userid = ?;';
+        const queryParam = [id];
     
-        const [result, ] = await conn.query(queryString, queryParam);
+        const [result, ] = await conn.execute(queryString, queryParam);
         if(result[0]) return 1;
         return 0;
     }catch(e){
@@ -33,4 +33,13 @@ exports.isLogined = (req) =>{
     if(!req.session.user) return false;
 
     return true;
+}
+
+exports.GetUserInfo = async (conn, id) =>{
+    let queryString = 'SELECT * FROM user WHERE id = ? LIMIT 1;';
+    let queryParam = [id];
+
+    let [result, ] = await conn.execute(queryString, queryParam);
+    
+    return result[0];
 }
