@@ -9,7 +9,7 @@ function setGridColItem(gridItemID){
             itemHeight = parseInt(item.lastElementChild.offsetHeight) / rem / 2;
             gap = 2;
         }
-        item.style.gridRowEnd = `span ${Math.round(itemHeight + gap)}`;
+        item.style.gridRowEnd = `span ${Math.floor(itemHeight + gap)}`;
     }
 }
 
