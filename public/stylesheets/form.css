@@ -26,7 +26,9 @@ input[type='checkbox']:hover
 input[type='text'],
 input[type='password'],
 input[type='id'],
-input[type='email']
+input[type='email'],
+input[type='date'],
+textarea
 {
     border:0;
     border-radius:4px;
@@ -41,7 +43,9 @@ input[type='email']
 input[type='text']:hover,
 input[type='password']:hover,
 input[type='id']:hover,
-input[type='email']:hover
+input[type='email']:hover,
+input[type='date']:hover,
+textarea:hover
 {
     box-shadow:0 0 .3rem rgba(0,0,0,0.2);
 }
@@ -51,9 +55,14 @@ input[type='text']:focus:hover,
 input[type='password']:focus,
 input[type='password']:focus:hover,
 input[type='id']:focus,
+input[type='date']:focus,
+textarea:focus,
+
 input[type='id']:focus:hover,
 input[type='email']:focus,
-input[type='email']:focus:hover
+input[type='email']:focus:hover,
+input[type='date']:focus:hover,
+textarea:focus:hover
 {
     box-shadow:0 0 .3rem rgba(63, 195, 235, 0.7);
 }
@@ -113,4 +122,13 @@ form .wrapper{
 }
 .submit-field > *{
     margin-left:1rem;
+}
+
+textarea{
+    resize:vertical;
+
+}
+
+input[type='date']{
+    text-align:right;
 }

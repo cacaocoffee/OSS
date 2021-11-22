@@ -4,6 +4,10 @@ function setGridColItem(gridItemID){
     let rem = parseInt(window.getComputedStyle(document.querySelector('body')).getPropertyValue('font-size'));
     let itemHeight;
     for(let item of grid.children){
+        if(item.hasAttribute('rowspan')){
+            item.style.gridRowEnd = `span ${parseInt(item.getAttribute('rowspan'))}`;
+            continue;
+        }
         itemHeight = 0;
         if(item.childElementCount){
             itemHeight = parseInt(item.lastElementChild.offsetHeight) / rem / 2;

@@ -1,0 +1,60 @@
+form{
+    width:100%;
+}
+
+form fieldset > div.flex-mode{
+    margin-top:1rem !important;
+}
+
+form fieldset > div.flex-mode:first-child{
+    margin-top:0;
+}
+
+.language-field > div{
+    display:inline-block;
+}
+
+.language-field{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-items:stretch;
+    align-items:center;
+}
+
+.language-field > div{
+    flex-grow:1;
+    flex-shrink:1;
+    flex-basis:0;
+    margin:0.1rem;
+}
+
+
+input[type='checkbox']{
+    display:none;
+}
+
+input[type='checkbox'] + label{
+    border:1px solid #888;
+    display:inline-block;
+    padding:0.5rem;
+    white-space:pre;
+    width:100%;
+    border-radius:4px;
+    user-select:none;
+    cursor:pointer;
+}
+input[type='checkbox']:checked + label{
+    border:1px solid #333;
+    background-color:#333;
+    color:#FFF;
+    user-select:none;
+}
+
+.int-checkbox {
+  display: inline-block;
+  width: 400px;
+}
+.int-checkbox label {
+  display: inline-block;
+}

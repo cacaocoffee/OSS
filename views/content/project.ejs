@@ -19,6 +19,12 @@
             <p style="text-align:center;">아직 프로젝트가 없습니다.</p>
         </div>
     <% } else { %>
+        <div class="glass project" onclick="location.href = `/project/make`;" style="display:flex; align-items:center; justify-content:center; align-content:center;" rowspan='4'>
+            <div class="wrapper" style="text-align:center">
+                <p>새 프로젝트 만들기</p> 
+            </div>
+        </div>
+
         <% data.project.forEach(proj => { %>
             <div class="glass project" onclick="location.href = `/project/detail?projectid=<%= proj.id %>`;">
                 <div class="wrapper">

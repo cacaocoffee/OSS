@@ -8,6 +8,10 @@ router.get('/detail', controller.getProejctDetail);
 
 router.get('/list', controller.getProject);
 
+router.get('/make', controller.getProjectMake);
+
+router.post('/make', controller.postProjectMake);
+
 router.use(controller.getProject);
 
 module.exports = router;
