@@ -27,6 +27,8 @@ function retnUserData(id, userid, name){
         'name':name
     };
 }
+
+
 function retnTodoData(toid,deadline,todo){
     return {
         id:toid,
@@ -43,6 +45,11 @@ function retnUserTodoData(userid,todoid,projectid,overwrite,done,cleardate){
     'done':done,
     'cleardate':cleardate
     };
+}
+function retnTodoInfoData(project,todolist,todouserlist){
+    project.todolist = todolist;
+    project.todouserlist = todouserlist;
+    return project;
 }
 
 exports.GetLanguageList = async (conn) =>{
@@ -153,5 +160,21 @@ exports.GetTodolist = async (conn) =>{
     todolist.forEach((data) =>{
         result.push(retnTodoData(data.id,data.deadline,data.todo));
     });
+    return result;
+}
+
+exports.GetTodotext = async (conn, userid) =>{
+    const queryString = 'SELECT * FROM todo_user WHERE userid = ?;';
+    const queryParam = [userid];
+    let [todo, ] = await conn.query(queryString, queryParam);
+
+    let[todo_list,] = await this.GetTodolist(conn, userid);
+    let[todouser_list,] =await this.GetUserTodolist(conn,userid);    
+    result = retnTodoInfoData(
+        retnUserTodoData(todo[0].userid,todo[0].todoid,todo[0].projectid,todo[0].overwrite,todo[0].done,todo[0].cleardate),
+        todo_list,
+        todouser_list
+    );
+    console.log(result);
     return result;
 }
