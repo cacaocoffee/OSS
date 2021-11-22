@@ -85,10 +85,13 @@ exports.InitializeDB = async (req, res, next) => {
             query(
                 `CREATE TABLE IF NOT EXISTS project(
                     id int unsigned NOT NULL AUTO_INCREMENT COMMENT '프로젝트 식별 아이디',
+                    leaderid int unsigned NOT NULL COMMENT '프로젝트 팀장 id ',
                     name tinytext NOT NULL COMMENT '프로젝트 이름',
                     description tinytext COMMENT '프로젝트 설명 및 내용',
                     deadline date NOT NULL COMMENT '프로젝트 종료 기간',
-                    PRIMARY KEY(id)
+                    createtime date DEFAULT CURRENT_TIMESTAMP COMMENT '프로젝트 생성 기간',
+                    PRIMARY KEY(id),
+                    FOREIGN KEY(leaderid) references user(id)
                 ) default character set utf8 collate utf8_general_ci;` );
             await connection.
             query(
@@ -135,12 +138,12 @@ exports.InitializeDB = async (req, res, next) => {
             await connection.query(`INSERT INTO todo (deadline,todo) VALUES('2021-12-25','meet Santa');`);
             await connection.query(`INSERT INTO todo_user (userid,todoid) VALUES(1,1);`);
             await connection.query(`INSERT INTO todo_user (userid,todoid,projectid,overwrite) VALUES(1,2,1,1);`);
-            await connection.query(`INSERT INTO project (name, description, deadline) VALUES('hello world', '테스트', '2021-11-25');`);
+            await connection.query(`INSERT INTO project (leaderid,name, description, deadline) VALUES(1,'hello world', '테스트', '2021-11-25');`);
             await connection.query(`INSERT INTO project_user (userid, projectid) VALUES(1,1);`);
             await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(1,1);`);
             await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(2,1);`);
             await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(5,1);`);
-            await connection.query(`INSERT INTO project (name, description, deadline) VALUES('말많은 양의 왕', '테스트', '2021-11-27');`);
+            await connection.query(`INSERT INTO project (leaderid,name, description, deadline) VALUES(2,'말많은 양의 왕', '테스트', '2021-11-27');`);
             await connection.query(`INSERT INTO project_user (userid, projectid) VALUES(2,2);`);
             await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(5,2);`);
             await connection.query(`INSERT INTO language_project (languageid, projectid) VALUES(2,2);`);

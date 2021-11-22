@@ -7,12 +7,14 @@ function retnLangData(langid, langText){
         value:langText
     };
 }
-function retnProjectData(id, name, desc, deadline, languageList){
+function retnProjectData(id,leaderid, name, desc, deadline,createtime, languageList){
     return {
         'id': id,
+        'leaderid':leaderid,
         'name': name,
         'desc': desc,
         'deadline':deadline,
+        'createtime':createtime,
         'language':languageList
     }
 }
@@ -29,8 +31,6 @@ function retnUserData(id, userid, name){
         'name':name
     };
 }
-
-
 function retnTodoData(toid,deadline,todo){
     return {
         id:toid,
@@ -90,7 +90,7 @@ exports.GetProjectList = async (conn, limits = null) =>{
 
     for(let project of getList){
         let langList = await this.GetProjectLanguageList(conn, project.id);
-        result.push(retnProjectData(project.id, project.name, project.description, project.deadline, langList));
+        result.push(retnProjectData(project.id,project.leaderid, project.name, project.description, project.deadline,project.createtime, langList));
     }
 
     return result;    
@@ -122,7 +122,7 @@ exports.GetUserProjectList = async (conn, userid) =>{
         let [listFromProj, ] = await conn.execute(queryString, queryParam);
         for(let project of listFromProj){
             let langList = await this.GetProjectLanguageList(conn, project.id)
-            result.push(retnProjectData(project.id, project.name, project.description, project.deadline, langList));
+            result.push(retnProjectData(project.id,project.leaderid, project.name, project.description, project.deadline,project.createtime, langList));
         }
     }
     return result;
@@ -151,10 +151,11 @@ exports.GetProject = async (conn,projectid) =>{
     let project_langlist= await this.GetProjectLanguageList(conn,projectid);
 
     result = retnProjectInfoData(
-        retnProjectData(project[0].id, project[0].name, project[0].description, project[0].deadline), 
+        retnProjectData(project[0].id,project[0].leaderid, project[0].name, project[0].description, project[0].deadline,project[0].createtime), 
         project_userlist, 
         project_langlist
     );
+    console.log(result);
     return result;
 }
 
