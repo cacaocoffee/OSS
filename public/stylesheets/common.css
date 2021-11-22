@@ -48,3 +48,20 @@ content{
     border-radius:3px;
     background-color:rgba(255,255,255,1);
 }
+
+
+.language-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 0.5rem;
+}
+
+.language-area > *{
+    flex-grow:1;
+    flex-shrink:0;
+    padding:0.2rem 0.5rem;
+    background-color:#555;
+    color:#FFF;
+    border-radius:4px;
+    text-align:center;
+}

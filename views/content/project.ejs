@@ -19,7 +19,7 @@
             <p style="text-align:center;">아직 프로젝트가 없습니다.</p>
         </div>
     <% } else { %>
-        <% for(let i = 0 ; i < 5; ++i ){ data.project.forEach(proj => { %>
+        <% data.project.forEach(proj => { %>
             <div class="glass project" onclick="location.href = `/project/detail?projectid=<%= proj.id %>`;">
                 <div class="wrapper">
                     <p class="project-title"><%= proj.name %></p>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-        <% });} %>
+        <% }); %>
     <% } %>
 </content>
 

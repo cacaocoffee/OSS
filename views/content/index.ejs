@@ -6,7 +6,7 @@
                 <p>최근 생성된 프로젝트가 존재하지 않습니다.</p>
             <% } else { %>
                 <% data.recentProject.forEach(item=>{ %>
-                    <div class="notice-item" onclick="location.href= `/project?id=<%= item.id %>`;">
+                    <div class="notice-item" onclick="location.href= `/project/detail?projectid=<%= item.id %>`;">
                         <p class="notice-item-title"><%= item.name %></p>
                         <p class="notice-item-date">~ <%= item.deadline.toLocaleString() %></p>
     
@@ -27,7 +27,7 @@
                 <p>내가 참여중인 프로젝트가 존재하지 않습니다.</p>
             <% } else { %>
                 <% data.myProject.forEach(item=>{ %>
-                    <div class="notice-item" onclick="location.href= `/project?id=<%= item.id %>`;">
+                    <div class="notice-item" onclick="location.href= `/project/detail?projectid=<%= item.id %>`;">
                         <p class="notice-item-title"><%= item.name %></p>
                         <p class="notice-item-date">~ <%= item.deadline.toLocaleString() %></p>
     
