@@ -20,7 +20,7 @@ function renderData(loginedUser, customize, targetUserInfo, projectList){
 
 function renderForDetail(loginedUser, projectInfo, coworker){
     let result = apiCommon.renderData(
-        'project_detail',
+        'project-detail',
         ['project_detail'],
         ['script'],
         {

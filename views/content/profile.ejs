@@ -8,6 +8,12 @@
             <div class="wrapper">
                 <p class="title">'<%= data.findUser.user.name %>'님의 프로필 정보</p>
                 <p>아이디: <%= data.findUser.user.userid %></p>
+                <p>소개: <% if(data.findUser.user.description == null) { %>
+                        소개글이 없습니다.
+                    <% } else { %>
+                        <%= data.findUser.user.descrption %>
+                    <% } %>
+                </p>
             </div>
         </div>
 
