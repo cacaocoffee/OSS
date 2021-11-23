@@ -231,5 +231,45 @@ exports.SetProject = async (conn, projectid, name, description, deadline, langua
             await conn.execute(queryString, queryParam);
         }
     }
+}
 
+//배열로 들어옴
+exports.GetUserListwithlanguage = async(conn,language) =>{
+    const q = `SELECT id FROM user;`;
+    let [userid, ]= await conn.execute(q);
+    let result = [];
+    userid.forEach(data => {
+        result.push(data.id);        
+    });
+    //전체 유저의 userid 가져옴
+    if(!(Array.isArray(language) && language.length === 0)){
+        for(let item of language){
+            const queryString = `SELECT userid FROM language_user WHERE language = ? ;`;
+            const queryParam = [item];
+            
+            // 언어별 사용자 리스트
+            let [langUserList, ]= await conn.query(queryString, queryParam);
+            let temp = []; // 사용자 리스트 배열
+            let arr = []; // white list;
+            langUserList.forEach(datiTempa => temp.push(data.userid));
+            
+            for(let val of temp) {
+                let ;
+                iTemp = result.findIndex((elt) => {return elt == val});
+                if(0 <= iTemp) arr.push(result[iTemp]);
+            }
+            result = arr;
+        }
+    }
+    let retn=[];
+    for(let item of result)
+    {
+        const queryString = `SELECT id,userid,name,description FROM user WHERE id=?;`
+        const queryParam = [item];
+        let [UserList,] = await conn.execute(queryString, queryParam);
+        if(UserList.length != 0){
+            retn.push(retnUserData(UserList[0].id,UserList[0].userid,UserList[0].name,UserList[0].description))
+        }
+    }
+    return retn;
 }
