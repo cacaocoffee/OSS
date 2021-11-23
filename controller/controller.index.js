@@ -17,7 +17,7 @@ exports.index = async (req, res, next) => {
             if (recentProject.length > 5) {
                 recentProject = recentProject.slice(0, 5);
             }
-
+            await apiSearch.GetUserList(connection);
             let myProject = [];
             myProject = await apiSearch.GetUserProjectList(connection, req.session.user);
             if(myProject.length > 5){
@@ -30,7 +30,7 @@ exports.index = async (req, res, next) => {
             if (todoList.length > 5) {
                 todoList = todoList.slice(0, 5);
             }
-
+            await set
             let user = await apiAuth.GetUserInfo(connection, req.session.user);
 
             let result = apiCmn.renderData(
