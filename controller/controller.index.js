@@ -29,7 +29,6 @@ exports.index = async (req, res, next) => {
             if (todoList.length > 5) {
                 todoList = todoList.slice(0, 5);
             }
-            await set
             let user = await apiAuth.GetUserInfo(connection, req.session.user);
 
             let result = apiCmn.renderData(
