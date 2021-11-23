@@ -258,26 +258,26 @@ exports.getProjectModify = async(req,res,next)=>{
 
 exports.postProjectModify = async (req, res, next) =>{
     if(! await apiAuth.isLogined(req)) return res.redirect(req.baseUrl);
-
+    
     try{
         const pool = await db.pool();
         const connection = await pool.getConnection(async conn=>conn);
         try{
             const mdfProjectId = req.body.projectid || null;
-            const project = await apiSearch.GetProject(connection, mdfProjectId) || null;
+            const project = (await apiSearch.GetProject(connection, mdfProjectId));
             const data = {
                 newName: req.body.projectName,
                 newDesc: req.body.projectDesc,
-                newDeadLine: req.body.projectdeadline,
+                newDeadLine: req.body.projectDeadline,
                 newLangauge: req.body.language || []
             }
-
-            if(!project || project.leaderid != req.session.user) return res.redirect(req.baseUrl);
+            
+            if(project == null || project.leaderid != req.session.user) {
+                return res.redirect(req.baseUrl);
+            }
             // 없는 프로젝트이거나 프로젝트 소유자로 로그인하지 않은 경우 탈출
-
             // TODO: 프로젝트 변경사항 적용
-
-
+            await apiSearch.SetProject(connection,mdfProjectId,data.newName,data.newDesc,data.newDeadLine,data.newLangauge);
             // ---------------------------------------
 
             await connection.commit();
