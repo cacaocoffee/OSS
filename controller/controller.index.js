@@ -17,7 +17,6 @@ exports.index = async (req, res, next) => {
             if (recentProject.length > 5) {
                 recentProject = recentProject.slice(0, 5);
             }
-            await apiSearch.GetUserList(connection);
             let myProject = [];
             myProject = await apiSearch.GetUserProjectList(connection, req.session.user);
             if(myProject.length > 5){

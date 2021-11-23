@@ -210,6 +210,5 @@ exports.GetUserList = async (conn) =>{
     UserList.forEach((data) =>{
         result.push(retnUserTodoData(data.id,data.userid,data.name,data.description));
     });
-    console.log(result);
     return result;
 }
