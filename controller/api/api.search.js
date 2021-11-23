@@ -188,10 +188,18 @@ exports.GetTodotext = async (conn, userid) =>{
     let[todo_list,] = await this.GetTodolist(conn, userid);
     let[todouser_list,] =await this.GetUserTodolist(conn,userid);    
     result = retnTodoInfoData(
-        retnUserTodoData(todo[0].userid,todo[0].todoid,todo[0].projectid,todo[0].overwrite,todo[0].done,todo[0].cleardate),
+        retnUserTodoData( todo[0].userid,todo[0].todoid,todo[0].projectid,todo[0].overwrite,todo[0].done,todo[0].cleardate),
         todo_list,
         todouser_list
     );
     console.log(result);
     return result;
+}
+
+//todo 내용 업데이트 하는 api
+exports.SetTodo = async (conn,id,deadline,todo) => {
+    // Todo의 아이디는 고윳값이므로 수정에 들어갈 필요가 없겠죠?
+    const queryString = 'UPDATE todo SET deadline=?,todo=?  WHERE id = ?;';
+    const queryParam = [deadline,todo,id];
+    await conn.query(queryString, queryParam);
 }
