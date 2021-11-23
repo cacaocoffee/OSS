@@ -98,14 +98,10 @@ exports.postGetUserListWith = async(req,res,next)=>{
         try{
             const langList = req.body.filter || [];
             // 검색시 적용할 필터
-            console.log(langList);
             
             let result; // 반환할 데이터
-            // 검색 api 호출
+            result = await apiSearch.GetUserListWithLanguage(connection, langList);
 
-
-
-            // -----------------------------------------------
             return res.json(jsonData(true, result));
 
         }catch(e){

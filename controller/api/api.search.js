@@ -234,7 +234,7 @@ exports.SetProject = async (conn, projectid, name, description, deadline, langua
 }
 
 //배열로 들어옴
-exports.GetUserListwithlanguage = async(conn,language) =>{
+exports.GetUserListWithLanguage = async(conn,language) =>{
     const q = `SELECT id FROM user;`;
     let [userid, ]= await conn.execute(q);
     let result = [];
