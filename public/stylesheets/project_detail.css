@@ -77,7 +77,8 @@
     overflow-wrap:break-word;
 }
 
-#project-detail .invite{
+#project-detail .invite,
+#project-detail .modify{
     width:100%;
     padding:0.5rem;
     border:0;
@@ -88,6 +89,7 @@
     transition:box-shadow 300ms;
 }
 
-#project-detail .invite:hover{
+#project-detail .invite:hover,
+#project-detail .modify:hover{
     box-shadow:0 0 0.5rem rgba(0,0,0,0.3); 
 }

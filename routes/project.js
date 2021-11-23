@@ -12,6 +12,8 @@ router.get('/make', controller.getProjectMake);
 
 router.post('/make', controller.postProjectMake);
 
+router.get('/modify', controller.getProjectModify);
+
 router.use(controller.getProject);
 
 module.exports = router;

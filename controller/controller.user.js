@@ -30,8 +30,8 @@ exports.getProfile = async (req, res, next) =>{
             }
 
             res.render('layout', apiCommon.renderData(
-                'profile',
-                ['index', 'profile'],
+                'profile-detail',
+                ['index', 'profile_detail'],
                 ['script'],
                 {
                     user: userInfo,

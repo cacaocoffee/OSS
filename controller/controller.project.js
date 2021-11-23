@@ -18,7 +18,7 @@ function renderData(loginedUser, customize, targetUserInfo, projectList){
     return result;
 }
 
-function renderForDetail(loginedUser, projectInfo, coworker){
+function renderForDetail(loginedUser, projectInfo){
     let result = apiCommon.renderData(
         'project-detail',
         ['project_detail'],
@@ -64,7 +64,7 @@ exports.getProject = async (req,res, next)=>{
             ));
 
         }catch(e){
-            return next(e);
+            return res.redirect(req.baseUrl);
         }
 
     }catch(e){
@@ -77,6 +77,7 @@ exports.getMyProject = async (req,res,next)=>{
     if(! await apiAuth.isLogined(req)){
         return res.redirect('/');
     }
+
     try{
         const pool = await db.pool();
         const connection = await pool.getConnection(async conn=>conn);
@@ -92,8 +93,7 @@ exports.getMyProject = async (req,res,next)=>{
                 myProject
             ));
         }catch(e){
-            return next(e);
-
+            return res.redirect(req.baseUrl);
         }finally{
             await connection.release();
         }
@@ -105,14 +105,13 @@ exports.getMyProject = async (req,res,next)=>{
 
 exports.getProejctDetail = async(req,res,next)=>{
     if(! await apiAuth.isLogined(req)) return res.redirect('/');
-    
     try{
         const pool = await db.pool();
         const connection = await pool.getConnection(async conn => conn);
         try{
 
             let projectId = req.query.projectid || null;
-            if(!projectId) return res.redirect('/project');
+            if(!projectId) return res.redirect(req.baseurl);
 
             let projectInfo = await apiSearch.GetProject(connection, projectId);
 
@@ -121,7 +120,7 @@ exports.getProejctDetail = async(req,res,next)=>{
                 loginedUser,
                 projectInfo))
         }catch(e){
-            return next(e);
+            return res.redirect(req.baseUrl);
         }finally{
             await connection.release();
         }
@@ -132,7 +131,7 @@ exports.getProejctDetail = async(req,res,next)=>{
 
 exports.getProjectMake = async(req,res,next)=>{
     if(! await apiAuth.isLogined(req)) return res.redirect('/');
-
+    console.log(req);
     try{
         const pool = await db.pool();
         const connection = await pool.getConnection(async conn=>conn);
@@ -170,7 +169,7 @@ exports.postProjectMake = async(req,res,next)=>{
             const projectName = req.body.projectName || null;
             const projectDesc = req.body.projectDesc || null;
             const projectDeadline = req.body.projectDeadline || null;
-            const languageList = req.body.language || null;
+            const languageList = req.body.language || [];
             
             if(projectName == null || projectDeadline == null) return res.redirect('/project');
             // 필수 항목 없으면 프로젝트 리스트 페이지로 리다이렉트
@@ -191,8 +190,102 @@ exports.postProjectMake = async(req,res,next)=>{
             return res.redirect(`/project/detail?projectid=${project.insertId}`);
 
         }catch(e){
-            await connection.rollaback();
+            await connection.rollback();
             return next(e);
+        }finally{
+            await connection.release();
+        }
+    }catch(e){
+        return next(e);
+    }
+}
+
+exports.getProjectModify = async(req,res,next)=>{
+    if(!await apiAuth.isLogined(req)) return res.redirect('/');
+
+    const mdfProjectId = req.query.projectid || null;
+
+    if(! mdfProjectId)  return res.redirect('/project');
+
+    try{
+        const pool = await db.pool();
+        const connection = await pool.getConnection(async conn=>conn);
+
+        try{
+            const project = await apiSearch.GetProject(connection, mdfProjectId);
+
+            if(project.leaderid != req.session.user) return redirect(`/project/detail?projectid=${mdfProjectId}`)
+            // 프로젝트 소유자가 아닌 경우 상세 페이지로 리다이렉트
+            
+            const loginedUser = await apiAuth.GetUserInfo(connection, req.session.user);
+            
+            const langList = await apiSearch.GetLanguageList(connection);
+            const langCheckedList = await apiSearch.GetProjectLanguageList(connection, project.id);
+
+            for(let lang of langList){
+                for(let chekced of langCheckedList){
+                    if(chekced.id === lang.id){
+                        lang.checked = true;
+                    }
+                }
+                if(! 'checked' in lang) lang.checked = false;
+
+            }
+
+            return res.render('layout', apiCommon.renderData(
+                'project-mdf',
+                ['project_make', 'form'],
+                ['script'],
+                {
+                    user:loginedUser,
+                    project:project,
+                    language: langList
+                }
+            ));
+
+
+        }catch(e){
+            console.log(e);
+            return res.redirect(req.baseUrl);
+        }finally{
+            await connection.release();
+        }
+
+    }catch(e) {
+        return next(e);
+    }
+}
+
+exports.postProjectModify = async (req, res, next) =>{
+    if(! await apiAuth.isLogined(req)) return res.redirect(req.baseUrl);
+
+    try{
+        const pool = await db.pool();
+        const connection = await pool.getConnection(async conn=>conn);
+        try{
+            const mdfProjectId = req.body.projectid || null;
+            const project = await apiSearch.GetProject(connection, mdfProjectId) || null;
+            const data = {
+                newName: req.body.projectName,
+                newDesc: req.body.projectDesc,
+                newDeadLine: req.body.projectdeadline,
+                newLangauge: req.body.language || []
+            }
+
+            if(!project || project.leaderid != req.session.user) return res.redirect(req.baseUrl);
+            // 없는 프로젝트이거나 프로젝트 소유자로 로그인하지 않은 경우 탈출
+
+            // TODO: 프로젝트 변경사항 적용
+
+
+            // ---------------------------------------
+
+            await connection.commit();
+            return res.redirect(`/project/detail?projectid=${mdfProjectId}`);
+
+        }catch(e){
+            await connection.rollback();
+            return res.redirect(req.baseUrl);
         }finally{
             await connection.release();
         }
