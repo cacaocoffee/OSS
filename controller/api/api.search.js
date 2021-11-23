@@ -24,11 +24,12 @@ function retnProjectInfoData(project, userlist,langlist){
     return project;
 }
 
-function retnUserData(id, userid, name){
+function retnUserData(id, userid, name,description){
     return {
         'id' : id,
         'userid': userid,
-        'name':name
+        'name':name,
+        'description':description
     };
 }
 function retnTodoData(toid,deadline,todo){
@@ -196,10 +197,19 @@ exports.GetTodotext = async (conn, userid) =>{
     return result;
 }
 
-//todo 내용 업데이트 하는 api
 exports.SetTodo = async (conn,id,deadline,todo) => {
-    // Todo의 아이디는 고윳값이므로 수정에 들어갈 필요가 없겠죠?
     const queryString = 'UPDATE todo SET deadline=?,todo=?  WHERE id = ?;';
     const queryParam = [deadline,todo,id];
-    await conn.query(queryString, queryParam);
+    await conn.execute(queryString, queryParam);
+}
+
+exports.GetUserList = async (conn) =>{
+    const queryString = `SELECT id,userid,name,description FROM user ;`;
+    let [UserList,]  = await conn.query(queryString);
+    let result=[]; 
+    UserList.forEach((data) =>{
+        result.push(retnUserTodoData(data.id,data.userid,data.name,data.description));
+    });
+    console.log(result);
+    return result;
 }
