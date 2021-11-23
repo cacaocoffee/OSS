@@ -4,18 +4,16 @@ const apiSearch = require('./api/api.search');
 const db = require('../Server/dbConn');
 const sitesubstitute = require('../Server/config').config_site;
 
-exports.getProfile = async (req, res, next) =>{
-    if(! await apiAuth.isLogined(req)) {
-        console.log('not login');
-        return res.redirect('/');
-    }
+exports.getProfileDetail = async (req, res, next) =>{
+    if(! await apiAuth.isLogined(req)) return res.redirect('/');
+
     try{
         const pool = await db.pool();
         const connection = await pool.getConnection();
         try{
 
             const findId = req.query.userid || null;
-            if(!findId) return res.redirect('/');
+            if(!findId) return res.redirect(req.baseUrl);
 
             let userInfo = await apiAuth.GetUserInfo(connection, req.session.user);
 
@@ -45,10 +43,46 @@ exports.getProfile = async (req, res, next) =>{
 
         }catch(e){
             console.log(e);
-            return res.status(500).end();
+            return res.redirect(req.baseUrl);
         }
     }catch(e){
         console.log(e);
         return res.status(500).end();
+    }
+}
+
+exports.getProfileList = async (req,res,next) =>{
+    if(! await apiAuth.isLogined(req)) return res.redirect('/');
+
+    try{
+        const pool = await db.pool();
+        const connection = await pool.getConnection(async conn => conn);
+        try{
+            const peopleCount = 30; // 한 번에 가져올 데이터 수
+            const page = req.query.page || 0;
+            const limitStart = peopleCount * page;
+            // 검색 새작할 위치
+
+            const loginedUser = await apiAuth.GetUserInfo(connection, req.session.user);
+            // const userList;
+                        
+            return res.render('layout', apiCommon.renderData(
+                'profile',
+                ['profile'],
+                ['script'],
+                {
+                    user: loginedUser,
+                    userList: []
+                }
+            ));
+
+        }catch(e){
+            return res.redirect(req.baseUrl);
+        }finally{
+            await connection.release();
+        }
+    }catch(e){
+        console.log(e);
+        return res.redirect(req.baseUrl);
     }
 }

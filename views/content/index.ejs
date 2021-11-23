@@ -1,12 +1,13 @@
 <content class="glass-parent" id="content" style="grid-template-columns:repeat(auto-fill, minmax(25rem, 1fr));">
     <div class="glass notice">
-        <div clss="wrapper">
-            <h3 class="title">최근 생성된 프로젝트</h3>
-            <% if (data.recentProject.length == 0){ %>
-                <p>최근 생성된 프로젝트가 존재하지 않습니다.</p>
+        <div class="wrapper">
+            <h3 class="title">내가 할일</h3>
+            <% if (data.todo.length == 0){ %>
+                <p>할일을 모두 했습니다. 부지런한 당신! 칭찬해~</p>
             <% } else { %>
-                <% data.recentProject.forEach(item=>{ %>
-                    <div class="notice-item" onclick="location.href= `/project/detail?projectid=<%= item.id %>`;">
+                <%# TODO: 들어오는 데이터 구조가 확정된 후 수정 필요 %>
+                <% data.todo.forEach(item=>{ %>
+                    <div class="notice-item" onclick="location.href= `/profile?id=<%= data.user.id %>&todoid=<%= item.id %>`;">
                         <p class="notice-item-title"><%= item.name %></p>
                         <p class="notice-item-date">~ <%= item.deadline.toLocaleString() %></p>
     
@@ -42,14 +43,13 @@
         </div>
     </div>
     <div class="glass notice">
-        <div class="wrapper">
-            <h3 class="title">내가 할일</h3>
-            <% if (data.todo.length == 0){ %>
-                <p>할일을 모두 했습니다. 부지런한 당신! 칭찬해~</p>
+        <div clss="wrapper">
+            <h3 class="title">최근 생성된 프로젝트</h3>
+            <% if (data.recentProject.length == 0){ %>
+                <p>최근 생성된 프로젝트가 존재하지 않습니다.</p>
             <% } else { %>
-                <%# TODO: 들어오는 데이터 구조가 확정된 후 수정 필요 %>
-                <% data.todo.forEach(item=>{ %>
-                    <div class="notice-item" onclick="location.href= `/profile?id=<%= data.user.id %>&todoid=<%= item.id %>`;">
+                <% data.recentProject.forEach(item=>{ %>
+                    <div class="notice-item" onclick="location.href= `/project/detail?projectid=<%= item.id %>`;">
                         <p class="notice-item-title"><%= item.name %></p>
                         <p class="notice-item-date">~ <%= item.deadline.toLocaleString() %></p>
     
@@ -63,6 +63,7 @@
             <% } %>
         </div>
     </div>
+
 </content>
 <script type="text/javascript">
     window.addEventListener('load', () => {
