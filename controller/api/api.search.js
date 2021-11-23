@@ -251,10 +251,9 @@ exports.GetUserListWithLanguage = async(conn,language) =>{
             let [langUserList, ]= await conn.query(queryString, queryParam);
             let temp = []; // 사용자 리스트 배열
             let arr = []; // white list;
-            langUserList.forEach(datiTempa => temp.push(data.userid));
+            langUserList.forEach(data => temp.push(data.userid));
             
             for(let val of temp) {
-                let ;
                 iTemp = result.findIndex((elt) => {return elt == val});
                 if(0 <= iTemp) arr.push(result[iTemp]);
             }
