@@ -65,6 +65,8 @@ exports.getProject = async (req,res, next)=>{
 
         }catch(e){
             return res.redirect(req.baseUrl);
+        }finally{
+            await connection.release();
         }
 
     }catch(e){
@@ -272,13 +274,9 @@ exports.postProjectModify = async (req, res, next) =>{
                 newLangauge: req.body.language || []
             }
             
-            if(project == null || project.leaderid != req.session.user) {
-                return res.redirect(req.baseUrl);
-            }
+            if(project == null || project.leaderid != req.session.user) return res.redirect(req.baseUrl);
             // 없는 프로젝트이거나 프로젝트 소유자로 로그인하지 않은 경우 탈출
-            // TODO: 프로젝트 변경사항 적용
             await apiSearch.SetProject(connection,mdfProjectId,data.newName,data.newDesc,data.newDeadLine,data.newLangauge);
-            // ---------------------------------------
 
             await connection.commit();
             return res.redirect(`/project/detail?projectid=${mdfProjectId}`);

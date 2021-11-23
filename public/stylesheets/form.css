@@ -76,17 +76,13 @@ form .wrapper{
     width:100%;
     display:flex;
     flex-wrap:nowrap;
-}
-
-.flex-field > *:first-child{
-    margin-left:0;
+    gap:1rem;
 }
 
 .flex-field > *{
     flex-basis:1;
     flex-grow:1;
     flex-shrink:1;
-    margin-left:1rem;
 }
 
 .upper-line{

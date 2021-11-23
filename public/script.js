@@ -1,8 +1,13 @@
 function setGridColItem(gridItemID){
     let grid = document.querySelector(`#${gridItemID}`);
 
-    let rem = parseInt(window.getComputedStyle(document.querySelector('body')).getPropertyValue('font-size'));
+    
+    let rowHeight = window.getComputedStyle(document.querySelector('body')).getPropertyValue('font-size');
+    
+    rowHeight = parseInt(rowHeight);
+    let gap = parseInt(window.getComputedStyle(grid).getPropertyValue('grid-gap').split(' ')[0]);
     let itemHeight;
+
     for(let item of grid.children){
         if(item.hasAttribute('rowspan')){
             item.style.gridRowEnd = `span ${parseInt(item.getAttribute('rowspan'))}`;
@@ -10,10 +15,10 @@ function setGridColItem(gridItemID){
         }
         itemHeight = 0;
         if(item.childElementCount){
-            itemHeight = parseInt(item.lastElementChild.offsetHeight) / rem / 2;
-            gap = 2;
+            parentPadding = parseInt(window.getComputedStyle(item).getPropertyValue('padding'));
+            itemHeight = parseInt(item.lastElementChild.offsetHeight) + parentPadding * 2;
         }
-        item.style.gridRowEnd = `span ${Math.floor(itemHeight + gap)}`;
+        item.style.gridRowEnd = `span ${Math.ceil(itemHeight / (rowHeight + gap))}`;
     }
 }
 

@@ -54,11 +54,3 @@ input[type='checkbox']:checked + label{
     color:#FFF;
     user-select:none;
 }
-
-.int-checkbox {
-  display: inline-block;
-  width: 400px;
-}
-.int-checkbox label {
-  display: inline-block;
-}

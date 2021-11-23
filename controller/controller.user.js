@@ -44,6 +44,8 @@ exports.getProfileDetail = async (req, res, next) =>{
         }catch(e){
             console.log(e);
             return res.redirect(req.baseUrl);
+        }finally{
+            await connection.release();
         }
     }catch(e){
         console.log(e);
@@ -64,15 +66,16 @@ exports.getProfileList = async (req,res,next) =>{
             // 검색 새작할 위치
 
             const loginedUser = await apiAuth.GetUserInfo(connection, req.session.user);
+            const language = await apiSearch.GetLanguageList(connection);
             // const userList;
-                        
+
             return res.render('layout', apiCommon.renderData(
                 'profile',
-                ['profile'],
+                ['profile', 'form'],
                 ['script'],
                 {
                     user: loginedUser,
-                    userList: []
+                    language: language
                 }
             ));
 

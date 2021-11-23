@@ -1,25 +1,27 @@
-<content id="profile-grid" class="glass-parent" style="grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr))">
+<content id="profile-grid" class="glass-parent" style="grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr))">
     <%# if(data.userList.length == 0) { %>
         <!-- <div class="glass" colspan="max">
             <h2 style="text-align:center;">공개된 프로필이 없습니다.</h2>
         </div> -->
     <%# } else { %>
-        <div class="glass" colspan="max">
+        <div class="glass" colspan='3'>
             <div class="wrapper">
                 <form class="language-filter" id="lang-filter">
                     <div class='search-box'>
                         <% data.language.forEach(lang =>{ %>
-                            <input type="checkbox" class="language-filter" style="display:none" name="language[]" id="language-<%= lang.id %>" value="<%= lang.id %>">
-                            <label for="language-<% lang.id %>"  class="language" style="cursor:pointer"><%= lang.value %></label>
+                            <div class="data-field">
+                                <input type="checkbox" class="language" name="language[]" id="language-<%= lang.id %>" value="<%= lang.id %>">
+                                <label for="language-<%= lang.id %>"><%= lang.value %></label>
+                            </div>
                         <% }); %>
-                        <input type='submit' class="button" value="검색">
+                    </div>
+                    <div class="flex-field">
+                        <input type='button' id="clearFilter" class="button" style="width:100%;" value="필터 초기화">
+                        <input type='submit' class="button" style="width:100%;" value="검색">
                     </div>
                 </form>
             </div>
-
-            </div>
         </div>
-        
     <%# } %>
 </content>
 
@@ -33,16 +35,16 @@
         search();
 
         function search(){
-            const langFilter = document.querySelectorAll('span.language-filter');
-
+            const langFilter = document.querySelectorAll(`input[type='checkbox'].language`);
+            
             let filterList = [];
 
             langFilter.forEach(elt => {
-                if (elt.hasAttribute('checked')) filterList.push(elt.value);
+                if (elt.checked == true) filterList.push(elt.value);
             });
 
             fetch('/api/searchProfile', {
-                method: 'post',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -52,8 +54,56 @@
             }).then(response => {
                 return response.json();
             }).then(result => {
-                let userItemList = document.querySelectorAll('.');
+                let userItemList = document.querySelectorAll('.user-field');
+                if(result.success == false){
+                    alert(result.value);
+                    return;
+                }
+                userItemList.forEach( elt=> elt.remove() );
+                //기존 데이터 삭제
 
+                let parent = document.querySelector('#profile-grid');
+                
+                for(let user of result.value){
+                    let userField = document.createElement('div');
+                    userField.classList.add('glass');
+                    userField.classList.add('user-field');
+
+                    let wrapper = document.createElement('div');
+                    wrapper.classList.add('wrapper');
+                    wrapper.classList.add('user');
+
+                    userField.appendChild(wrapper);
+
+                    let userName = document.createElement('p');
+                    userName.classList.add('user-name');
+                    userName.innerHTML = `${user.name}<br><span class="user-id">- ${user.userid} - </span>`;
+
+                    wrapper.appendChild(userName);
+
+                    let userDesc = document.createElement('p');
+                    userDesc.classList.add('user-description');
+                    if(user.descrption != null){
+                        userDesc.innerText = user.descrption;
+                    }else{
+                        userDesc.style.color = '#666';
+                        userDesc.style.textAlign = 'center';
+                        userDesc.innerText = '소개가 없습니다.'
+                    }
+
+                    wrapper.appendChild(userDesc);
+
+                    userField.addEventListener('click', () =>{
+                        location.href = `/users/profile?userid=${user.id}`;
+                    });
+
+                    parent.appendChild(userField);
+                    
+                }
+                
+                setColSpan(gridID);
+                setGridColItem(gridID);
+                
             });
 
         }
@@ -61,8 +111,18 @@
         const form = document.querySelector('#lang-filter');
         form.addEventListener('submit', (e)=>{
             e.preventDefault();
-
             search();
+        });
+
+        const clearFilterBtn = document.querySelector('#clearFilter');
+
+        clearFilterBtn.addEventListener('click', ()=>{
+            let checkboxList = document.querySelectorAll(`input[type='checkbox']:checked`);
+            console.log(checkboxList);
+            checkboxList.forEach(elt =>{
+                elt.checked = false;
+            });
+            
         });
 
     });

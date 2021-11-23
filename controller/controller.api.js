@@ -38,7 +38,7 @@ exports.getValidID = async (req,res, next)=>{
             console.log(e);
 
         }finally{
-            connection.release();
+            await connection.release();
         }
     }catch(e){
         console.log(e);
@@ -98,10 +98,9 @@ exports.postGetUserListWith = async(req,res,next)=>{
         try{
             const langList = req.body.filter || [];
             // 검색시 적용할 필터
-            
             let result; // 반환할 데이터
-            result = await apiSearch.GetUserListWithLanguage(connection, langList);
-
+                result = await apiSearch.GetUserListWithLanguage(connection, langList);
+            
             return res.json(jsonData(true, result));
 
         }catch(e){

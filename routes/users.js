@@ -5,9 +5,6 @@ const apiAuth = require('../controller/api/api.auth');
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-    res.send('respond with a resource');
-});
 
 router.get('/login', authController.getLogin);
 router.post('/login', authController.Login);
@@ -20,6 +17,6 @@ router.post('/signup', authController.SignUp);
 router.get('/profile', profileController.getProfileDetail);
 
 router.get('/list', profileController.getProfileList);
-router.get(profileController.getProfileList);
+router.use(profileController.getProfileList);
 
 module.exports = router;

@@ -19,7 +19,7 @@ content{
     margin:0 auto;
     background:inherit;
     display:grid;
-    grid-gap:1rem;
+    grid-gap:0.7rem;
     grid-auto-flow:dense;
 }
 

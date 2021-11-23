@@ -13,7 +13,7 @@
     z-index:0;
     overflow:hidden;
     border-radius:4px;
-    box-shadow:0 0 1rem rgba(0,0,0,0.2);
+    box-shadow:0 0 0.3rem rgba(0,0,0,0.2);
     padding:1rem;
 }
 
@@ -21,7 +21,7 @@
     content:'';
     background:inherit;
     background-attachment: fixed;
-    filter:blur(15px);
+    filter:blur(10px);
     position:absolute;
     left:0;
     top:0;
@@ -39,5 +39,5 @@
     top:0;
     right:0;
     bottom:0;
-    background-color:rgba(255,255,255,0.7);
+    background-color:rgba(255,255,255,0.65);
 }
