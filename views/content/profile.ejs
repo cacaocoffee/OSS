@@ -1,0 +1,73 @@
+<content id="profile-grid" class="glass-parent" style="grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr))">
+    <%# if(data.userList.length == 0) { %>
+        <!-- <div class="glass" colspan="max">
+            <h2 style="text-align:center;">공개된 프로필이 없습니다.</h2>
+        </div> -->
+    <%# } else { %>
+        <div class="glass" colspan="max">
+            <div class="wrapper">
+                <form class="language-filter" id="lang-filter">
+                    <div class='search-box'>
+                        <% data.language.forEach(lang =>{ %>
+                            <input type="checkbox" class="language-filter" style="display:none" name="language[]" id="language-<%= lang.id %>" value="<%= lang.id %>">
+                            <label for="language-<% lang.id %>"  class="language" style="cursor:pointer"><%= lang.value %></label>
+                        <% }); %>
+                        <input type='submit' class="button" value="검색">
+                    </div>
+                </form>
+            </div>
+
+            </div>
+        </div>
+        
+    <%# } %>
+</content>
+
+<script type="text/javascript">
+    let gridID = 'profile-grid';
+
+    window.addEventListener('load', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+        
+        search();
+
+        function search(){
+            const langFilter = document.querySelectorAll('span.language-filter');
+
+            let filterList = [];
+
+            langFilter.forEach(elt => {
+                if (elt.hasAttribute('checked')) filterList.push(elt.value);
+            });
+
+            fetch('/api/searchProfile', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    filter: filterList
+                })
+            }).then(response => {
+                return response.json();
+            }).then(result => {
+                let userItemList = document.querySelectorAll('.');
+
+            });
+
+        }
+
+        const form = document.querySelector('#lang-filter');
+        form.addEventListener('submit', (e)=>{
+            e.preventDefault();
+
+            search();
+        });
+
+    });
+    window.addEventListener('resize', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+    });
+</script>

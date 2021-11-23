@@ -1,5 +1,10 @@
 const db = require('../Server/dbConn');
 const apiAuth = require('./api/api.auth');
+const apiSearch = require('./api/api.search');
+
+function jsonData(success, value){
+    return {'success': success, 'value':value};
+}
 
 exports.getValidID = async (req,res, next)=>{
     let result = {
@@ -43,12 +48,8 @@ exports.getValidID = async (req,res, next)=>{
     
 }
 
-
 exports.postInviteProject= async(req,res,next)=>{
-    function jsonData(success, value){
-        return {'success': success, 'value':value};
-    }
-    if(! await apiAuth.isLogined(req)) return res.jsonData(false, '잘못된 접근입니다.');
+    if(! await apiAuth.isLogined(req)) return res.json(jsonData(false, '잘못된 접근입니다.'));
     
     try{
 
@@ -81,5 +82,38 @@ exports.postInviteProject= async(req,res,next)=>{
 
     }catch(e){
         return res.json(jsonData(false, '알 수 없는 오류'));
+    }
+}
+
+exports.postGetUserListWith = async(req,res,next)=>{
+    function jsonData(success, value){
+        return {'success': success, 'value':value};
+    }
+
+    if(! await apiAuth.isLogined(req)) return res.jsonData(false, '잘못된 접근입니다.');
+
+    try{
+        const pool = await db.pool();
+        const connection = await pool.getConnection(async conn=>conn);
+        try{
+            const langList = req.body.filter || [];
+            // 검색시 적용할 필터
+            console.log(langList);
+            
+            let result; // 반환할 데이터
+            // 검색 api 호출
+
+
+
+            // -----------------------------------------------
+            return res.json(jsonData(true, result));
+
+        }catch(e){
+            return res.json(jsonData(false, `오류:${e.errno}`));
+        }finally{
+            await connection.release();
+        }
+    }catch(e){
+        return res.json(jsonData(false,`오류:${e.errno}`));
     }
 }
