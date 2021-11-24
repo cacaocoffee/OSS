@@ -1,0 +1,134 @@
+<content id="todo-grid" class="glass-parent">
+    <div class="glass finderFilter" colspan=2>
+        <div class="wrapper">
+            <h3>적용 대상</h3>
+            <select name="projectId" id="projSelect">
+                <optgroup label="개인">
+                    <option value="-1">개인</option>
+                </optgroup>
+                <optgroup label="내가 팀장인 프로젝트">
+                    <% data.projectList.forEach(proj=>{ %>
+                        <option value="<%= proj.id %>"><%= proj.name %></option>
+                    <% }); %>
+                </optgroup>
+            </select>
+            <div id='todo-maker'>
+                <form class="wrapper" id="todo" method='post' action="/todo/registration">
+                    <h3 id="project-title">선택된 프로젝트</h3>
+                    <input type="hidden" name="projectid" value='-1'>
+                    <div id="hider" style="display:none;">
+                        <fieldset>
+                            <legend>참여중인 사람</legend>
+                            <div id="project-participation">
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div>
+                                <input name="overwrite" type="radio" id="radio-all" value="0" checked>
+                                <label for="radio-all">선택된 모두가 해야합니다.</label>
+                            </div>
+                            <div>
+                                <input name="overwrite" id="radio-one" type="radio" value="1">
+                                <label for="radio-one" >팀원 중 누구라도 하면 됩니다.(선택 무시)</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <fieldset>
+                        <textarea name="todo" placeholder="어떤 일을 해야하나요?" required></textarea>
+                    </fieldset>
+                    <fieldset>
+                        <legend style="margin-bottom:0.3rem;">언제까지 해야하나요?</legend>
+                        <input type="date" name="deadline" value="<%= (new Date).toLocaleString().split('. ').slice(0,3).join('-') %>" required>
+                    </fieldset>
+                    <fieldset>
+                        <input type="submit" class="button" value="등록">
+                    </fieldset>
+                </form>
+            </div>
+        
+        </div>
+    </div>
+
+    <% data.myTodo.forEach(todo =>{ %>
+        <div class="glass" style="background-color:<%= todo.done ? '#FFFFFF' : '#FFA0A0A0' %>">
+            <div class="wrapper">
+                <p><%= todo.data.todo %></p>
+                <p><%= todo.data.deadline.toLocaleString() %> 까지</p>
+            </div>
+        </div>
+    <% }); %>
+
+</content>
+
+<script type="text/javascript">
+    let gridID = 'todo-grid'
+    window.addEventListener('load', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+
+        function setProjectOption(ProjectId, ProjectName, Users){
+            const parent = document.querySelector('#todo-maker');
+            
+            parent.querySelector(`input[name='projectid']`).value = ProjectId;
+
+            parent.querySelector('#project-title').innerText = ProjectName;
+            const userParent = parent.querySelector('#project-participation');
+            userParent.innerHTML = null;
+            for(let user of Users){
+                let wrapper = document.createElement('div');
+                
+                let input = document.createElement('input');
+                input.setAttribute('type','checkbox');
+                input.setAttribute('value', user.id);
+                input.setAttribute('name', 'todoUser[]');
+                input.id = `user-${user.id}`;
+                let label = document.createElement('label');
+                label.setAttribute('for', `user-${user.id}`);
+                label.innerText = `${user.name}(${user.userid})`;
+
+                wrapper.appendChild(input);
+                wrapper.appendChild(label);
+
+                userParent.appendChild(wrapper);
+            }
+        }
+        
+        const selector = document.querySelector('#projSelect');
+
+        selector.addEventListener('change', () =>{
+            if(selector.value != -1){
+                fetch('/api/todo/projectdata', {
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({
+                        projectId: selector.value
+                    })
+                }).then(response => {
+                    return response.json()
+                }).then(result => {
+                    setProjectOption(result.value.id, result.value.name + '에서 작성', result.value.userlist )
+                    document.querySelector('#hider').style.display = 'block';
+                })
+            }else{
+                setProjectOption(-1, '내 TODO 작성', []);
+                document.querySelector('#hider').style.display = 'none';
+                document.querySelector(`radio-all`).checked = true;
+            }
+            
+        })
+
+        const form = document.querySelector('#todo');
+
+        form.addEventListener('submit', (e)=>{
+            const todo = form.querySelector(`textarea[name='todo']`)
+
+        });
+
+    });
+    window.addEventListener('resize', () => {
+        setColSpan(gridID);
+        setGridColItem(gridID);
+    });
+</script>

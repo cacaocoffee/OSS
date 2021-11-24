@@ -86,10 +86,6 @@ exports.postInviteProject= async(req,res,next)=>{
 }
 
 exports.postGetUserListWith = async(req,res,next)=>{
-    function jsonData(success, value){
-        return {'success': success, 'value':value};
-    }
-
     if(! await apiAuth.isLogined(req)) return res.jsonData(false, '잘못된 접근입니다.');
 
     try{
@@ -110,5 +106,34 @@ exports.postGetUserListWith = async(req,res,next)=>{
         }
     }catch(e){
         return res.json(jsonData(false,`오류:${e.errno}`));
+    }
+}
+
+// 입력으로 들어온 project id에 대한 프로젝트 정보 전달
+exports.postProjectData = async(req,res,next) =>{
+    if(! await apiAuth.isLogined(req)) return res.json(jsonData(false, '잘못된 접근입니다.'));
+    
+    try{
+        const pool = await db.pool();
+        const connection = await pool.getConnection(async conn=>conn);
+        try{
+
+            const selProjectedId = req.body.projectId || -1;
+            if(selProjectedId < 1) return res.json(jsonData(false, '존재하지 않는 프로젝트 ID입니다.'));
+
+            const project = await apiSearch.GetProject(connection, selProjectedId);
+
+            if(project.leaderid != req.session.user) return res.json(jsonData(false, '접근 권한이 없습니다.'));
+            // 선택한 프로젝트의 팀장이 본인이 아닐 때
+
+            return res.json(jsonData(true, project));
+
+        }catch(e){
+            return res.json(jsonData(false, `오류:${e.errno}`));
+        }finally{
+            await connection.release();
+        }
+    }catch(e){
+        return res.json(jsonData(false, `오류:${e.errno}`));
     }
 }
