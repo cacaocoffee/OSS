@@ -57,7 +57,7 @@ exports.InitializeDB = async (req, res, next) => {
             query(`CREATE TABLE IF NOT EXISTS language_user (
                     userid int unsigned NOT NULL AUTO_INCREMENT COMMENT 'user테이블 id', 
                     language int unsigned NOT NULL COMMENT '사용 언어',
-                    PRIMARY KEY(userid,language),
+                    PRIMARY KEY(userid, language),
                     FOREIGN KEY(userid) references user(id),
                     FOREIGN KEY(language) references language_list(id)
                 ) default character set utf8 collate utf8_general_ci;`);
@@ -89,7 +89,7 @@ exports.InitializeDB = async (req, res, next) => {
                     name tinytext NOT NULL COMMENT '프로젝트 이름',
                     description tinytext COMMENT '프로젝트 설명 및 내용',
                     deadline date NOT NULL COMMENT '프로젝트 종료 기간',
-                    createtime date DEFAULT CURRENT_TIMESTAMP COMMENT '프로젝트 생성 기간',
+                    createtime datetime DEFAULT CURRENT_TIMESTAMP COMMENT '프로젝트 생성 기간',
                     PRIMARY KEY(id),
                     FOREIGN KEY(leaderid) references user(id)
                 ) default character set utf8 collate utf8_general_ci;` );
@@ -99,7 +99,8 @@ exports.InitializeDB = async (req, res, next) => {
                     userid int unsigned NOT NULL COMMENT '유저 식별 아이디',
                     projectid int unsigned NOT NULL COMMENT '프로젝트 식별 아이디',
                     FOREIGN KEY(userid) references user(id),
-                    FOREIGN KEY(projectid) references project(id)
+                    FOREIGN KEY(projectid) references project(id),
+                    PRIMARY KEY(userid, projectid)
                 ) default character set utf8 collate utf8_general_ci;`
             );
             await connection.
@@ -108,7 +109,8 @@ exports.InitializeDB = async (req, res, next) => {
                     languageid int unsigned NOT NULL COMMENT '프로젝트 사용 언어 아이디',
                     projectid int unsigned NOT NULL COMMENT '프로젝트 식별 아이디',
                     FOREIGN KEY(languageid) references language_list(id),
-                    FOREIGN KEY(projectid) references project(id)
+                    FOREIGN KEY(projectid) references project(id),
+                    PRIMARY KEY(languageid, projectid)
                 ) default character set utf8 collate utf8_general_ci;`
             );
 

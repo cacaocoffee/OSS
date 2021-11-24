@@ -1,57 +1,130 @@
-<content id="user-profile" class="glass-parent" style="grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));">
-    <% if(data.findUser == null) { %>
-        <div class="glass" colspan="max">
-            <p style="text-align: center;">없는 사용자이거나 대상 프로필을 볼 권한이 없습니다.</p>
-        </div>
-    <% } else { %>
-        <div class="glass" >
+<content id="profile-grid" class="glass-parent" style="grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr))">
+    <%# if(data.userList.length == 0) { %>
+        <!-- <div class="glass" colspan="max">
+            <h2 style="text-align:center;">공개된 프로필이 없습니다.</h2>
+        </div> -->
+    <%# } else { %>
+        <div class="glass" colspan='3'>
             <div class="wrapper">
-                <p class="title">'<%= data.findUser.user.name %>'님의 프로필 정보</p>
-                <p>아이디: <%= data.findUser.user.userid %></p>
-            </div>
-        </div>
-
-        <div class="glass" colspan=2 >
-            <div class="wrapper">
-                <p class="title">사용할 수 있는 언어/스택</p>
-                <div class="language-area">
-                    <% if(data.findUser.language.length == 0){ %>
-                        <span class="language">아직 사용 가능한 언어/스택을 작성하지 않았습니다.</span>
-                    <% } else { %>
-                        <% data.findUser.language.forEach(item =>{ %>
-                            <span class="language"><%= item.value %></span>
-                        <% }); %>
-                    <% } %>
-                </div>
-            </div>
-        </div>
-        <div class="glass" colspan='max'>
-            <div class="wrapper">
-                <p class="title">참여한 프로젝트</p>
-                <div class="project-area">
-                    
-                    <% if( data.findUser.project.length == 0){ %>
-                        <p style="width:100%;text-align:center;">아직 참여한 프로젝트가 없습니다.</p>
-                        <% } else { %>
-                            <% data.findUser.project.forEach( proj => {%>
-                                <div class="project" onclick="location.href=`/project/detail?projectid=<%= proj.id %>`">
-                                    <p><%= proj.name %></p>
-                                    <p><%= proj.desc.substring(0, 30) %></p>
-                                    <p>~<%= proj.deadline.toLocaleString() %></p>
-                                </div>
-                                <% }); %>
+                <form class="language-filter" id="lang-filter">
+                    <div class='search-box'>
+                        <% data.language.forEach(lang =>{ %>
+                            <div class="data-field">
+                                <input type="checkbox" class="language" name="language[]" id="language-<%= lang.id %>" value="<%= lang.id %>">
+                                <label for="language-<%= lang.id %>"><%= lang.value %></label>
                             </div>
-                <% } %>
+                        <% }); %>
+                    </div>
+                    <div class="flex-field">
+                        <input type='button' id="clearFilter" class="button" style="width:100%;" value="필터 초기화">
+                        <input type='submit' class="button" style="width:100%;" value="검색">
+                    </div>
+                </form>
             </div>
         </div>
-    <% } %>
+    <%# } %>
 </content>
 
 <script type="text/javascript">
-    let gridID = 'user-profile'
+    let gridID = 'profile-grid';
+
     window.addEventListener('load', () => {
         setColSpan(gridID);
         setGridColItem(gridID);
+        
+        search();
+
+        function search(){
+            const langFilter = document.querySelectorAll(`input[type='checkbox'].language`);
+            
+            let filterList = [];
+
+            langFilter.forEach(elt => {
+                if (elt.checked == true) filterList.push(elt.value);
+            });
+
+            fetch('/api/searchProfile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    filter: filterList
+                })
+            }).then(response => {
+                return response.json();
+            }).then(result => {
+                let userItemList = document.querySelectorAll('.user-field');
+                if(result.success == false){
+                    alert(result.value);
+                    return;
+                }
+                userItemList.forEach( elt=> elt.remove() );
+                //기존 데이터 삭제
+
+                let parent = document.querySelector('#profile-grid');
+                
+                for(let user of result.value){
+                    let userField = document.createElement('div');
+                    userField.classList.add('glass');
+                    userField.classList.add('user-field');
+
+                    let wrapper = document.createElement('div');
+                    wrapper.classList.add('wrapper');
+                    wrapper.classList.add('user');
+
+                    userField.appendChild(wrapper);
+
+                    let userName = document.createElement('p');
+                    userName.classList.add('user-name');
+                    userName.innerHTML = `${user.name}<br><span class="user-id">- ${user.userid} - </span>`;
+
+                    wrapper.appendChild(userName);
+
+                    let userDesc = document.createElement('p');
+                    userDesc.classList.add('user-description');
+                    if(user.descrption != null){
+                        userDesc.innerText = user.descrption;
+                    }else{
+                        userDesc.style.color = '#666';
+                        userDesc.style.textAlign = 'center';
+                        userDesc.innerText = '소개가 없습니다.'
+                    }
+
+                    wrapper.appendChild(userDesc);
+
+                    userField.addEventListener('click', () =>{
+                        location.href = `/users/profile?userid=${user.id}`;
+                    });
+
+                    parent.appendChild(userField);
+                    
+                }
+                
+                setColSpan(gridID);
+                setGridColItem(gridID);
+                
+            });
+
+        }
+
+        const form = document.querySelector('#lang-filter');
+        form.addEventListener('submit', (e)=>{
+            e.preventDefault();
+            search();
+        });
+
+        const clearFilterBtn = document.querySelector('#clearFilter');
+
+        clearFilterBtn.addEventListener('click', ()=>{
+            let checkboxList = document.querySelectorAll(`input[type='checkbox']:checked`);
+            console.log(checkboxList);
+            checkboxList.forEach(elt =>{
+                elt.checked = false;
+            });
+            
+        });
+
     });
     window.addEventListener('resize', () => {
         setColSpan(gridID);

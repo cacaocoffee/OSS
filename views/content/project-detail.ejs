@@ -1,3 +1,24 @@
+<script type="text/javascript">
+    function invite(){
+        fetch('/api/project/invite', {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify({
+                projectid:<%= data.project.id %>
+            })
+        }).then(response =>{
+            return response.json();
+        }).then(result=>{
+            alert(result.value);
+            if(result.success) location.reload();
+            
+        });
+    }
+
+</script>
+<% let isParticipation = false; %>
 <content id="project-detail" class="glass-parent">
     <% if(data.project == null){ %>
         <div class="glass" colspan="max">
@@ -40,11 +61,12 @@
         </div>
         <div class="glass" colspan="max">
             <div class="wrapper" id="userlist">
-                <p class="project-subtitle">참여하는 사람들</p>
+                <p class="project-subtitle">참여하는 사람</p>
                 <div class="user-area">
                     <% data.project.userlist.forEach( projUser =>{ %>
+                        <% if(projUser.id == data.user.id) isParticipation = true; %>
                         <div class="user" onclick="location.href = `/users/profile?userid=<%= projUser.id %>`;">
-                            <p class="user-name"><%= projUser.name %> <br><span class="user-loginid">- <%= projUser.userid %> -</span></p>
+                            <p class="user-name"><%= (projUser.id == data.project.leaderid) ? '팀장 ' : '' %><%= projUser.name %> <br><span class="user-loginid">- <%= projUser.userid %> -</span></p>
                             <% if(projUser.descritpion != null){ %>
                                 <div class="upperLine">
                                     <p class="user-descript"><%= projUser.descritpion.substring(0,30) %></p>
@@ -56,6 +78,22 @@
                 </div>
             </div>
         </div>
+        <% if(!isParticipation){ %>
+            <div class="glass">
+                <div class="wrapper">
+                    <p class="project-subtitle">Invite</p>
+                    <button class='invite' onclick="invite()">프로젝트 참여하기</button>
+                </div>
+            </div>
+        <% } %>
+        <% if(data.project.leaderid === data.user.id){ %>
+            <div class="glass">
+                <div class="wrapper">
+                    <p class="project-subtitle">프로젝트 수정</p>
+                    <button class="modify" onclick="location.href = `/project/modify?projectid=<%= data.project.id %>`;">수정하러 가기</button>
+                </div>
+            </div>
+        <% } %>
     <% } %>
 
 </content>

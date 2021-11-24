@@ -1,0 +1,58 @@
+#user-profile{
+
+}
+
+#user-profile .glass{
+    height:100%;
+}
+
+#user-profile .title{
+    font-size:1.4rem;
+    text-align:center;
+    padding-bottom:0.5rem;
+    margin-bottom:1rem;
+    border-bottom:1px solid #888;
+}
+
+.language-area *,
+.project-area *{
+ 
+}
+.language-area,
+.project-area{
+    display:flex;
+    gap:0.5rem;
+    justify-content:stretch;
+    align-items: center;
+    flex-wrap:wrap;
+    
+}
+
+.language-area > .language,
+.project-area > .project{
+    flex-shrink:0;
+    flex-grow:1;
+    flex-basis:1;
+    padding:0.5rem 1rem;
+    text-align:center;
+}
+
+.language-area > .language{
+    background:#333;
+    color:#FFF;
+    user-select:none;
+    border-radius:4px;
+}
+
+.project-area > .project{
+    min-width:15rem;
+    cursor:pointer;
+    transition:border-bottom 300ms;
+    border-bottom:1px solid rgb(0,0,0,0);
+    margin:0.1rem;
+    
+}
+
+.project-area > .project:hover{
+    border-bottom:1px solid rgb(0,0,0,0.5);
+}

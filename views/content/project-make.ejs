@@ -1,0 +1,31 @@
+<content class="glass-parent" style="max-width:800px;">
+    <form class="glass" method="post">
+        <h2 style="text-align:center;">새 프로젝트 생성</h2>
+        <div class="wrapper">
+            <fieldset>
+                <div class="flex-mode">
+                    <input type="text" name="projectName" placeholder="프로젝트 제목" required>
+                </div>
+                <div class="flex-mode">
+                    <textarea name="projectDesc" style="min-height:7rem;" placeholder="설명을 입력하세요"></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="upper-line">
+                <legend>프로젝트 만료일</legend>
+                <input type="date" name="projectDeadline" required>
+            </fieldset>
+            <fieldset class="language-field upper-line">
+                <legend>사용할 언어/스택</legend>
+                <% data.language.forEach(lang =>{ %>
+                    <div>
+                        <input type="checkbox" name="language[]" id="language-<%= lang.id %>" value="<%= lang.id %>">
+                        <label class="language" for="language-<%= lang.id %>"><%= lang.value %></label>
+                    </div>
+                <% }) %>
+            </fieldset>
+            <fieldset class="upper-line">
+                <input type="submit" class="button" value="프로젝트 생성">
+            </fieldset>
+        </div>
+    </form>
+</content>

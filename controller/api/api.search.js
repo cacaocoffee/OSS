@@ -24,11 +24,12 @@ function retnProjectInfoData(project, userlist,langlist){
     return project;
 }
 
-function retnUserData(id, userid, name){
+function retnUserData(id, userid, name,description){
     return {
         'id' : id,
         'userid': userid,
-        'name':name
+        'name':name,
+        'description': description
     };
 }
 function retnTodoData(toid,deadline,todo){
@@ -155,7 +156,6 @@ exports.GetProject = async (conn,projectid) =>{
         project_userlist, 
         project_langlist
     );
-    console.log(result);
     return result;
 }
 
@@ -194,4 +194,81 @@ exports.GetTodotext = async (conn, userid) =>{
     );
     console.log(result);
     return result;
+}
+
+exports.SetTodo = async (conn,id,deadline,todo) => {
+    const queryString = 'UPDATE todo SET deadline=?,todo=?  WHERE id = ?;';
+    const queryParam = [deadline,todo,id];
+    await conn.execute(queryString, queryParam);
+} 
+exports.GetUserList = async (conn) =>{
+    const queryString = `SELECT id,userid,name,description FROM user ;`;
+    let [UserList,]  = await conn.query(queryString);
+    let result=[]; 
+    UserList.forEach((data) =>{
+        result.push(retnUserData(data.id,data.userid,data.name,data.description));
+    });
+    console.log(result);
+    return result;
+}
+
+exports.SetProject = async (conn, projectid, name, description, deadline, language) => {
+    {//프로젝트 수정
+        const queryString = `UPDATE project SET name=?, description=?,deadline=? WHERE id =? ;`;
+        const queryParam = [name, description, deadline, projectid];
+        await conn.execute(queryString, queryParam);
+    }
+    {//삭제
+        const queryString = `DELETE FROM language_project WHERE projectid = ?;`;
+        const queryParam = [projectid]
+        await conn.execute(queryString, queryParam);
+    }
+    {//프로젝트 언어 수정
+        
+        for(let item of language){
+            const queryString = `INSERT INTO language_project(projectid,languageid) VALUES (?,?);`;
+            const queryParam = [projectid,item];
+            await conn.execute(queryString, queryParam);
+        }
+    }
+}
+
+//배열로 들어옴
+exports.GetUserListWithLanguage = async(conn,language) =>{
+    const q = `SELECT id FROM user;`;
+    let [userid, ]= await conn.execute(q);
+    let result = [];
+    userid.forEach(data => {
+        result.push(data.id);        
+    });
+    //전체 유저의 userid 가져옴
+    if(!(Array.isArray(language) && language.length === 0)){
+        for(let item of language){
+            const queryString = `SELECT userid FROM language_user WHERE language = ? ;`;
+            const queryParam = [item];
+            
+            // 언어별 사용자 리스트
+            let [langUserList, ]= await conn.query(queryString, queryParam);
+            let temp = []; // 사용자 리스트 배열
+            let arr = []; // white list;
+            langUserList.forEach(data => temp.push(data.userid));
+            
+            for(let val of temp) {
+                iTemp = result.findIndex((elt) => {return elt == val});
+                if(0 <= iTemp) arr.push(result[iTemp]);
+            }
+            result = arr;
+        }
+    }
+    let retn=[];
+    for(let item of result)
+    {
+        const queryString = `SELECT id,userid,name,description FROM user WHERE id=?;`
+        const queryParam = [item];
+        let [UserList,] = await conn.execute(queryString, queryParam);
+        if(UserList.length != 0){
+            retn.push(retnUserData(UserList[0].id,UserList[0].userid,UserList[0].name,UserList[0].description))
+        }
+    }
+    return retn;
 }
