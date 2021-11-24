@@ -32,27 +32,22 @@ function retnUserData(id, userid, name,description){
         'description': description
     };
 }
-function retnTodoData(toid,deadline,todo){
+function retnTodoData(todoId,deadline,todo){
     return {
-        id:toid,
+        id:todoId,
         deadline:deadline,
         todo:todo,
     };
 }
-function retnUserTodoData(userid,todoid,projectid,overwrite,done,cleardate){
-    return{
-    'userid':userid,
-    'todoid':todoid,
-    'projectid':projectid,
-    'overwrite':overwrite,
-    'done':done,
-    'cleardate':cleardate
+function retnUserTodoData(userid,todoData,projectid,overwrite,done,cleardate){
+    return {
+        'userid':userid,
+        'data':todoData,
+        'projectid':projectid,
+        'overwrite':overwrite,
+        'done':done,
+        'cleardate':cleardate
     };
-}
-function retnTodoInfoData(project,todolist,todouserlist){
-    project.todolist = todolist;
-    project.todouserlist = todouserlist;
-    return project;
 }
 
 exports.GetLanguageList = async (conn) =>{
@@ -171,36 +166,88 @@ exports.GetUserTodolist = async (conn, userid) =>{
     return result;
 }
 
-exports.GetTodolist = async (conn) =>{
-    let [todolist, ] = await conn.execute('SELECT * FROM todo;');
+exports.GetTodoData = async (conn, todoid) =>{
+    let [result, ] = await conn.execute(`SELECT * FROM todo WHERE id = ?;`, [todoid]);
+    return retnTodoData(result.id, result.deadline, result.todo);
+}
+
+exports.GetSharedTodo = async (conn,userid) =>{
     let result = [];
-    todolist.forEach((data) =>{
-        result.push(retnTodoData(data.id,data.deadline,data.todo));
-    });
+    const projectList = await this.GetUserProjectList(conn, userid);
+    
+    for(let project of projectList){
+        const queryString = 'SELECT * FROM todo_user WHERE projectid = ? AND overwrite = 1;';
+        const queryParam = [project.id];
+
+        const [todoList, ] = await conn.execute(queryString, queryParam);
+        for(let todo of todoList){
+            let todoData = await this.GetTodoData(conn, todo.todoid);
+            result.push(retnUserTodoData(
+                todo.userid,
+                todoData,
+                todo.projectid,
+                todo.overwrite,
+                todo.doen,
+                todo.cleardate
+            ));
+        }
+    }
     return result;
 }
 
-exports.GetTodotext = async (conn, userid) =>{
+exports.GetMyTodo = async (conn, userid) =>{
     const queryString = 'SELECT * FROM todo_user WHERE userid = ?;';
     const queryParam = [userid];
-    let [todo, ] = await conn.query(queryString, queryParam);
+    let [todoUser, ] = await conn.execute(queryString, queryParam);
 
-    let[todo_list,] = await this.GetTodolist(conn, userid);
-    let[todouser_list,] =await this.GetUserTodolist(conn,userid);    
-    result = retnTodoInfoData(
-        retnUserTodoData(todo[0].userid,todo[0].todoid,todo[0].projectid,todo[0].overwrite,todo[0].done,todo[0].cleardate),
-        todo_list,
-        todouser_list
-    );
-    console.log(result);
+    let result = []
+
+    for(let todo of todoUser){
+        let [todoData, ] = await conn.execute(`SELECT * FROM todo WHERE id = ?;`, [todo.todoid]);
+        result.push(retnUserTodoData(
+            todo.userid,
+            retnTodoData(todoData[0].id,todoData[0].deadline, todoData[0].todo),
+            todo.projectid,
+            todo.overwrite,
+            todo.done,
+            todo.cleardate
+        ));
+    }
+    
     return result;
 }
 
-exports.SetTodo = async (conn,id,deadline,todo) => {
+exports.SetTodo = async (conn, todoText, overwrite, deadline, userList, projectid) =>{
+    let queryString = `INSERT INTO todo(deadline, todo) VALUES(?, ?);`;
+    let queryParam = [deadline, todoText];
+    const [todo, ] = await conn.execute(queryString, queryParam);
+    
+    if(! 'insertId' in todo){
+        return false;
+    }
+    
+    const addTodo = async (c, userid, todoid, projectid, overwrite) =>{
+        const queryString = `INSERT INTO todo_user(userid, todoid, projectid, overwrite) VALUES(?,?,?,?);`;
+        const queryParam = [userid, todoid, projectid, overwrite];
+        let result = await c.execute(queryString, queryParam);
+        console.log(result);
+    }
+
+    if(overwrite){
+        console.log(123);
+        addTodo(conn, userList[0], todo.insertId, projectid, overwrite);
+    }else{
+        console.log(1233123);
+        for(let user of userList) addTodo(conn, user, todo.insertId, projectid, overwrite);
+    }
+}
+
+exports.UpdateTodo = async (conn,id,deadline,todo) => {
     const queryString = 'UPDATE todo SET deadline=?,todo=?  WHERE id = ?;';
     const queryParam = [deadline,todo,id];
     await conn.execute(queryString, queryParam);
-} 
+}
+
 exports.GetUserList = async (conn) =>{
     const queryString = `SELECT id,userid,name,description FROM user ;`;
     let [UserList,]  = await conn.query(queryString);
@@ -208,7 +255,6 @@ exports.GetUserList = async (conn) =>{
     UserList.forEach((data) =>{
         result.push(retnUserData(data.id,data.userid,data.name,data.description));
     });
-    console.log(result);
     return result;
 }
 
@@ -218,12 +264,12 @@ exports.SetProject = async (conn, projectid, name, description, deadline, langua
         const queryParam = [name, description, deadline, projectid];
         await conn.execute(queryString, queryParam);
     }
-    {//삭제
+    {// 언어 목록 삭제 삭제
         const queryString = `DELETE FROM language_project WHERE projectid = ?;`;
         const queryParam = [projectid]
         await conn.execute(queryString, queryParam);
     }
-    {//프로젝트 언어 수정
+    {// 언어 목록 재등록
         
         for(let item of language){
             const queryString = `INSERT INTO language_project(projectid,languageid) VALUES (?,?);`;
@@ -233,7 +279,7 @@ exports.SetProject = async (conn, projectid, name, description, deadline, langua
     }
 }
 
-//배열로 들어옴
+// language = Array(projectid: int)
 exports.GetUserListWithLanguage = async(conn,language) =>{
     const q = `SELECT id FROM user;`;
     let [userid, ]= await conn.execute(q);
