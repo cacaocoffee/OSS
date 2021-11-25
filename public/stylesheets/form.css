@@ -28,7 +28,8 @@ input[type='password'],
 input[type='id'],
 input[type='email'],
 input[type='date'],
-textarea
+textarea,
+select
 {
     border:0;
     border-radius:4px;
@@ -46,6 +47,7 @@ input[type='id']:hover,
 input[type='email']:hover,
 input[type='date']:hover,
 textarea:hover
+select:hover
 {
     box-shadow:0 0 .3rem rgba(0,0,0,0.2);
 }
@@ -57,12 +59,14 @@ input[type='password']:focus:hover,
 input[type='id']:focus,
 input[type='date']:focus,
 textarea:focus,
+select:focus,
 
 input[type='id']:focus:hover,
 input[type='email']:focus,
 input[type='email']:focus:hover,
 input[type='date']:focus:hover,
-textarea:focus:hover
+textarea:focus:hover,
+select:focus:hover
 {
     box-shadow:0 0 .3rem rgba(63, 195, 235, 0.7);
 }

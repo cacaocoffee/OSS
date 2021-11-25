@@ -9,5 +9,6 @@ router.post('/project/invite', controller.postInviteProject);
 
 router.post('/searchProfile', controller.postGetUserListWith);
 
+router.post('/todo/projectdata', controller.postProjectData);
 
 module.exports = router;

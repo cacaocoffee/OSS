@@ -2,29 +2,13 @@
 const sec = require('./security');
 const tools = require('./tools');
 
-const express = require('express');
 const mysql2 = require('mysql2/promise');
-const fs = require('fs');
-
-const app  = express();
-    
-// exports.sessionStore = (connection) =>{
-//     let sessionStore;
-    
-//     const InitializeSessionStore = _ => {
-//         sessionStore = new MySQLStore({}, connection);
-//         return sessionStore;
-//     }
-    
-//     if(!sessionStore) return sessionStore = InitializeSessionStore();
-//     return sessionStore;
-// }
 
 exports.pool = _ => {
     let dbPool = undefined;
     const Initialize = _ => {
         let config = this.config;
-        config.connectionLimit = 10;
+        config.connectionLimit = 30;
         
         return dbPool = mysql2.createPool(config);
     };
