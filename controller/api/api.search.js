@@ -102,7 +102,6 @@ exports.GetProjectUserList = async(conn, projectid) =>{
     for(let item of userList){
         result.push(await apiAuth.GetUserInfo(conn, item.userid));
     }
-
     return result;
 }
 
