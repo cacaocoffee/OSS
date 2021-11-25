@@ -36,10 +36,9 @@ exports.isLogined = (req) =>{
 }
 
 exports.GetUserInfo = async (conn, id) =>{
-    let queryString = 'SELECT * FROM user WHERE id = ? LIMIT 1;';
+    let queryString = 'SELECT id,userid,name,description,authorize FROM user WHERE id = ? LIMIT 1;';
     let queryParam = [id];
 
     let [result, ] = await conn.execute(queryString, queryParam);
-    
     return result[0];
 }
