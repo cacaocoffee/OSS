@@ -60,7 +60,7 @@ table:  project_user
 |userid                     | 유저아이디      | int unsigned |       -           | NOT NULL | PRIMARY KEY,FOREIGN KEY |
 | projectid          | 프로젝트아이디 |  int unsigned    |       -          | NOT NULL | PRIMARY KEY,FOREIGN KEY|
 
-##프로젝트 언어 테이블
+## 프로젝트 언어 테이블
 table: language_project
 | Column Name | Comment           | data type       | Default     | NULL        | Option            |
 |-----------------:|:------------------|:---------------|:------------|:------------|:----------------|
